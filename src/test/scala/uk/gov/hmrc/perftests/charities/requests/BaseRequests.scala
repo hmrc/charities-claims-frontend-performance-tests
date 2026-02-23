@@ -12,25 +12,24 @@ import io.gatling.http.Predef._
 import io.gatling.http.check.header.HttpHeaderRegexCheckType
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
-
 trait BaseRequests extends ServicesConfiguration {
 
+  val baseUrl: String                   = baseUrlFor("charities-claims")
+  val redirectUrl: String               = "/charities-claims"
+  val makeACharityClaim: String         = "/make-a-charity-repayment-claim"
+  val repaymentClaimDetails: String     = "/repayment-claim-details"
+  val repaymentClaimType: String        = "/repayment-claim-type"
+  val haveClaimReference: String        = "/claim-reference-number"
+  val enterClaimReferenceNumber: String = "enter-claim-reference-number"
+  val repaymentCYA: String              = "/check-your-repayment-claim"
 
-  val baseUrl: String               = baseUrlFor("charities-claims")
-  val redirectUrl: String           = "/stamp-duty-land-tax-filing"
-  val beforeYouStart: String        = "/preliminary-questions/before-you-start"
-  val individualOrBusiness: String  = "/preliminary-questions/who-is-making-the-purchase"
-  val purchaserName: String          = "/preliminary-questions/purchaser-name"
-  val transactionType: String       = "/preliminary-questions/transaction-type"
-  val prelimCYA: String             = "/preliminary-questions/check-answers"
-  val address: String               = "/preliminary-questions/address"
+  val transactionType: String = "/preliminary-questions/transaction-type"
+  val address: String         = "/preliminary-questions/address"
 
-
-  val authLoginStub: String         = baseUrlFor("auth-login-stub")
-  val authLoginStubUrl              = s"$authLoginStub/auth-login-stub/gg-sign-in"
-  val CsrfPattern                   = """<input type="hidden" name="csrfToken" value="([^"]+)""""
-  val lookupPattern                 = """<form method="POST" novalidate action="([^"]+)""""
-
+  val authLoginStub: String = baseUrlFor("auth-login-stub")
+  val authLoginStubUrl      = s"$authLoginStub/auth-login-stub/gg-sign-in"
+  val CsrfPattern           = """<input type="hidden" name="csrfToken" value="([^"]+)""""
+  val lookupPattern         = """<form method="POST" novalidate action="([^"]+)""""
 
   def saveCsrfToken(): CheckBuilder[RegexCheckType, String] = regex(_ => CsrfPattern).saveAs("csrfToken")
 
@@ -38,6 +37,5 @@ trait BaseRequests extends ServicesConfiguration {
 
   def saveAddressLookupUrl: CheckBuilder[HttpHeaderRegexCheckType, Response] =
     headerRegex("Location", lookupRegexp).saveAs("lookupAddressLocation")
-
 
 }

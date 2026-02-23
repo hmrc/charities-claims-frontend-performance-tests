@@ -3,7 +3,7 @@
  *
  */
 
-package uk.gov.hmrc.perftests.example
+package uk.gov.hmrc.perftests.requests
 
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
@@ -12,7 +12,7 @@ import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 object ExampleRequests extends ServicesConfiguration {
 
-  val baseUrl: String = baseUrlFor("example-frontend")
+  val baseUrl: String = baseUrlFor("requests-frontend")
   val route: String   = "/check-your-vat-flat-rate"
 
   val navigateToHomePage: HttpRequestBuilder =

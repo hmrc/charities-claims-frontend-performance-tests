@@ -3,10 +3,10 @@
  *
  */
 
-package uk.gov.hmrc.perftests.example
+package uk.gov.hmrc.perftests.requests
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import uk.gov.hmrc.perftests.example.ExampleRequests._
+import uk.gov.hmrc.perftests.requests.ExampleRequests._
 
 class ExampleSimulation extends PerformanceTestRunner {
 
