@@ -1,6 +1,17 @@
 /*
  * Copyright 2023 HM Revenue & Customs
  *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package uk.gov.hmrc.perftests.charities.requests
@@ -25,7 +36,7 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
       .check(regex("Make a charity repayment claim"))
 
   val navigateToRepaymentClaimDetails: HttpRequestBuilder =
-    http("Navigate to individual or Business Page")
+    http("Navigate to Repayment Claim Details page")
       .get(s"$baseUrl$redirectUrl$repaymentClaimDetails")
       .check(status.is(200))
       .check(saveCsrfToken())
@@ -43,10 +54,9 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
     http("Select type of repayment claim Page")
       .post(s"$baseUrl$redirectUrl$repaymentClaimType")
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", "claimingGiftAid")
-      .formParam("value", "claimingTaxDeducted")
+      .formParam("value[0]", "claimingGiftAid")
+      .formParam("value[2]", "claimingTaxDeducted")
       .check(status.is(303))
-      .check(saveCsrfToken())
 
   val navigateToHaveClaimReference: HttpRequestBuilder =
     http("Navigate to Do you have a claim reference number Page")
@@ -79,6 +89,7 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
   val navigateToCheckYourRepaymentClaim: HttpRequestBuilder =
     http("Navigate to Check Your Answers Page for Repayment Claim")
       .get(s"$baseUrl$redirectUrl$repaymentCYA")
+      .formParam("csrfToken", "#{csrfToken}")
       .check(status.is(200))
       .check(saveCsrfToken())
       .check(regex("Check your repayment claim"))
