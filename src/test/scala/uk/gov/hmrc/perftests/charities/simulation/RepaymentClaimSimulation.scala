@@ -17,10 +17,8 @@
 package uk.gov.hmrc.perftests.charities.simulation
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{enterClaimReferenceValue, loginToAuthWizard, navigateToCheckYourRepaymentClaim, navigateToEnterClaimReferenceNumber, navigateToHaveClaimReference, navigateToMakeACharityClaim, navigateToRepaymentClaimDetails, navigateToSelectClaimType, selectClaimType, selectReference, submitRepaymentClaim}
-import uk.gov.hmrc.perftests.charities.requests._
-import uk.gov.hmrc.perftests.requests._
-import uk.gov.hmrc.perftests.charities.requests._
+import uk.gov.hmrc.perftests.charities.requests.BaseRequests
+import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{enterClaimReferenceValue, loginToAuthWizard, navigateToCheckYourRepaymentClaim, navigateToEnterClaimReferenceNumber, navigateToHaveClaimReference, navigateToMakeACharityClaim, navigateToRepaymentClaimDetails, navigateToSelectClaimType, selectClaimTypeGASDS, selectClaimTypeNoGASDS, selectReference, submitRepaymentClaim}
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
 
 trait RepaymentClaimSimulation extends PerformanceTestRunner with BaseRequests {
@@ -32,7 +30,7 @@ trait RepaymentClaimSimulation extends PerformanceTestRunner with BaseRequests {
     navigateToMakeACharityClaim,
     navigateToRepaymentClaimDetails,
     navigateToSelectClaimType,
-    selectClaimType,
+    selectClaimTypeNoGASDS,
     navigateToHaveClaimReference,
     selectReference,
     navigateToEnterClaimReferenceNumber,

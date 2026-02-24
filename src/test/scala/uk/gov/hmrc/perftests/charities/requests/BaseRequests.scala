@@ -34,6 +34,21 @@ trait BaseRequests extends ServicesConfiguration {
   val enterClaimReferenceNumber: String = "/enter-claim-reference-number"
   val repaymentCYA: String              = "/check-your-repayment-claim"
 
+  val aboutTheOrg: String         = "/about-the-organisation"
+  val nameOfCharityRegulator: String     = "/name-of-charity-regulator"
+  val charityNotRegistered: String        = "/charity-not-registered"
+  val charityExcepted: String        = "/charity-excepted"
+  val charityExempt: String      = "/charity-exempt"
+  val charityRegulatorNumber: String           = "/charity-regulator-number"
+  val corporateTrustee: String           = "/corporate-trustee-claim"
+  val corporateTrusteeAddress: String           = "/corporate-trustee-address"
+  val corporateTrusteeDetails: String           = "/corporate-trustee-details"
+  val authorisedOfficialAddress: String           = "/authorised-official-address"
+  val authorisedOfficialDetails: String           = "/authorised-official-details"
+  val organisationCYA: String           = "/check-your-organisation-details"
+
+
+
   val transactionType: String = "/preliminary-questions/transaction-type"
   val address: String         = "/preliminary-questions/address"
 

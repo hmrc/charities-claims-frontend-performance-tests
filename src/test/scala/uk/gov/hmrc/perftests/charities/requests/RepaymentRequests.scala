@@ -50,11 +50,20 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
       .check(saveCsrfToken())
       .check(regex("Which type of repayment claim do you want to make?"))
 
-  val selectClaimType: HttpRequestBuilder =
+  val selectClaimTypeNoGASDS: HttpRequestBuilder =
     http("Select type of repayment claim Page")
       .post(s"$baseUrl$redirectUrl$repaymentClaimType")
       .formParam("csrfToken", "#{csrfToken}")
       .formParam("value[0]", "claimingGiftAid")
+      .formParam("value[2]", "claimingTaxDeducted")
+      .check(status.is(303))
+
+  val selectClaimTypeGASDS: HttpRequestBuilder =
+    http("Select type of repayment claim Page")
+      .post(s"$baseUrl$redirectUrl$repaymentClaimType")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value[0]", "claimingGiftAid")
+      .formParam("value[1]", "claimingUnderGiftAidSmallDonationsScheme")
       .formParam("value[2]", "claimingTaxDeducted")
       .check(status.is(303))
 
