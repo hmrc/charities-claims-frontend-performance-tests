@@ -152,7 +152,10 @@ object OrganisationRequests extends ServicesConfiguration with BaseRequests {
     http("Enter Corporate trustee Details")
       .post(s"$baseUrl$redirectUrl$corporateTrusteeDetails")
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("nameOfCorporateTrustee", "Service information  region    visited  link    Charities Claims151532  Language switcher  navigation landmark    list  with 2 items  current  ENG  visited  lin")
+      .formParam(
+        "nameOfCorporateTrustee",
+        "Service information  region    visited  link    Charities Claims151532  Language switcher  navigation landmark    list  with 2 items  current  ENG  visited  lin"
+      )
       .formParam("corporateTrusteeDaytimeTelephoneNumber", "45689123456789123456789123456789122")
       .check(status.is(303))
 
@@ -195,61 +198,9 @@ object OrganisationRequests extends ServicesConfiguration with BaseRequests {
       .check(saveCsrfToken())
       .check(regex("Check your organisation details"))
 
-
-
-
-
-
-
-
-
-  val selectClaimType: HttpRequestBuilder =
-    http("Select type of repayment claim Page")
-      .post(s"$baseUrl$redirectUrl$repaymentClaimType")
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", "claimingGiftAid")
-      .formParam("value", "claimingTaxDeducted")
-      .check(status.is(303))
-      .check(saveCsrfToken())
-
-  val navigateToHaveClaimReference: HttpRequestBuilder =
-    http("Navigate to Do you have a claim reference number Page")
-      .get(s"$baseUrl$redirectUrl$haveClaimReference")
-      .check(status.is(200))
-      .check(saveCsrfToken())
-      .check(regex("Do you have a claim reference number?"))
-
-  val selectReference: HttpRequestBuilder =
-    http("Enter If you have a claim reference number")
-      .post(s"$baseUrl$redirectUrl$haveClaimReference")
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", "true")
-      .check(status.is(303))
-
-  val navigateToEnterClaimReferenceNumber: HttpRequestBuilder =
-    http("Navigate to Enter your claim reference number Page")
-      .get(s"$baseUrl$redirectUrl$enterClaimReferenceNumber")
-      .check(status.is(200))
-      .check(saveCsrfToken())
-      .check(regex("What is your claim reference number?"))
-
-  val enterClaimReferenceValue: HttpRequestBuilder =
-    http("Enter If you have a claim reference number")
-      .post(s"$baseUrl$redirectUrl$enterClaimReferenceNumber")
-      .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", "112233aaffddee44ggrr")
-      .check(status.is(303))
-
-  val navigateToCheckYourRepaymentClaim: HttpRequestBuilder =
-    http("Navigate to Check Your Answers Page for Repayment Claim")
-      .get(s"$baseUrl$redirectUrl$repaymentCYA")
-      .check(status.is(200))
-      .check(saveCsrfToken())
-      .check(regex("Check your repayment claim"))
-
-  val submitRepaymentClaim: HttpRequestBuilder =
-    http("Submit Repayment Claim")
-      .post(s"$baseUrl$redirectUrl$repaymentCYA")
+  val submitOrganisationDetails: HttpRequestBuilder =
+    http("Submit Organisation Details")
+      .post(s"$baseUrl$redirectUrl$organisationCYA")
       .formParam("csrfToken", "#{csrfToken}")
       .check(status.is(303))
 

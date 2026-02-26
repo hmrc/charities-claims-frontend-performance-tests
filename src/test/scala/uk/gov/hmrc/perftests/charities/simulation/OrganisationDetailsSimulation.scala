@@ -18,7 +18,7 @@ package uk.gov.hmrc.perftests.charities.simulation
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
-import uk.gov.hmrc.perftests.charities.requests.OrganisationRequests.{enterAuthorisedOfficialDetails, enterCorporateTrusteeDetails, enterRegulatorNumber, navigateToAboutTheOrg, navigateToAuthorisedOfficialDetails, navigateToAuthorisedOfficialUKAddress, navigateToCharityExcepted, navigateToCharityRegulator, navigateToCheckYourOrganisationDetails, navigateToCorporateTrustee, navigateToCorporateTrusteeDetails, navigateToCorporateTrusteeUKAddress, navigateToRegulatorNumber, navigateToWhyNotRegistered, selectAuthorisedOfficialUKAddressYes, selectCharityExcepted, selectCorporateTrusteeNo, selectCorporateTrusteeUKAddressNo, selectCorporateTrusteeYes, selectNotRegistered, selectScottishRegistered}
+import uk.gov.hmrc.perftests.charities.requests.OrganisationRequests.{enterAuthorisedOfficialDetails, enterCorporateTrusteeDetails, enterRegulatorNumber, navigateToAboutTheOrg, navigateToAuthorisedOfficialDetails, navigateToAuthorisedOfficialUKAddress, navigateToCharityExcepted, navigateToCharityRegulator, navigateToCheckYourOrganisationDetails, navigateToCorporateTrustee, navigateToCorporateTrusteeDetails, navigateToCorporateTrusteeUKAddress, navigateToRegulatorNumber, navigateToWhyNotRegistered, selectAuthorisedOfficialUKAddressYes, selectCharityExcepted, selectCorporateTrusteeNo, selectCorporateTrusteeUKAddressNo, selectCorporateTrusteeYes, selectNotRegistered, selectScottishRegistered, submitOrganisationDetails}
 import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{enterClaimReferenceValue, loginToAuthWizard, navigateToCheckYourRepaymentClaim, navigateToEnterClaimReferenceNumber, navigateToHaveClaimReference, navigateToMakeACharityClaim, navigateToRepaymentClaimDetails, navigateToSelectClaimType, selectClaimTypeNoGASDS, selectReference, submitRepaymentClaim}
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
 
@@ -52,10 +52,14 @@ trait OrganisationDetailsSimulation extends PerformanceTestRunner with BaseReque
     navigateToCorporateTrusteeDetails,
     enterCorporateTrusteeDetails,
     navigateToCheckYourOrganisationDetails,
+    submitOrganisationDetails,
     navigateToMakeACharityClaim
   )
 
-  setup("organisation-journey-2", "Organisation Questions Journey with scottish regulator Number and Authorised Official").withRequests(
+  setup(
+    "organisation-journey-2",
+    "Organisation Questions Journey with scottish regulator Number and Authorised Official"
+  ).withRequests(
     navigateToAuth,
     authLogInForOrg,
     loginToAuthWizard,
@@ -82,6 +86,7 @@ trait OrganisationDetailsSimulation extends PerformanceTestRunner with BaseReque
     navigateToAuthorisedOfficialDetails,
     enterAuthorisedOfficialDetails,
     navigateToCheckYourOrganisationDetails,
+    submitOrganisationDetails,
     navigateToMakeACharityClaim
   )
 }
