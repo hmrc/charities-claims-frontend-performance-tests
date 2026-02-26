@@ -23,6 +23,7 @@ import uk.gov.hmrc.perftests.charities.simulation.OrganisationDetailsSimulation
 class CharitiesSimulation
     extends PerformanceTestRunner
     with RepaymentClaimSimulation
-    with OrganisationDetailsSimulation {
+    with OrganisationDetailsSimulation
+    with GASScheduleSimulation {
   runSimulation()
 }

@@ -20,7 +20,7 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
-import uk.gov.hmrc.perftests.charities.requests.{BaseRequests,RepaymentRequests, OrganisationRequests}
+import uk.gov.hmrc.perftests.charities.requests.{BaseRequests, OrganisationRequests, RepaymentRequests}
 
 object AuthLoginRequests extends ServicesConfiguration with BaseRequests {
 
@@ -66,11 +66,11 @@ object AuthLoginRequests extends ServicesConfiguration with BaseRequests {
       .check(status.saveAs("statusCode"))
 
   def loginToService(
-                      name: String,
-                      baseUrl: String,
-                      redirectUrl: String,
-                      expectedLocation: String
-                    ): HttpRequestBuilder =
+    name: String,
+    baseUrl: String,
+    redirectUrl: String,
+    expectedLocation: String
+  ): HttpRequestBuilder =
     http(name)
       .get(s"$baseUrl$redirectUrl")
       .check(status.is(303))
