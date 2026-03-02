@@ -2,7 +2,7 @@
 
 # charities-claims-frontend-performance-tests
 
-Performance test suite for the `<digital service name>`, using [performance-test-runner](https://github.com/hmrc/performance-test-runner) under the hood.
+Performance test suite for the `DASS REPLATFORM Live Service- CHARITIES CLAIMS `, using [performance-test-runner](https://github.com/hmrc/performance-test-runner) under the hood.
 
 ## Pre-requisites
 
