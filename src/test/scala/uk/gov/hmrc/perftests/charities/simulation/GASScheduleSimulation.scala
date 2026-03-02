@@ -74,96 +74,6 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
         navigateToMakeACharityClaim
       )
 
-
-
-  val uploadGASScheduleWarning: List[ActionBuilder] =
-    List[ActionBuilder](
-      navigateToAuth,
-      authLogInForOrg,
-      loginToAuthWizard,
-      navigateToMakeACharityClaim,
-      navigateToRepaymentClaimDetails,
-      navigateToSelectClaimType,
-      selectClaimTypeNoGASDS,
-      navigateToHaveClaimReference,
-      selectReference,
-      navigateToEnterClaimReferenceNumber,
-      enterClaimReferenceValue,
-      navigateToCheckYourRepaymentClaim,
-      submitRepaymentClaim,
-      navigateToMakeACharityClaim,
-      navigateToAboutTheOrg,
-      navigateToCharityRegulator,
-      selectNotRegistered,
-      navigateToWhyNotRegistered,
-      selectCharityExcepted,
-      navigateToCharityExcepted,
-      navigateToCorporateTrustee,
-      selectCorporateTrusteeYes,
-      navigateToCorporateTrusteeUKAddress,
-      selectCorporateTrusteeUKAddressNo,
-      navigateToCorporateTrusteeDetails,
-      enterCorporateTrusteeDetails,
-      navigateToCheckYourOrganisationDetails,
-      submitOrganisationDetails,
-      navigateToMakeACharityClaim,
-      navigateToAboutGiftAidSchedule,
-      navigateToUploadGiftAidSchedule,
-      postFileToUpscan("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
-      getUpscanUploadResponse,
-      navigateToGASUploaded
-    ) ++ getFileVerificationStatus ++
-      List[ActionBuilder](
-        continueFromUploadedPage,
-        navigateToCheckYourGASSchedule,
-        selectUpdateScheduleYes,
-        navigateToUpdateGASWarning,
-        SelectUpdateGASWarningYes,
-        navigateToUploadGiftAidSchedule
-      )
-
-  val uploadGASScheduleRemove: List[ActionBuilder] =
-    List[ActionBuilder](
-      navigateToAuth,
-      authLogInForOrg,
-      loginToAuthWizard,
-      navigateToMakeACharityClaim,
-      navigateToRepaymentClaimDetails,
-      navigateToSelectClaimType,
-      selectClaimTypeNoGASDS,
-      navigateToHaveClaimReference,
-      selectReference,
-      navigateToEnterClaimReferenceNumber,
-      enterClaimReferenceValue,
-      navigateToCheckYourRepaymentClaim,
-      submitRepaymentClaim,
-      navigateToMakeACharityClaim,
-      navigateToAboutTheOrg,
-      navigateToCharityRegulator,
-      selectNotRegistered,
-      navigateToWhyNotRegistered,
-      selectCharityExcepted,
-      navigateToCharityExcepted,
-      navigateToCorporateTrustee,
-      selectCorporateTrusteeYes,
-      navigateToCorporateTrusteeUKAddress,
-      selectCorporateTrusteeUKAddressNo,
-      navigateToCorporateTrusteeDetails,
-      enterCorporateTrusteeDetails,
-      navigateToCheckYourOrganisationDetails,
-      submitOrganisationDetails,
-      navigateToMakeACharityClaim,
-      navigateToAboutGiftAidSchedule,
-      navigateToUploadGiftAidSchedule,
-      postFileToUpscan("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
-      getUpscanUploadResponse,
-      navigateToGASUploaded
-    ) ++ getFileVerificationStatus ++
-      List[ActionBuilder](
-        removeGASFromUploadedPage,
-        navigateToUploadGiftAidSchedule
-      )
-
   val uploadGASScheduleErrorPage: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
@@ -208,24 +118,79 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
         navigateToMakeACharityClaim
       )
 
+  val uploadGASScheduleRemoveWarningIterations: List[ActionBuilder] =
+    List[ActionBuilder](
+      navigateToAuth,
+      authLogInForOrg,
+      loginToAuthWizard,
+      navigateToMakeACharityClaim,
+      navigateToRepaymentClaimDetails,
+      navigateToSelectClaimType,
+      selectClaimTypeNoGASDS,
+      navigateToHaveClaimReference,
+      selectReference,
+      navigateToEnterClaimReferenceNumber,
+      enterClaimReferenceValue,
+      navigateToCheckYourRepaymentClaim,
+      submitRepaymentClaim,
+      navigateToMakeACharityClaim,
+      navigateToAboutTheOrg,
+      navigateToCharityRegulator,
+      selectNotRegistered,
+      navigateToWhyNotRegistered,
+      selectCharityExcepted,
+      navigateToCharityExcepted,
+      navigateToCorporateTrustee,
+      selectCorporateTrusteeYes,
+      navigateToCorporateTrusteeUKAddress,
+      selectCorporateTrusteeUKAddressNo,
+      navigateToCorporateTrusteeDetails,
+      enterCorporateTrusteeDetails,
+      navigateToCheckYourOrganisationDetails,
+      submitOrganisationDetails,
+      navigateToMakeACharityClaim,
+      navigateToAboutGiftAidSchedule,
+      navigateToUploadGiftAidSchedule,
+      postFileToUpscan("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
+      getUpscanUploadResponse,
+      navigateToGASUploaded
+    ) ++ getFileVerificationStatus ++
+      List[ActionBuilder](
+        removeGASFromUploadedPage,
+        navigateToUploadGiftAidSchedule,
+        postFileToUpscan("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
+        getUpscanUploadResponse,
+        navigateToGASUploaded
+      ) ++ getFileVerificationStatus ++
+      List[ActionBuilder](
+        continueFromUploadedPage,
+        navigateToCheckYourGASSchedule,
+        selectUpdateScheduleYes,
+        navigateToUpdateGASWarning,
+        SelectUpdateGASWarningYes,
+        navigateToUploadGiftAidSchedule,
+        postFileToUpscan("data/Gift-Aid-Schedule-TEST-MasterError.ods"),
+        getUpscanUploadResponse
+      ) ++ getFileVerificationStatus ++
+      List[ActionBuilder](
+        continueFromUploadedPage,
+        navigateToProblemWithYourGASSchedule,
+        clickAttachUpdatedScheduleButton
+      )
 
-
-  setup("gas-journey-1", "Gift Aid schedule upload journey with success") withActions(
-    uploadGASScheduleHappyPath:_*
+  setup("gas-journey-1", "Gift Aid schedule upload journey with success") withActions (
+    uploadGASScheduleHappyPath: _*
   )
 
-  setup("gas-journey-2", "Gift Aid schedule upload journey with validation failed file to Errors page") withActions(
-    uploadGASScheduleErrorPage:_*
-    )
+  setup("gas-journey-2", "Gift Aid schedule upload journey with validation failed file to Errors page") withActions (
+    uploadGASScheduleErrorPage: _*
+  )
 
-  setup("gas-journey-3", "Gift Aid schedule upload journey removing validated uploaded file") withActions(
-    uploadGASScheduleWarning:_*
-    )
-
-  setup("gas-journey-4", "Gift Aid schedule upload journey removing from upload page itself") withActions(
-    uploadGASScheduleRemove:_*
-    )
-
+  setup(
+    "gas-journey-3",
+    "GAS journeys removing from upload page, deleting from Warning page, reuploading GAS etc"
+  ) withActions (
+    uploadGASScheduleRemoveWarningIterations: _*
+  )
 
 }
-
