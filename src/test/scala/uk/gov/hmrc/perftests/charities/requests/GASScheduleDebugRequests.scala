@@ -26,16 +26,14 @@ import scala.concurrent.duration.DurationInt
 
 object GASScheduleDebugRequests extends ServicesConfiguration with BaseRequests {
 
-
   val navigateToGASUploaded: HttpRequestBuilder =
     http("Navigate to your Gift Aid Schedule upload page")
       .get(s"$baseUrl$redirectUrl$uploadedGASPage")
       .check(status.is(200))
       .check(saveCsrfToken())
 
-
   val resetUploadStatus: ActionBuilder =
-    exec { s => s.remove("uploadStatus") }.actionBuilders.head
+    exec(s => s.remove("uploadStatus")).actionBuilders.head
 
   val pollUntilUploaded: List[ActionBuilder] =
     asLongAsDuring(
@@ -64,10 +62,8 @@ object GASScheduleDebugRequests extends ServicesConfiguration with BaseRequests 
         }
     ).actionBuilders
 
-
   val getFileVerificationStatus: List[ActionBuilder] =
     resetUploadStatus :: pollUntilUploaded
-
 
   val continueFromUploadedPage: HttpRequestBuilder =
     http("CONTINUE from your GIFT AID Upload Page")
@@ -75,8 +71,6 @@ object GASScheduleDebugRequests extends ServicesConfiguration with BaseRequests 
       .formParam("csrfToken", "#{csrfToken}")
       .check(status.is(303))
       .check(header("Location").saveAs("nextPageURL"))
-
-
 
   // sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
 
@@ -92,7 +86,7 @@ object GASScheduleDebugRequests extends ServicesConfiguration with BaseRequests 
     exec { s =>
       println("nextpage URL = " + s("nextPageURL").asOption[String])
       s
-    }.actionBuilders.head   // this head is the underlying SessionHookBuilder (an ActionBuilder)
+    }.actionBuilders.head // this head is the underlying SessionHookBuilder (an ActionBuilder)
 
   // 3) Your required list
   val actionspost: List[ActionBuilder] = List(finalPostReq, finalPostDebugHook)
@@ -110,11 +104,10 @@ object GASScheduleDebugRequests extends ServicesConfiguration with BaseRequests 
     exec { s =>
       println(s"""FinalGET status=${s("st").asOption[Int]} location=${s("landedUrlget").asOption[String]}""")
       s
-    }.actionBuilders.head   // this head is the underlying SessionHookBuilder (an ActionBuilder)
+    }.actionBuilders.head // this head is the underlying SessionHookBuilder (an ActionBuilder)
 
   // 3) Your required list
   val actions: List[ActionBuilder] = List(finalGetReq, finalGetDebugHook)
-
 
   // sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
 
@@ -130,7 +123,5 @@ object GASScheduleDebugRequests extends ServicesConfiguration with BaseRequests 
   // What you asked for: a method that returns List[ActionBuilder]
   val flushAll: List[ActionBuilder] =
     List(flushHttpCacheAB, flushSessionCookiesAB, flushCookieJarAB)
-
-
 
 }
