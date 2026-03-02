@@ -49,7 +49,11 @@ object GASScheduleUploadRequests extends ServicesConfiguration with BaseRequests
       .check(regex("""<form[^>]*action="([^"]+)"""").saveAs("uploadUrl"))
       .check(regex("""name="success_action_redirect"\s+value="([^"]+)"""").saveAs("successActionRedirect"))
       .check(regex("""name="x-amz-credential"\s+value="([^"]+)"""").saveAs("xAmzCredential"))
-      .check(regex("""name="x-amz-meta-upscan-initiate-response"\s+value="([^"]+)"""").saveAs("xAmzMetaUpscanInitiateResponse"))
+      .check(
+        regex("""name="x-amz-meta-upscan-initiate-response"\s+value="([^"]+)"""").saveAs(
+          "xAmzMetaUpscanInitiateResponse"
+        )
+      )
       .check(regex("""name="x-amz-meta-original-filename"\s+value="([^"]+)"""").saveAs("xAmzMetaOriginalFilename"))
       .check(regex("""name="x-amz-algorithm"\s+value="([^"]+)"""").saveAs("xAmzAlgorithm"))
       .check(regex("""name="x-amz-signature"\s+value="([^"]+)"""").saveAs("xAmzSignature"))
@@ -57,7 +61,11 @@ object GASScheduleUploadRequests extends ServicesConfiguration with BaseRequests
       .check(regex("""name="x-amz-meta-session-id"\s+value="([^"]+)"""").saveAs("xAmzMetaSessionId"))
       .check(regex("""name="x-amz-meta-callback-url"\s+value="([^"]+)"""").saveAs("xAmzMetaCallbackURL"))
       .check(regex("""name="x-amz-date"\s+value="([^"]+)"""").saveAs("xAmzDate"))
-      .check(regex("""name="x-amz-meta-upscan-initiate-received"\s+value="([^"]+)"""").saveAs("xAmzMetaUpscanInitiateReceived"))
+      .check(
+        regex("""name="x-amz-meta-upscan-initiate-received"\s+value="([^"]+)"""").saveAs(
+          "xAmzMetaUpscanInitiateReceived"
+        )
+      )
       .check(regex("""name="x-amz-meta-request-id"\s+value="([^"]+)"""").saveAs("xAmzMetaRequestId"))
       .check(regex("""name="key"\s+value="([^"]+)"""").saveAs("key"))
       .check(regex("""name="acl"\s+value="([^"]+)"""").saveAs("acl"))
@@ -97,32 +105,40 @@ object GASScheduleUploadRequests extends ServicesConfiguration with BaseRequests
     http("Navigate to your Gift Aid Schedule upload page")
       .get(s"$baseUrl$redirectUrl$uploadedGASPage")
       .check(status.is(200))
+      .check(saveCsrfToken())
 
+  val resetUploadStatus: ActionBuilder =
+    exec(s => s.remove("uploadStatus")).actionBuilders.head
 
-  val getFileVerificationStatus: List[ActionBuilder] =
-    asLongAsDuring(session =>
-      session("uploadStatus").asOption[String] match {
-        case Some(status) => !status.equalsIgnoreCase("UPLOADED")
-        case None => true
-      },
-      5.minutes
+  val pollUntilUploaded: List[ActionBuilder] =
+    asLongAsDuring(
+      session =>
+        session("uploadStatus").asOption[String] match {
+          case Some(status) => !status.equalsIgnoreCase("UPLOADED")
+          case None         => true
+        },
+      5.minutes,
+      exitASAP = true
     )(
-      pause(3.second)
+      pause(5.second)
         .exec(
           http("Get the file verification/validation status on your Gift Aid Schedule Upload Page")
             .get(s"$baseUrl$redirectUrl$uploadedGASPage")
             .check(status.is(200))
-            .check(regex("""<strong[^>]*>\s*([\s\S]*?)\s*</strong>""").saveAs("uploadStatus"))
+            .check(regex("""<strong[^>]*>\s*([\s\S]*?)\s*</strong>""").saveAs("uploadStatusRaw"))
             .check(saveCsrfToken())
             .check(regex("Your Gift Aid schedule upload"))
         )
-        .exec(session =>
-          session.set(
-            "uploadStatus",
-            session("uploadStatus").as[String].trim
-          )
-        )
-        ).actionBuilders
+        .exec { session =>
+          val cleaned = session("uploadStatusRaw").asOption[String].map(_.trim).getOrElse("")
+          session
+            .remove("uploadStatusRaw")
+            .set("uploadStatus", cleaned)
+        }
+    ).actionBuilders
+
+  val getFileVerificationStatus: List[ActionBuilder] =
+    resetUploadStatus :: pollUntilUploaded
 
   val continueFromUploadedPage: HttpRequestBuilder =
     http("CONTINUE from your GIFT AID Upload Page")
@@ -136,19 +152,16 @@ object GASScheduleUploadRequests extends ServicesConfiguration with BaseRequests
       .get(s"$baseUrl$redirectUrl$removeGASFromUploaded")
       .check(status.is(303))
 
-
   val navigateToCheckYourGASSchedule: HttpRequestBuilder =
     http("Navigate to check your Gift Aid Schedule page")
-      //.get(s"$baseUrl$redirectUrl$checkGASSuccess")
-      .get(s"$baseUrl"+"#{nextPageURL}")
+      .get(s"$baseUrl" + "#{nextPageURL}")
       .check(status.is(200))
       .check(saveCsrfToken())
       .check(regex("Check your Gift Aid schedule"))
 
   val navigateToProblemWithYourGASSchedule: HttpRequestBuilder =
     http("Navigate to Problem with your Gift Aid Schedule page")
-      //.get(s"$baseUrl$redirectUrl$checkGASProblem")
-      .get(s"$baseUrl"+"#{nextPageURL}")
+      .get(s"$baseUrl" + "#{nextPageURL}")
       .check(status.is(200))
       .check(saveCsrfToken())
       .check(regex("There is a problem with the data in your Gift Aid schedule"))
@@ -213,14 +226,5 @@ object GASScheduleUploadRequests extends ServicesConfiguration with BaseRequests
       .post(s"$baseUrl$redirectUrl$bannerGAS")
       .formParam("csrfToken", "#{csrfToken}")
       .check(status.is(303))
-
-
-
-
-
-
-
-
-
 
 }

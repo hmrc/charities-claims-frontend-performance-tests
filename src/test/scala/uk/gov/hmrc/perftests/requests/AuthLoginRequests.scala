@@ -26,14 +26,14 @@ object AuthLoginRequests extends ServicesConfiguration with BaseRequests {
 
   lazy val navigateToAuth: HttpRequestBuilder =
     http("Auth wizard")
-      .get(OrganisationRequests.authLoginStubUrl)
+      .get(authLoginStubUrl)
       .check(saveCsrfToken())
       .check(status.is(200))
       .check(regex("Authority Wizard").exists)
 
   def authLogInForOrg: HttpRequestBuilder =
     http("Login as an GG sign-in")
-      .post(OrganisationRequests.authLoginStubUrl)
+      .post(authLoginStubUrl)
       .formParam("redirectionUrl", redirectUrl)
       .formParam("csrfToken", "#{csrfToken}")
       .formParam("credentialStrength", "strong")
@@ -49,7 +49,7 @@ object AuthLoginRequests extends ServicesConfiguration with BaseRequests {
 
   def authLogInForAgent: HttpRequestBuilder =
     http("Login as an Org")
-      .post(OrganisationRequests.authLoginStubUrl)
+      .post(authLoginStubUrl)
       .formParam("redirectionUrl", redirectUrl)
       .formParam("csrfToken", "#{csrfToken}")
       .formParam("credentialStrength", "strong")
