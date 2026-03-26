@@ -61,7 +61,7 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToAboutGiftAidSchedule,
       navigateToUploadGiftAidSchedule,
-      postFileToUpscanGAS("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
+      postFileToUpscanGAS("data/gift-aid-valid-large.ods"),
       getUpscanUploadResponseGAS,
       navigateToGASUploaded
     ) ++ getFileVerificationStatusGAS ++
@@ -107,7 +107,7 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToAboutGiftAidSchedule,
       navigateToUploadGiftAidSchedule,
-      postFileToUpscanGAS("data/Gift-Aid-Schedule-TEST-MasterError.ods"),
+      postFileToUpscanGAS("data/gift-aid-MasterError.ods"),
       getUpscanUploadResponseGAS
     ) ++ getFileVerificationStatusGAS ++
       List[ActionBuilder](
@@ -151,14 +151,14 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToAboutGiftAidSchedule,
       navigateToUploadGiftAidSchedule,
-      postFileToUpscanGAS("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
+      postFileToUpscanGAS("data/gift-aid-valid-large.ods"),
       getUpscanUploadResponseGAS,
       navigateToGASUploaded
     ) ++ getFileVerificationStatusGAS ++
       List[ActionBuilder](
         removeGASFromUploadedPage,
         navigateToUploadGiftAidSchedule,
-        postFileToUpscanGAS("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
+        postFileToUpscanGAS("data/gift-aid-valid-large.ods"),
         getUpscanUploadResponseGAS,
         navigateToGASUploaded
       ) ++ getFileVerificationStatusGAS ++
@@ -169,7 +169,7 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
         navigateToUpdateGASWarning,
         SelectUpdateGASWarningYes,
         navigateToUploadGiftAidSchedule,
-        postFileToUpscanGAS("data/Gift-Aid-Schedule-TEST-MasterError.ods"),
+        postFileToUpscanGAS("data/gift-aid-MasterError.ods"),
         getUpscanUploadResponseGAS
       ) ++ getFileVerificationStatusGAS ++
       List[ActionBuilder](

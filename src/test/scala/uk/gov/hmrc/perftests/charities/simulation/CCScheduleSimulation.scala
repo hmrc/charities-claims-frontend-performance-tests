@@ -19,14 +19,14 @@ package uk.gov.hmrc.perftests.charities.simulation
 import io.gatling.core.action.builder.ActionBuilder
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
-import uk.gov.hmrc.perftests.charities.requests.GASScheduleUploadRequests._
+import uk.gov.hmrc.perftests.charities.requests.CCScheduleUploadRequests.{SelectDeleteCCWarningYes, SelectUpdateCCWarningYes, clickAttachUpdatedScheduleButtonCC, continueFromUploadedPageCC, getFileVerificationStatusCC, getUpscanUploadResponseCC, navigateToAboutConnectedCharitiesSchedule, navigateToCheckYourCCSchedule, navigateToDeleteCCWarning, navigateToCCSuccessBanner, navigateToCCUploaded, navigateToProblemWithYourCCSchedule, navigateToUpdateCCWarning, navigateToUploadConnectedCharitiesSchedule, postFileToUpscanCC, removeCCFromUploadedPage, selectUpdateScheduleNoCC, selectUpdateScheduleYesCC, submitScheduleUploadCC}
 import uk.gov.hmrc.perftests.charities.requests.OrganisationRequests._
 import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{loginToAuthWizard, _}
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
 
 trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
 
-  val uploadGASScheduleHappyPath: List[ActionBuilder] =
+  val uploadCCScheduleHappyPath: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
       authLogInForOrg,
@@ -57,22 +57,22 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
-      navigateToAboutGiftAidSchedule,
-      navigateToUploadGiftAidSchedule,
-      postFileToUpscanGAS("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
-      getUpscanUploadResponseGAS,
-      navigateToGASUploaded
-    ) ++ getFileVerificationStatusGAS ++
+      navigateToAboutConnectedCharitiesSchedule,
+      navigateToUploadConnectedCharitiesSchedule,
+      postFileToUpscanCC("data/connected-charities-valid-large.ods"),
+      getUpscanUploadResponseCC,
+      navigateToCCUploaded
+    ) ++ getFileVerificationStatusCC ++
       List[ActionBuilder](
-        continueFromUploadedPageGAS,
-        navigateToCheckYourGASSchedule,
-        selectUpdateScheduleNoGAS,
-        navigateToGASSuccessBanner,
-        submitScheduleUploadGAS,
+        continueFromUploadedPageCC,
+        navigateToCheckYourCCSchedule,
+        selectUpdateScheduleNoCC,
+        navigateToCCSuccessBanner,
+        submitScheduleUploadCC,
         navigateToMakeACharityClaim
       )
 
-  val uploadGASScheduleErrorPage: List[ActionBuilder] =
+  val uploadCCScheduleErrorPage: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
       authLogInForOrg,
@@ -103,20 +103,20 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
-      navigateToAboutGiftAidSchedule,
-      navigateToUploadGiftAidSchedule,
-      postFileToUpscanGAS("data/Gift-Aid-Schedule-TEST-MasterError.ods"),
-      getUpscanUploadResponseGAS
-    ) ++ getFileVerificationStatusGAS ++
+      navigateToAboutConnectedCharitiesSchedule,
+      navigateToUploadConnectedCharitiesSchedule,
+      postFileToUpscanCC("data/connected-charities-MasterError.ods"),
+      getUpscanUploadResponseCC
+    ) ++ getFileVerificationStatusCC ++
       List[ActionBuilder](
-        continueFromUploadedPageGAS,
-        navigateToProblemWithYourGASSchedule,
-        navigateToDeleteGASWarning,
-        SelectDeleteGASWarningYes,
+        continueFromUploadedPageCC,
+        navigateToProblemWithYourCCSchedule,
+        navigateToDeleteCCWarning,
+        SelectDeleteCCWarningYes,
         navigateToMakeACharityClaim
       )
 
-  val uploadGASScheduleRemoveWarningIterations: List[ActionBuilder] =
+  val uploadCCScheduleRemoveWarningIterations: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
       authLogInForOrg,
@@ -147,48 +147,48 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
-      navigateToAboutGiftAidSchedule,
-      navigateToUploadGiftAidSchedule,
-      postFileToUpscanGAS("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
-      getUpscanUploadResponseGAS,
-      navigateToGASUploaded
-    ) ++ getFileVerificationStatusGAS ++
+      navigateToAboutConnectedCharitiesSchedule,
+      navigateToUploadConnectedCharitiesSchedule,
+      postFileToUpscanCC("data/connected-charities-valid-large.ods"),
+      getUpscanUploadResponseCC,
+      navigateToCCUploaded
+    ) ++ getFileVerificationStatusCC ++
       List[ActionBuilder](
-        removeGASFromUploadedPage,
-        navigateToUploadGiftAidSchedule,
-        postFileToUpscanGAS("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
-        getUpscanUploadResponseGAS,
-        navigateToGASUploaded
-      ) ++ getFileVerificationStatusGAS ++
+        removeCCFromUploadedPage,
+        navigateToUploadConnectedCharitiesSchedule,
+        postFileToUpscanCC("data/connected-charities-valid-large.ods"),
+        getUpscanUploadResponseCC,
+        navigateToCCUploaded
+      ) ++ getFileVerificationStatusCC ++
       List[ActionBuilder](
-        continueFromUploadedPageGAS,
-        navigateToCheckYourGASSchedule,
-        selectUpdateScheduleYesGAS,
-        navigateToUpdateGASWarning,
-        SelectUpdateGASWarningYes,
-        navigateToUploadGiftAidSchedule,
-        postFileToUpscanGAS("data/Gift-Aid-Schedule-TEST-MasterError.ods"),
-        getUpscanUploadResponseGAS
-      ) ++ getFileVerificationStatusGAS ++
+        continueFromUploadedPageCC,
+        navigateToCheckYourCCSchedule,
+        selectUpdateScheduleYesCC,
+        navigateToUpdateCCWarning,
+        SelectUpdateCCWarningYes,
+        navigateToUploadConnectedCharitiesSchedule,
+        postFileToUpscanCC("data/connected-charities-MasterError.ods"),
+        getUpscanUploadResponseCC
+      ) ++ getFileVerificationStatusCC ++
       List[ActionBuilder](
-        continueFromUploadedPageGAS,
-        navigateToProblemWithYourGASSchedule,
-        clickAttachUpdatedScheduleButtonGAS
+        continueFromUploadedPageCC,
+        navigateToProblemWithYourCCSchedule,
+        clickAttachUpdatedScheduleButtonCC
       )
 
-  setup("gas-journey-1", "Gift Aid schedule upload journey with success") withActions (
-    uploadGASScheduleHappyPath: _*
-  )
+  setup("oi-journey-1", "Other Income schedule upload journey with success") withActions (
+    uploadCCScheduleHappyPath: _*
+    )
 
-  setup("gas-journey-2", "Gift Aid schedule upload journey with validation failed file to Errors page") withActions (
-    uploadGASScheduleErrorPage: _*
-  )
+  setup("oi-journey-2", "Other Income schedule upload journey with validation failed file to Errors page") withActions (
+    uploadCCScheduleErrorPage: _*
+    )
 
   setup(
-    "gas-journey-3",
-    "GAS journeys removing from upload page, deleting from Warning page, reuploading GAS etc"
+    "oi-journey-3",
+    "Other Income journeys removing from upload page, deleting from Warning page, reuploading CC etc"
   ) withActions (
-    uploadGASScheduleRemoveWarningIterations: _*
-  )
+    uploadCCScheduleRemoveWarningIterations: _*
+    )
 
 }

@@ -165,7 +165,9 @@ object CBScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
       .check(regex("There is a problem with the data in your Community Buildings schedule"))
 
   val clickAttachUpdatedScheduleButtonCB: HttpRequestBuilder =
-    http("Click on Attach an updated Community Buildings Schedule Button on Problem page, that Deletes the uploaded schedule")
+    http(
+      "Click on Attach an updated Community Buildings Schedule Button on Problem page, that Deletes the uploaded schedule"
+    )
       .post(s"$baseUrl$redirectUrl$checkCBProblem")
       .formParam("csrfToken", "#{csrfToken}")
       .check(status.is(303))

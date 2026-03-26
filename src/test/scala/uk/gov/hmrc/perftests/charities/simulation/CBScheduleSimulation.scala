@@ -19,7 +19,7 @@ package uk.gov.hmrc.perftests.charities.simulation
 import io.gatling.core.action.builder.ActionBuilder
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
-import uk.gov.hmrc.perftests.charities.requests.CBScheduleUploadRequests.{SelectDeleteCBWarningYes, SelectUpdateCBWarningYes, clickAttachUpdatedScheduleButtonCB, continueFromUploadedPageCB, getFileVerificationStatusCB, getUpscanUploadResponseCB, navigateToAboutOtherIncomeSchedule, navigateToCheckYourCBSchedule, navigateToDeleteCBWarning, navigateToCBSuccessBanner, navigateToCBUploaded, navigateToProblemWithYourCBSchedule, navigateToUpdateCBWarning, navigateToUploadOtherIncomeSchedule, postFileToUpscanCB, removeCBFromUploadedPage, selectUpdateScheduleNoCB, selectUpdateScheduleYesCB, submitScheduleUploadCB}
+import uk.gov.hmrc.perftests.charities.requests.CBScheduleUploadRequests.{SelectDeleteCBWarningYes, SelectUpdateCBWarningYes, clickAttachUpdatedScheduleButtonCB, continueFromUploadedPageCB, getFileVerificationStatusCB, getUpscanUploadResponseCB, navigateToAboutCommunityBuildingsSchedule, navigateToCBSuccessBanner, navigateToCBUploaded, navigateToCheckYourCBSchedule, navigateToDeleteCBWarning, navigateToProblemWithYourCBSchedule, navigateToUpdateCBWarning, navigateToUploadCommunityBuildingsSchedule, postFileToUpscanCB, removeCBFromUploadedPage, selectUpdateScheduleNoCB, selectUpdateScheduleYesCB, submitScheduleUploadCB}
 import uk.gov.hmrc.perftests.charities.requests.OrganisationRequests._
 import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{loginToAuthWizard, _}
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
@@ -57,9 +57,9 @@ trait CBScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
-      navigateToAboutOtherIncomeSchedule,
-      navigateToUploadOtherIncomeSchedule,
-      postFileToUpscanCB("data/other-income-GoodData-large.ods"),
+      navigateToAboutCommunityBuildingsSchedule,
+      navigateToUploadCommunityBuildingsSchedule,
+      postFileToUpscanCB("data/community-buildings-valid-large.ods"),
       getUpscanUploadResponseCB,
       navigateToCBUploaded
     ) ++ getFileVerificationStatusCB ++
@@ -103,9 +103,9 @@ trait CBScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
-      navigateToAboutOtherIncomeSchedule,
-      navigateToUploadOtherIncomeSchedule,
-      postFileToUpscanCB("data/Gift-Aid-Schedule-TEST-MasterError.ods"),
+      navigateToAboutCommunityBuildingsSchedule,
+      navigateToUploadCommunityBuildingsSchedule,
+      postFileToUpscanCB("data/community-buildings-MasterError.ods"),
       getUpscanUploadResponseCB
     ) ++ getFileVerificationStatusCB ++
       List[ActionBuilder](
@@ -147,16 +147,16 @@ trait CBScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
-      navigateToAboutOtherIncomeSchedule,
-      navigateToUploadOtherIncomeSchedule,
-      postFileToUpscanCB("data/other-income-GoodData-large.ods"),
+      navigateToAboutCommunityBuildingsSchedule,
+      navigateToUploadCommunityBuildingsSchedule,
+      postFileToUpscanCB("data/community-buildings-valid-large.ods"),
       getUpscanUploadResponseCB,
       navigateToCBUploaded
     ) ++ getFileVerificationStatusCB ++
       List[ActionBuilder](
         removeCBFromUploadedPage,
-        navigateToUploadOtherIncomeSchedule,
-        postFileToUpscanCB("data/other-income-GoodData-large.ods"),
+        navigateToUploadCommunityBuildingsSchedule,
+        postFileToUpscanCB("data/community-buildings-valid-large.ods"),
         getUpscanUploadResponseCB,
         navigateToCBUploaded
       ) ++ getFileVerificationStatusCB ++
@@ -166,8 +166,8 @@ trait CBScheduleSimulation extends PerformanceTestRunner with BaseRequests {
         selectUpdateScheduleYesCB,
         navigateToUpdateCBWarning,
         SelectUpdateCBWarningYes,
-        navigateToUploadOtherIncomeSchedule,
-        postFileToUpscanCB("data/Gift-Aid-Schedule-TEST-MasterError.ods"),
+        navigateToUploadCommunityBuildingsSchedule,
+        postFileToUpscanCB("data/community-buildings-MasterError.ods"),
         getUpscanUploadResponseCB
       ) ++ getFileVerificationStatusCB ++
       List[ActionBuilder](
@@ -176,19 +176,19 @@ trait CBScheduleSimulation extends PerformanceTestRunner with BaseRequests {
         clickAttachUpdatedScheduleButtonCB
       )
 
-  setup("oi-journey-1", "Other Income schedule upload journey with success") withActions (
+  setup("cb-journey-1", "Community Buildings schedule upload journey with success") withActions (
     uploadCBScheduleHappyPath: _*
-    )
+  )
 
-  setup("oi-journey-2", "Other Income schedule upload journey with validation failed file to Errors page") withActions (
+  setup("cb-journey-2", "Community Buildings schedule upload journey with validation failed file to Errors page") withActions (
     uploadCBScheduleErrorPage: _*
-    )
+  )
 
   setup(
-    "oi-journey-3",
-    "Other Income journeys removing from upload page, deleting from Warning page, reuploading CB etc"
+    "cb-journey-3",
+    "Community Buildings journeys removing from upload page, deleting from Warning page, reuploading CB etc"
   ) withActions (
     uploadCBScheduleRemoveWarningIterations: _*
-    )
+  )
 
 }

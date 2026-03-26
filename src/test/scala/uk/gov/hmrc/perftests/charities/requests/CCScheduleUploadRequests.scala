@@ -165,7 +165,9 @@ object CCScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
       .check(regex("There is a problem with the data in your Connected Charities schedule"))
 
   val clickAttachUpdatedScheduleButtonCC: HttpRequestBuilder =
-    http("Click on Attach an updated Connected Charities Schedule Button on Problem page, that Deletes the uploaded schedule")
+    http(
+      "Click on Attach an updated Connected Charities Schedule Button on Problem page, that Deletes the uploaded schedule"
+    )
       .post(s"$baseUrl$redirectUrl$checkCCProblem")
       .formParam("csrfToken", "#{csrfToken}")
       .check(status.is(303))
@@ -191,7 +193,7 @@ object CCScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
       .check(saveCsrfToken())
       .check(regex("Are you sure you want to update this Connected Charities schedule?"))
 
-  val SelectUpdateCCWarningYesCC: HttpRequestBuilder =
+  val SelectUpdateCCWarningYes: HttpRequestBuilder =
     http("Select YES on update CC Warning page, that Deletes the uploaded schedule")
       .post(s"$baseUrl$redirectUrl$updateCCWarning")
       .formParam("csrfToken", "#{csrfToken}")

@@ -39,5 +39,4 @@ trait RepaymentClaimSimulation extends PerformanceTestRunner with BaseRequests {
     submitRepaymentClaim
   )
 
-
 }

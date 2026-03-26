@@ -59,7 +59,7 @@ trait OIScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToAboutOtherIncomeSchedule,
       navigateToUploadOtherIncomeSchedule,
-      postFileToUpscanOI("data/other-income-GoodData-large.ods"),
+      postFileToUpscanOI("data/other-income-valid-large.ods"),
       getUpscanUploadResponseOI,
       navigateToOIUploaded
     ) ++ getFileVerificationStatusOI ++
@@ -105,7 +105,7 @@ trait OIScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToAboutOtherIncomeSchedule,
       navigateToUploadOtherIncomeSchedule,
-      postFileToUpscanOI("data/Gift-Aid-Schedule-TEST-MasterError.ods"),
+      postFileToUpscanOI("data/other-income-MasterError.ods"),
       getUpscanUploadResponseOI
     ) ++ getFileVerificationStatusOI ++
       List[ActionBuilder](
@@ -149,14 +149,14 @@ trait OIScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToAboutOtherIncomeSchedule,
       navigateToUploadOtherIncomeSchedule,
-      postFileToUpscanOI("data/other-income-GoodData-large.ods"),
+      postFileToUpscanOI("data/other-income-valid-large.ods"),
       getUpscanUploadResponseOI,
       navigateToOIUploaded
     ) ++ getFileVerificationStatusOI ++
       List[ActionBuilder](
         removeOIFromUploadedPage,
         navigateToUploadOtherIncomeSchedule,
-        postFileToUpscanOI("data/other-income-GoodData-large.ods"),
+        postFileToUpscanOI("data/other-income-valid-large.ods"),
         getUpscanUploadResponseOI,
         navigateToOIUploaded
       ) ++ getFileVerificationStatusOI ++
@@ -167,7 +167,7 @@ trait OIScheduleSimulation extends PerformanceTestRunner with BaseRequests {
         navigateToUpdateOIWarning,
         SelectUpdateOIWarningYes,
         navigateToUploadOtherIncomeSchedule,
-        postFileToUpscanOI("data/Gift-Aid-Schedule-TEST-MasterError.ods"),
+        postFileToUpscanOI("data/other-income-MasterError.ods"),
         getUpscanUploadResponseOI
       ) ++ getFileVerificationStatusOI ++
       List[ActionBuilder](
