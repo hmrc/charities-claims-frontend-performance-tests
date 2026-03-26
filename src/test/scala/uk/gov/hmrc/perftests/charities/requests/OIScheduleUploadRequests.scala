@@ -191,7 +191,7 @@ object OIScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
       .check(saveCsrfToken())
       .check(regex("Are you sure you want to update this Other Income schedule?"))
 
-  val SelectUpdateOIWarningYesOI: HttpRequestBuilder =
+  val SelectUpdateOIWarningYes: HttpRequestBuilder =
     http("Select YES on update OI Warning page, that Deletes the uploaded schedule")
       .post(s"$baseUrl$redirectUrl$updateOIWarning")
       .formParam("csrfToken", "#{csrfToken}")

@@ -39,36 +39,5 @@ trait RepaymentClaimSimulation extends PerformanceTestRunner with BaseRequests {
     submitRepaymentClaim
   )
 
-//  setup("vendor-questions", "Vendor Questions Journey when there is no vendor").withRequests(
-//    navigateToAuth,
-//    authLogIn,
-//    loginToAuthWizard,
-//    navigateToReturnTaskListWithNoVendor,
-//    navigateToAboutTheVendor,
-//    navigateToWhoTheVendor,
-//    selectIndividual,
-//    navigateToVendorNamePage,
-//    selectVendorFullName,
-//    getLookupAddress("Add address for vendor", baseUrl, redirectUrlForFiling, "/preliminary-questions/address"),
-//    getLookupAddressEdit,
-//    postLookupAddress,
-//    getLookupAddressConfirm,
-//    navigateToVendorAgent,
-//    selectVendorAgent,
-//    navigateToAgentName,
-//    selectAgentName,
-//    getLookupAddress("Add address for vendor Agent", baseUrl, redirectUrlForFiling, "/preliminary-questions/address"),
-//    getLookupAddressEdit,
-//    postLookupAddress,
-//    getLookupAddressConfirm,
-//    navigateToContactDetails,
-//    selectContactDetails,
-//    navigateToEnterContactDetails,
-//    addContactDetails,
-//    navigateToAddAgentReference,
-//    selectAddAgentReference,
-//    navigateToEnterAgentReference,
-//    selectEnterAgentReference,
-//    navigateToVendorCYA
-//  )
+
 }

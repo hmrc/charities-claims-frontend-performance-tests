@@ -191,7 +191,7 @@ object CBScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
       .check(saveCsrfToken())
       .check(regex("Are you sure you want to update this Community Buildings schedule?"))
 
-  val SelectUpdateCBWarningYesCB: HttpRequestBuilder =
+  val SelectUpdateCBWarningYes: HttpRequestBuilder =
     http("Select YES on update CB Warning page, that Deletes the uploaded schedule")
       .post(s"$baseUrl$redirectUrl$updateCBWarning")
       .formParam("csrfToken", "#{csrfToken}")
