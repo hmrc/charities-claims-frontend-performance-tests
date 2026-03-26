@@ -20,7 +20,7 @@ import io.gatling.core.Predef.{exec, scenario}
 import io.gatling.core.structure.{ChainBuilder, ScenarioBuilder}
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.{BaseRequests, GASScheduleUploadRequests}
-import uk.gov.hmrc.perftests.charities.requests.GASScheduleUploadRequests.{SelectDeleteGASWarningYes, SelectUpdateGASWarningYes, clickAttachUpdatedScheduleButton, continueFromUploadedPage, getFileVerificationStatus, getUpscanUploadResponse, navigateToAboutGiftAidSchedule, navigateToCheckYourGASSchedule, navigateToDeleteGASWarning, navigateToGASSuccessBanner, navigateToGASUploaded, navigateToProblemWithYourGASSchedule, navigateToUpdateGASWarning, navigateToUploadGiftAidSchedule, postFileToUpscan, removeGASFromUploadedPage, selectUpdateScheduleNo, selectUpdateScheduleYes, submitScheduleUpload}
+import uk.gov.hmrc.perftests.charities.requests.GASScheduleUploadRequests.{SelectDeleteGASWarningYes, SelectUpdateGASWarningYes, clickAttachUpdatedScheduleButtonGAS, continueFromUploadedPageGAS, getFileVerificationStatusGAS, getUpscanUploadResponseGAS, navigateToAboutGiftAidSchedule, navigateToCheckYourGASSchedule, navigateToDeleteGASWarning, navigateToGASSuccessBanner, navigateToGASUploaded, navigateToProblemWithYourGASSchedule, navigateToUpdateGASWarning, navigateToUploadGiftAidSchedule, postFileToUpscanGAS, removeGASFromUploadedPage, selectUpdateScheduleNoGAS, selectUpdateScheduleYesGAS, submitScheduleUploadGAS}
 import uk.gov.hmrc.perftests.charities.requests.OrganisationRequests._
 import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{enterClaimReferenceValue, loginToAuthWizard, navigateToCheckYourRepaymentClaim, navigateToEnterClaimReferenceNumber, navigateToHaveClaimReference, selectReference, submitRepaymentClaim, _}
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
@@ -61,16 +61,16 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToAboutGiftAidSchedule,
       navigateToUploadGiftAidSchedule,
-      postFileToUpscan("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
-      getUpscanUploadResponse,
+      postFileToUpscanGAS("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
+      getUpscanUploadResponseGAS,
       navigateToGASUploaded
-    ) ++ getFileVerificationStatus ++
+    ) ++ getFileVerificationStatusGAS ++
       List[ActionBuilder](
-        continueFromUploadedPage,
+        continueFromUploadedPageGAS,
         navigateToCheckYourGASSchedule,
-        selectUpdateScheduleNo,
+        selectUpdateScheduleNoGAS,
         navigateToGASSuccessBanner,
-        submitScheduleUpload,
+        submitScheduleUploadGAS,
         navigateToMakeACharityClaim
       )
 
@@ -107,11 +107,11 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToAboutGiftAidSchedule,
       navigateToUploadGiftAidSchedule,
-      postFileToUpscan("data/Gift-Aid-Schedule-TEST-MasterError.ods"),
-      getUpscanUploadResponse
-    ) ++ getFileVerificationStatus ++
+      postFileToUpscanGAS("data/Gift-Aid-Schedule-TEST-MasterError.ods"),
+      getUpscanUploadResponseGAS
+    ) ++ getFileVerificationStatusGAS ++
       List[ActionBuilder](
-        continueFromUploadedPage,
+        continueFromUploadedPageGAS,
         navigateToProblemWithYourGASSchedule,
         navigateToDeleteGASWarning,
         SelectDeleteGASWarningYes,
@@ -151,31 +151,31 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToAboutGiftAidSchedule,
       navigateToUploadGiftAidSchedule,
-      postFileToUpscan("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
-      getUpscanUploadResponse,
+      postFileToUpscanGAS("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
+      getUpscanUploadResponseGAS,
       navigateToGASUploaded
-    ) ++ getFileVerificationStatus ++
+    ) ++ getFileVerificationStatusGAS ++
       List[ActionBuilder](
         removeGASFromUploadedPage,
         navigateToUploadGiftAidSchedule,
-        postFileToUpscan("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
-        getUpscanUploadResponse,
+        postFileToUpscanGAS("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
+        getUpscanUploadResponseGAS,
         navigateToGASUploaded
-      ) ++ getFileVerificationStatus ++
+      ) ++ getFileVerificationStatusGAS ++
       List[ActionBuilder](
-        continueFromUploadedPage,
+        continueFromUploadedPageGAS,
         navigateToCheckYourGASSchedule,
-        selectUpdateScheduleYes,
+        selectUpdateScheduleYesGAS,
         navigateToUpdateGASWarning,
         SelectUpdateGASWarningYes,
         navigateToUploadGiftAidSchedule,
-        postFileToUpscan("data/Gift-Aid-Schedule-TEST-MasterError.ods"),
-        getUpscanUploadResponse
-      ) ++ getFileVerificationStatus ++
+        postFileToUpscanGAS("data/Gift-Aid-Schedule-TEST-MasterError.ods"),
+        getUpscanUploadResponseGAS
+      ) ++ getFileVerificationStatusGAS ++
       List[ActionBuilder](
-        continueFromUploadedPage,
+        continueFromUploadedPageGAS,
         navigateToProblemWithYourGASSchedule,
-        clickAttachUpdatedScheduleButton
+        clickAttachUpdatedScheduleButtonGAS
       )
 
   setup("gas-journey-1", "Gift Aid schedule upload journey with success") withActions (

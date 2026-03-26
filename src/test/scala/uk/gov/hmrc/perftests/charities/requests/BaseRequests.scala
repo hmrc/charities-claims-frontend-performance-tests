@@ -59,8 +59,8 @@ trait BaseRequests extends ServicesConfiguration {
 
   val aboutTheOI: String         = "/about-other-income-schedule"
   val uploadOI: String           = "/upload-other-income-schedule"
-  val uploadOIPage: String       = "/your-other-income-schedule-upload"
-  val removeOIFromUpload: String = "/your-other-income-schedule-upload/remove"
+  val uploadedOIPage: String       = "/your-other-income-schedule-upload"
+  val removeOIFromUploaded: String = "/your-other-income-schedule-upload/remove"
   val checkOISuccess: String     = "/check-your-other-income-schedule"
   val checkOIProblem: String     = "/problem-with-other-income-schedule"
   val updateOIWarning: String    = "/update-other-income-schedule"
@@ -69,8 +69,8 @@ trait BaseRequests extends ServicesConfiguration {
 
   val aboutTheCB: String            = "/about-community-buildings-schedule"
   val uploadCB: String           = "/upload-community-buildings-schedule"
-  val uploadCBPage: String       = "/your-community-buildings-schedule-upload"
-  val removeCBFromUpload: String = "/your-community-buildings-schedule-upload/remove"
+  val uploadedCBPage: String       = "/your-community-buildings-schedule-upload"
+  val removeCBFromUploaded: String = "/your-community-buildings-schedule-upload/remove"
   val checkCBSuccess: String     = "/check-your-community-buildings-schedule"
   val checkCBProblem: String     = "/problem-with-community-buildings-schedule"
   val updateCBWarning: String    = "/update-community-buildings-schedule"
@@ -79,8 +79,8 @@ trait BaseRequests extends ServicesConfiguration {
 
   val aboutTheCC: String            = "/about-connected-charities-schedule"
   val uploadCC: String           = "/upload-connected-charities-schedule"
-  val uploadCCPage: String       = "/your-connected-charities-schedule-upload"
-  val removeCCFromUpload: String = "/your-connected-charities-schedule-upload-remove"
+  val uploadedCCPage: String       = "/your-connected-charities-schedule-upload"
+  val removeCCFromUploaded: String = "/your-connected-charities-schedule-upload-remove"
   val checkCCSuccess: String     = "/check-your-connected-charities-schedule"
   val checkCCProblem: String     = "/problem-with-connected-charities-schedule"
   val updateCCWarning: String    = "/update-connected-charities-schedule"

@@ -18,15 +18,13 @@ package uk.gov.hmrc.perftests.charities.requests
 
 import io.gatling.core.Predef._
 import io.gatling.core.action.builder.ActionBuilder
-import io.gatling.core.structure.ChainBuilder
 import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 import scala.concurrent.duration.DurationInt
-import scala.util.matching.Regex
 
-object GASScheduleUploadRequests extends ServicesConfiguration with BaseRequests {
+object OIScheduleUploadRequests extends ServicesConfiguration with BaseRequests {
 
   val loginToAuthWizard: HttpRequestBuilder =
     http("Login to auth wizard")
@@ -34,18 +32,18 @@ object GASScheduleUploadRequests extends ServicesConfiguration with BaseRequests
       .check(status.is(303))
       .check(header("Location").is(s"$redirectUrl$makeACharityClaim"))
 
-  val navigateToAboutGiftAidSchedule: HttpRequestBuilder =
-    http("Navigate to About the Gift Aid Schedule page")
-      .get(s"$baseUrl$redirectUrl$aboutTheGAS")
+  val navigateToAboutOtherIncomeSchedule: HttpRequestBuilder =
+    http("Navigate to About the Other Income Schedule page")
+      .get(s"$baseUrl$redirectUrl$aboutTheOI")
       .check(status.is(200))
       .check(saveCsrfToken())
-      .check(regex("About Gift Aid schedule"))
+      .check(regex("About Other Income schedule"))
 
-  val navigateToUploadGiftAidSchedule: HttpRequestBuilder =
-    http("Navigate to Upload your gift aid schedule Page")
-      .get(s"$baseUrl$redirectUrl$uploadGAS")
+  val navigateToUploadOtherIncomeSchedule: HttpRequestBuilder =
+    http("Navigate to Upload your other income schedule Page")
+      .get(s"$baseUrl$redirectUrl$uploadOI")
       .check(status.is(200))
-      .check(regex("Upload a Gift Aid schedule"))
+      .check(regex("Upload an Other Income schedule"))
       .check(regex("""<form[^>]*action="([^"]+)"""").saveAs("uploadUrl"))
       .check(regex("""name="success_action_redirect"\s+value="([^"]+)"""").saveAs("successActionRedirect"))
       .check(regex("""name="x-amz-credential"\s+value="([^"]+)"""").saveAs("xAmzCredential"))
@@ -72,7 +70,7 @@ object GASScheduleUploadRequests extends ServicesConfiguration with BaseRequests
       .check(regex("""name="x-amz-meta-consuming-service"\s+value="([^"]+)"""").saveAs("xAmzMetaConsumingService"))
       .check(regex("""name="policy"\s+value="([^"]+)"""").saveAs("policy"))
 
-  def postFileToUpscanGAS(fileName: String): HttpRequestBuilder =
+  def postFileToUpscanOI(fileName: String): HttpRequestBuilder =
     http("Send a File valid at both validation and Upscan service, to Upscan's upload URL Received")
       .post("#{uploadUrl}")
       .asMultipartForm
@@ -96,21 +94,21 @@ object GASScheduleUploadRequests extends ServicesConfiguration with BaseRequests
       .check(status.is(303))
       .check(header("Location").saveAs("UpscanUploadResponse"))
 
-  val getUpscanUploadResponseGAS: HttpRequestBuilder =
+  val getUpscanUploadResponseOI: HttpRequestBuilder =
     http(s"Upscan upload redirect")
       .get("#{UpscanUploadResponse}")
       .check(status.in(303))
 
-  val navigateToGASUploaded: HttpRequestBuilder =
-    http("Navigate to your Gift Aid Schedule upload page")
-      .get(s"$baseUrl$redirectUrl$uploadedGASPage")
+  val navigateToOIUploaded: HttpRequestBuilder =
+    http("Navigate to your Other Income Schedule upload page")
+      .get(s"$baseUrl$redirectUrl$uploadedOIPage")
       .check(status.is(200))
       .check(saveCsrfToken())
 
-  val resetUploadStatusGAS: ActionBuilder =
+  val resetUploadStatusOI: ActionBuilder =
     exec(s => s.remove("uploadStatus")).actionBuilders.head
 
-  val pollUntilUploadedGAS: List[ActionBuilder] =
+  val pollUntilUploadedOI: List[ActionBuilder] =
     asLongAsDuring(
       session =>
         session("uploadStatus").asOption[String] match {
@@ -122,12 +120,12 @@ object GASScheduleUploadRequests extends ServicesConfiguration with BaseRequests
     )(
       pause(5.second)
         .exec(
-          http("Get the file verification/validation status on your Gift Aid Schedule Upload Page")
-            .get(s"$baseUrl$redirectUrl$uploadedGASPage")
+          http("Get the file verification/validation status on your Other Income Schedule Upload Page")
+            .get(s"$baseUrl$redirectUrl$uploadedOIPage")
             .check(status.is(200))
             .check(regex("""<strong[^>]*>\s*([\s\S]*?)\s*</strong>""").saveAs("uploadStatusRaw"))
             .check(saveCsrfToken())
-            .check(regex("Your Gift Aid schedule upload"))
+            .check(regex("Your Other Income schedule upload"))
         )
         .exec { session =>
           val cleaned = session("uploadStatusRaw").asOption[String].map(_.trim).getOrElse("")
@@ -137,93 +135,93 @@ object GASScheduleUploadRequests extends ServicesConfiguration with BaseRequests
         }
     ).actionBuilders
 
-  val getFileVerificationStatusGAS: List[ActionBuilder] =
-    resetUploadStatusGAS :: pollUntilUploadedGAS
+  val getFileVerificationStatusOI: List[ActionBuilder] =
+    resetUploadStatusOI :: pollUntilUploadedOI
 
-  val continueFromUploadedPageGAS: HttpRequestBuilder =
-    http("CONTINUE from your GIFT AID Upload Page")
-      .post(s"$baseUrl$redirectUrl$uploadedGASPage")
+  val continueFromUploadedPageOI: HttpRequestBuilder =
+    http("CONTINUE from your OTHER INCOME Upload Page")
+      .post(s"$baseUrl$redirectUrl$uploadedOIPage")
       .formParam("csrfToken", "#{csrfToken}")
       .check(status.is(303))
       .check(header("Location").saveAs("nextPageURL"))
 
-  val removeGASFromUploadedPage: HttpRequestBuilder =
-    http("Navigate to remove Schedule from Uploaded GAS Page that DELETES the schedule upload")
-      .get(s"$baseUrl$redirectUrl$removeGASFromUploaded")
+  val removeOIFromUploadedPage: HttpRequestBuilder =
+    http("Navigate to remove Schedule from Uploaded OI Page that DELETES the schedule upload")
+      .get(s"$baseUrl$redirectUrl$removeOIFromUploaded")
       .check(status.is(303))
 
-  val navigateToCheckYourGASSchedule: HttpRequestBuilder =
-    http("Navigate to check your Gift Aid Schedule page")
+  val navigateToCheckYourOISchedule: HttpRequestBuilder =
+    http("Navigate to check your Other Income Schedule page")
       .get(s"$baseUrl" + "#{nextPageURL}")
       .check(status.is(200))
       .check(saveCsrfToken())
-      .check(regex("Check your Gift Aid schedule"))
+      .check(regex("Check your Other Income schedule"))
 
-  val navigateToProblemWithYourGASSchedule: HttpRequestBuilder =
-    http("Navigate to Problem with your Gift Aid Schedule page")
+  val navigateToProblemWithYourOISchedule: HttpRequestBuilder =
+    http("Navigate to Problem with your Other Income Schedule page")
       .get(s"$baseUrl" + "#{nextPageURL}")
       .check(status.is(200))
       .check(saveCsrfToken())
-      .check(regex("There is a problem with the data in your Gift Aid schedule"))
+      .check(regex("There is a problem with the data in your Other Income schedule"))
 
-  val clickAttachUpdatedScheduleButtonGAS: HttpRequestBuilder =
-    http("Click on Attach an updated Gift Aid Schedule Button on Problem page, that Deletes the uploaded schedule")
-      .post(s"$baseUrl$redirectUrl$checkGASProblem")
+  val clickAttachUpdatedScheduleButtonOI: HttpRequestBuilder =
+    http("Click on Attach an updated Other Income Schedule Button on Problem page, that Deletes the uploaded schedule")
+      .post(s"$baseUrl$redirectUrl$checkOIProblem")
       .formParam("csrfToken", "#{csrfToken}")
       .check(status.is(303))
 
-  val selectUpdateScheduleNoGAS: HttpRequestBuilder =
-    http("Select Update Schedule as NO on check your GAS page")
-      .post(s"$baseUrl$redirectUrl$checkGASSuccess")
+  val selectUpdateScheduleNoOI: HttpRequestBuilder =
+    http("Select Update Schedule as NO on check your OI page")
+      .post(s"$baseUrl$redirectUrl$checkOISuccess")
       .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", "false")
       .check(status.is(303))
 
-  val selectUpdateScheduleYesGAS: HttpRequestBuilder =
-    http("Select Update Schedule as YES on check your GAS page")
-      .post(s"$baseUrl$redirectUrl$checkGASSuccess")
+  val selectUpdateScheduleYesOI: HttpRequestBuilder =
+    http("Select Update Schedule as YES on check your OI page")
+      .post(s"$baseUrl$redirectUrl$checkOISuccess")
       .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", "true")
       .check(status.is(303))
 
-  val navigateToUpdateGASWarning: HttpRequestBuilder =
-    http("Navigate to want to update this Gift Aid schedule? page")
-      .get(s"$baseUrl$redirectUrl$updateGASWarning")
+  val navigateToUpdateOIWarning: HttpRequestBuilder =
+    http("Navigate to want to update this Other Income schedule? page")
+      .get(s"$baseUrl$redirectUrl$updateOIWarning")
       .check(status.is(200))
       .check(saveCsrfToken())
-      .check(regex("Are you sure you want to update this Gift Aid schedule?"))
+      .check(regex("Are you sure you want to update this Other Income schedule?"))
 
-  val SelectUpdateGASWarningYes: HttpRequestBuilder =
-    http("Select YES on update GAS Warning page, that Deletes the uploaded schedule")
-      .post(s"$baseUrl$redirectUrl$updateGASWarning")
+  val SelectUpdateOIWarningYesOI: HttpRequestBuilder =
+    http("Select YES on update OI Warning page, that Deletes the uploaded schedule")
+      .post(s"$baseUrl$redirectUrl$updateOIWarning")
       .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", "true")
       .check(status.is(303))
 
-  val navigateToDeleteGASWarning: HttpRequestBuilder =
-    http("Navigate to want to delete this Gift Aid schedule? page")
-      .get(s"$baseUrl$redirectUrl$deleteGASWarning")
+  val navigateToDeleteOIWarning: HttpRequestBuilder =
+    http("Navigate to want to delete this Other Income schedule? page")
+      .get(s"$baseUrl$redirectUrl$deleteOIWarning")
       .check(status.is(200))
       .check(saveCsrfToken())
-      .check(regex("Do you want to delete this Gift Aid schedule?"))
+      .check(regex("Do you want to delete this Other Income schedule?"))
 
-  val SelectDeleteGASWarningYes: HttpRequestBuilder =
-    http("Select YES on update GAS Warning page, that Deletes the uploaded schedule")
-      .post(s"$baseUrl$redirectUrl$deleteGASWarning")
+  val SelectDeleteOIWarningYes: HttpRequestBuilder =
+    http("Select YES on update OI Warning page, that Deletes the uploaded schedule")
+      .post(s"$baseUrl$redirectUrl$deleteOIWarning")
       .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", "true")
       .check(status.is(303))
 
-  val navigateToGASSuccessBanner: HttpRequestBuilder =
-    http("Navigate to your Gift Aid Schedule upload successful banner page")
-      .get(s"$baseUrl$redirectUrl$bannerGAS")
+  val navigateToOISuccessBanner: HttpRequestBuilder =
+    http("Navigate to your Other Income Schedule upload successful banner page")
+      .get(s"$baseUrl$redirectUrl$bannerOI")
       .check(status.is(200))
       .check(saveCsrfToken())
       .check(regex("Upload successful"))
 
-  val submitScheduleUploadGAS: HttpRequestBuilder =
-    http("CONTINUE GAS Journey from Banner Page")
-      .post(s"$baseUrl$redirectUrl$bannerGAS")
+  val submitScheduleUploadOI: HttpRequestBuilder =
+    http("CONTINUE OI Journey from Banner Page")
+      .post(s"$baseUrl$redirectUrl$bannerOI")
       .formParam("csrfToken", "#{csrfToken}")
       .check(status.is(303))
 
