@@ -120,7 +120,7 @@ object CCScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
     )(
       pause(5.second)
         .exec(
-          http("Get the file verification/validation status on your Other Income Schedule Upload Page")
+          http("Get the file verification/validation status on your Connected Charities Schedule Upload Page")
             .get(s"$baseUrl$redirectUrl$uploadedCCPage")
             .check(status.is(200))
             .check(regex("""<strong[^>]*>\s*([\s\S]*?)\s*</strong>""").saveAs("uploadStatusRaw"))
@@ -205,7 +205,7 @@ object CCScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
       .get(s"$baseUrl$redirectUrl$deleteCCWarning")
       .check(status.is(200))
       .check(saveCsrfToken())
-      .check(regex("Do you want to delete this Connected Charities schedule?"))
+      .check(regex("Do you want to delete this Gift Aid Small Donations Scheme connected charities schedule?"))
 
   val SelectDeleteCCWarningYes: HttpRequestBuilder =
     http("Select YES on update CC Warning page, that Deletes the uploaded schedule")

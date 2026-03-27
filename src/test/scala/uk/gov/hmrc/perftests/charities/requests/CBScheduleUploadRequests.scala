@@ -120,7 +120,7 @@ object CBScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
     )(
       pause(5.second)
         .exec(
-          http("Get the file verification/validation status on your Other Income Schedule Upload Page")
+          http("Get the file verification/validation status on your Community Buildings Schedule Upload Page")
             .get(s"$baseUrl$redirectUrl$uploadedCBPage")
             .check(status.is(200))
             .check(regex("""<strong[^>]*>\s*([\s\S]*?)\s*</strong>""").saveAs("uploadStatusRaw"))
@@ -139,7 +139,7 @@ object CBScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
     resetUploadStatusCB :: pollUntilUploadedCB
 
   val continueFromUploadedPageCB: HttpRequestBuilder =
-    http("CONTINUE from your CONNECTED CHARITIES Upload Page")
+    http("CONTINUE from your COMMUNITY BUILDINGS Upload Page")
       .post(s"$baseUrl$redirectUrl$uploadedCBPage")
       .formParam("csrfToken", "#{csrfToken}")
       .check(status.is(303))
@@ -205,7 +205,7 @@ object CBScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
       .get(s"$baseUrl$redirectUrl$deleteCBWarning")
       .check(status.is(200))
       .check(saveCsrfToken())
-      .check(regex("Do you want to delete this Community Buildings schedule?"))
+      .check(regex("Do you want to delete this Gift Aid Small Donations Scheme community buildings schedule?"))
 
   val SelectDeleteCBWarningYes: HttpRequestBuilder =
     http("Select YES on update CB Warning page, that Deletes the uploaded schedule")

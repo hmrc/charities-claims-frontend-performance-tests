@@ -178,17 +178,20 @@ trait CharitiesJourneyScheduleSimulation extends PerformanceTestRunner with Base
 
   setup("cb-journey-1", "Community Buildings schedule upload journey with success") withActions (
     uploadCBScheduleHappyPath: _*
-    )
+  )
 
-  setup("cb-journey-2", "Community Buildings schedule upload journey with validation failed file to Errors page") withActions (
+  setup(
+    "cb-journey-2",
+    "Community Buildings schedule upload journey with validation failed file to Errors page"
+  ) withActions (
     uploadCBScheduleErrorPage: _*
-    )
+  )
 
   setup(
     "cb-journey-3",
     "Community Buildings journeys removing from upload page, deleting from Warning page, reuploading CB etc"
   ) withActions (
     uploadCBScheduleRemoveWarningIterations: _*
-    )
+  )
 
 }

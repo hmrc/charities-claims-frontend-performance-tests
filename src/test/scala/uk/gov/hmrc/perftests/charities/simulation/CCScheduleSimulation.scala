@@ -19,7 +19,7 @@ package uk.gov.hmrc.perftests.charities.simulation
 import io.gatling.core.action.builder.ActionBuilder
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
-import uk.gov.hmrc.perftests.charities.requests.CCScheduleUploadRequests.{SelectDeleteCCWarningYes, SelectUpdateCCWarningYes, clickAttachUpdatedScheduleButtonCC, continueFromUploadedPageCC, getFileVerificationStatusCC, getUpscanUploadResponseCC, navigateToAboutConnectedCharitiesSchedule, navigateToCheckYourCCSchedule, navigateToDeleteCCWarning, navigateToCCSuccessBanner, navigateToCCUploaded, navigateToProblemWithYourCCSchedule, navigateToUpdateCCWarning, navigateToUploadConnectedCharitiesSchedule, postFileToUpscanCC, removeCCFromUploadedPage, selectUpdateScheduleNoCC, selectUpdateScheduleYesCC, submitScheduleUploadCC}
+import uk.gov.hmrc.perftests.charities.requests.CCScheduleUploadRequests.{SelectDeleteCCWarningYes, SelectUpdateCCWarningYes, clickAttachUpdatedScheduleButtonCC, continueFromUploadedPageCC, getFileVerificationStatusCC, getUpscanUploadResponseCC, navigateToAboutConnectedCharitiesSchedule, navigateToCCSuccessBanner, navigateToCCUploaded, navigateToCheckYourCCSchedule, navigateToDeleteCCWarning, navigateToProblemWithYourCCSchedule, navigateToUpdateCCWarning, navigateToUploadConnectedCharitiesSchedule, postFileToUpscanCC, removeCCFromUploadedPage, selectUpdateScheduleNoCC, selectUpdateScheduleYesCC, submitScheduleUploadCC}
 import uk.gov.hmrc.perftests.charities.requests.OrganisationRequests._
 import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{loginToAuthWizard, _}
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
@@ -202,17 +202,20 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
 
   setup("cc-journey-1", "Connected Charities schedule upload journey with success") withActions (
     uploadCCScheduleHappyPath: _*
-    )
+  )
 
-  setup("cc-journey-2", "Connected Charities schedule upload journey with validation failed file to Errors page") withActions (
+  setup(
+    "cc-journey-2",
+    "Connected Charities schedule upload journey with validation failed file to Errors page"
+  ) withActions (
     uploadCCScheduleErrorPage: _*
-    )
+  )
 
   setup(
     "cc-journey-3",
     "Connected Charities journeys removing from upload page, deleting from Warning page, reuploading CC etc"
   ) withActions (
     uploadCCScheduleRemoveWarningIterations: _*
-    )
+  )
 
 }

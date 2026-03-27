@@ -204,7 +204,10 @@ trait CBScheduleSimulation extends PerformanceTestRunner with BaseRequests {
     uploadCBScheduleHappyPath: _*
   )
 
-  setup("cb-journey-2", "Community Buildings schedule upload journey with validation failed file to Errors page") withActions (
+  setup(
+    "cb-journey-2",
+    "Community Buildings schedule upload journey with validation failed file to Errors page"
+  ) withActions (
     uploadCBScheduleErrorPage: _*
   )
 
