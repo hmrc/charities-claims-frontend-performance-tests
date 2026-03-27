@@ -67,7 +67,7 @@ trait CharitiesJourneyScheduleSimulation extends PerformanceTestRunner with Base
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim
-      )
+    )
 
   val UIJourneyExceptedTrustee: List[ActionBuilder] =
     List[ActionBuilder](
@@ -305,15 +305,16 @@ trait CharitiesJourneyScheduleSimulation extends PerformanceTestRunner with Base
         navigateToMakeACharityClaim
       )
 
-
   setup("UI-form-journey-1", "Repayment and Organisation Journey with Regulator Number and Auth Official") withActions (
     UIJourneyRegulatorAuth: _*
   )
 
-
-  setup("UI-form-journey-2", "Repayment and Organisation Journey with Charity Excepted and Corporate Trustee") withActions (
+  setup(
+    "UI-form-journey-2",
+    "Repayment and Organisation Journey with Charity Excepted and Corporate Trustee"
+  ) withActions (
     UIJourneyExceptedTrustee: _*
-    )
+  )
 
   setup(
     "schedule-journey-all-iterations",
