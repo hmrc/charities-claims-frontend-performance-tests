@@ -19,11 +19,19 @@ package uk.gov.hmrc.perftests.charities.simulation
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.simulation.RepaymentClaimSimulation
 import uk.gov.hmrc.perftests.charities.simulation.OrganisationDetailsSimulation
+import uk.gov.hmrc.perftests.charities.simulation.GASScheduleSimulation
+import uk.gov.hmrc.perftests.charities.simulation.OIScheduleSimulation
+import uk.gov.hmrc.perftests.charities.simulation.CBScheduleSimulation
+import uk.gov.hmrc.perftests.charities.simulation.CCScheduleSimulation
 
 class CharitiesSimulation
     extends PerformanceTestRunner
     with RepaymentClaimSimulation
     with OrganisationDetailsSimulation
+    with CharitiesJourneyScheduleSimulation
+    with OIScheduleSimulation
+    with CBScheduleSimulation
+    with CCScheduleSimulation
     with GASScheduleSimulation {
   runSimulation()
 }

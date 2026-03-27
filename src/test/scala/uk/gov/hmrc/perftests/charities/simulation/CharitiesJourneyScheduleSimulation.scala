@@ -19,14 +19,17 @@ package uk.gov.hmrc.perftests.charities.simulation
 import io.gatling.core.action.builder.ActionBuilder
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
-import uk.gov.hmrc.perftests.charities.requests.GASScheduleUploadRequests._
+import uk.gov.hmrc.perftests.charities.requests.CBScheduleUploadRequests.{SelectDeleteCBWarningYes, SelectUpdateCBWarningYes, clickAttachUpdatedScheduleButtonCB, continueFromUploadedPageCB, getFileVerificationStatusCB, getUpscanUploadResponseCB, navigateToAboutCommunityBuildingsSchedule, navigateToCBSuccessBanner, navigateToCBUploaded, navigateToCheckYourCBSchedule, navigateToDeleteCBWarning, navigateToProblemWithYourCBSchedule, navigateToUpdateCBWarning, navigateToUploadCommunityBuildingsSchedule, postFileToUpscanCB, removeCBFromUploadedPage, selectUpdateScheduleNoCB, selectUpdateScheduleYesCB, submitScheduleUploadCB}
+import uk.gov.hmrc.perftests.charities.requests.CCScheduleUploadRequests.{SelectUpdateCCWarningYes, clickAttachUpdatedScheduleButtonCC, continueFromUploadedPageCC, getFileVerificationStatusCC, getUpscanUploadResponseCC, navigateToAboutConnectedCharitiesSchedule, navigateToCCSuccessBanner, navigateToCCUploaded, navigateToCheckYourCCSchedule, navigateToProblemWithYourCCSchedule, navigateToUpdateCCWarning, navigateToUploadConnectedCharitiesSchedule, postFileToUpscanCC, removeCCFromUploadedPage, selectUpdateScheduleNoCC, selectUpdateScheduleYesCC, submitScheduleUploadCC}
+import uk.gov.hmrc.perftests.charities.requests.GASScheduleUploadRequests.{SelectUpdateGASWarningYes, clickAttachUpdatedScheduleButtonGAS, continueFromUploadedPageGAS, getFileVerificationStatusGAS, getUpscanUploadResponseGAS, navigateToAboutGiftAidSchedule, navigateToCheckYourGASSchedule, navigateToGASSuccessBanner, navigateToGASUploaded, navigateToProblemWithYourGASSchedule, navigateToUpdateGASWarning, navigateToUploadGiftAidSchedule, postFileToUpscanGAS, removeGASFromUploadedPage, selectUpdateScheduleNoGAS, selectUpdateScheduleYesGAS, submitScheduleUploadGAS}
+import uk.gov.hmrc.perftests.charities.requests.OIScheduleUploadRequests.{SelectUpdateOIWarningYes, clickAttachUpdatedScheduleButtonOI, continueFromUploadedPageOI, getFileVerificationStatusOI, getUpscanUploadResponseOI, navigateToAboutOtherIncomeSchedule, navigateToCheckYourOISchedule, navigateToOISuccessBanner, navigateToOIUploaded, navigateToProblemWithYourOISchedule, navigateToUpdateOIWarning, navigateToUploadOtherIncomeSchedule, postFileToUpscanOI, removeOIFromUploadedPage, selectUpdateScheduleNoOI, selectUpdateScheduleYesOI, submitScheduleUploadOI}
 import uk.gov.hmrc.perftests.charities.requests.OrganisationRequests._
 import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{loginToAuthWizard, _}
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
 
 trait CharitiesJourneyScheduleSimulation extends PerformanceTestRunner with BaseRequests {
 
-  val uploadGASScheduleHappyPath: List[ActionBuilder] =
+  val UIJourneyRegulatorAuth: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
       authLogInForOrg,
@@ -34,97 +37,15 @@ trait CharitiesJourneyScheduleSimulation extends PerformanceTestRunner with Base
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
-      selectClaimTypeNoGASDS,
-      navigateToHaveClaimReference,
-      selectReference,
-      navigateToEnterClaimReferenceNumber,
-      enterClaimReferenceValue,
-      navigateToCheckYourRepaymentClaim,
-      submitRepaymentClaim,
-      navigateToMakeACharityClaim,
-      navigateToAboutTheOrg,
-      navigateToCharityRegulator,
-      selectNotRegistered,
-      navigateToWhyNotRegistered,
-      selectCharityExcepted,
-      navigateToCharityExcepted,
-      navigateToCorporateTrustee,
-      selectCorporateTrusteeYes,
-      navigateToCorporateTrusteeUKAddress,
-      selectCorporateTrusteeUKAddressNo,
-      navigateToCorporateTrusteeDetails,
-      enterCorporateTrusteeDetails,
-      navigateToCheckYourOrganisationDetails,
-      submitOrganisationDetails,
-      navigateToMakeACharityClaim,
-      navigateToAboutGiftAidSchedule,
-      navigateToUploadGiftAidSchedule,
-      postFileToUpscan("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
-      getUpscanUploadResponse,
-      navigateToGASUploaded
-    ) ++ getFileVerificationStatus ++
-      List[ActionBuilder](
-        continueFromUploadedPage,
-        navigateToCheckYourGASSchedule,
-        selectUpdateScheduleNo,
-        navigateToGASSuccessBanner,
-        submitScheduleUpload,
-        navigateToMakeACharityClaim
-      )
-
-  val uploadGASScheduleErrorPage: List[ActionBuilder] =
-    List[ActionBuilder](
-      navigateToAuth,
-      authLogInForOrg,
-      loginToAuthWizard,
-      navigateToMakeACharityClaim,
-      navigateToRepaymentClaimDetails,
-      navigateToSelectClaimType,
-      selectClaimTypeNoGASDS,
-      navigateToHaveClaimReference,
-      selectReference,
-      navigateToEnterClaimReferenceNumber,
-      enterClaimReferenceValue,
-      navigateToCheckYourRepaymentClaim,
-      submitRepaymentClaim,
-      navigateToMakeACharityClaim,
-      navigateToAboutTheOrg,
-      navigateToCharityRegulator,
-      selectNotRegistered,
-      navigateToWhyNotRegistered,
-      selectCharityExcepted,
-      navigateToCharityExcepted,
-      navigateToCorporateTrustee,
-      selectCorporateTrusteeYes,
-      navigateToCorporateTrusteeUKAddress,
-      selectCorporateTrusteeUKAddressNo,
-      navigateToCorporateTrusteeDetails,
-      enterCorporateTrusteeDetails,
-      navigateToCheckYourOrganisationDetails,
-      submitOrganisationDetails,
-      navigateToMakeACharityClaim,
-      navigateToAboutGiftAidSchedule,
-      navigateToUploadGiftAidSchedule,
-      postFileToUpscan("data/Gift-Aid-Schedule-TEST-MasterError.ods"),
-      getUpscanUploadResponse
-    ) ++ getFileVerificationStatus ++
-      List[ActionBuilder](
-        continueFromUploadedPage,
-        navigateToProblemWithYourGASSchedule,
-        navigateToDeleteGASWarning,
-        SelectDeleteGASWarningYes,
-        navigateToMakeACharityClaim
-      )
-
-  val uploadGASScheduleRemoveWarningIterations: List[ActionBuilder] =
-    List[ActionBuilder](
-      navigateToAuth,
-      authLogInForOrg,
-      loginToAuthWizard,
-      navigateToMakeACharityClaim,
-      navigateToRepaymentClaimDetails,
-      navigateToSelectClaimType,
-      selectClaimTypeNoGASDS,
+      selectClaimTypeGASDS,
+      navigateToGASDSNotCB,
+      selectGASDSNotCBYes,
+      navigateToGASDSCB,
+      selectGASDSCBYes,
+      navigateToGASDSOverclaimed,
+      selectGASDSOverclaimedYes,
+      navigateToConnectedToCharities,
+      selectConnectedToCharitiesYes,
       navigateToHaveClaimReference,
       selectReference,
       navigateToEnterClaimReferenceNumber,
@@ -145,49 +66,261 @@ trait CharitiesJourneyScheduleSimulation extends PerformanceTestRunner with Base
       enterAuthorisedOfficialDetails,
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
+      navigateToMakeACharityClaim
+    )
+
+  val UIJourneyExceptedTrustee: List[ActionBuilder] =
+    List[ActionBuilder](
+      navigateToAuth,
+      authLogInForOrg,
+      loginToAuthWizard,
+      navigateToMakeACharityClaim,
+      navigateToRepaymentClaimDetails,
+      navigateToSelectClaimType,
+      selectClaimTypeGASDS,
+      navigateToGASDSNotCB,
+      selectGASDSNotCBYes,
+      navigateToGASDSCB,
+      selectGASDSCBYes,
+      navigateToGASDSOverclaimed,
+      selectGASDSOverclaimedYes,
+      navigateToConnectedToCharities,
+      selectConnectedToCharitiesYes,
+      navigateToHaveClaimReference,
+      selectReference,
+      navigateToEnterClaimReferenceNumber,
+      enterClaimReferenceValue,
+      navigateToCheckYourRepaymentClaim,
+      submitRepaymentClaim,
+      navigateToMakeACharityClaim,
+      navigateToAboutTheOrg,
+      navigateToCharityRegulator,
+      selectNotRegistered,
+      navigateToWhyNotRegistered,
+      selectCharityExcepted,
+      navigateToCharityExcepted,
+      navigateToCorporateTrustee,
+      selectCorporateTrusteeYes,
+      navigateToCorporateTrusteeUKAddress,
+      selectCorporateTrusteeUKAddressNo,
+      navigateToCorporateTrusteeDetails,
+      enterCorporateTrusteeDetails,
+      navigateToCheckYourOrganisationDetails,
+      submitOrganisationDetails,
+      navigateToMakeACharityClaim
+    )
+
+  val scheduleUploadAllIterations: List[ActionBuilder] =
+    List[ActionBuilder](
+      navigateToAuth,
+      authLogInForOrg,
+      loginToAuthWizard,
+      navigateToMakeACharityClaim,
+      navigateToRepaymentClaimDetails,
+      navigateToSelectClaimType,
+      selectClaimTypeGASDS,
+      navigateToGASDSNotCB,
+      selectGASDSNotCBYes,
+      navigateToGASDSCB,
+      selectGASDSCBYes,
+      navigateToGASDSOverclaimed,
+      selectGASDSOverclaimedYes,
+      navigateToConnectedToCharities,
+      selectConnectedToCharitiesYes,
+      navigateToHaveClaimReference,
+      selectReference,
+      navigateToEnterClaimReferenceNumber,
+      enterClaimReferenceValue,
+      navigateToCheckYourRepaymentClaim,
+      submitRepaymentClaim,
+      navigateToMakeACharityClaim,
+      navigateToAboutTheOrg,
+      navigateToCharityRegulator,
+      selectNotRegistered,
+      navigateToWhyNotRegistered,
+      selectCharityExcepted,
+      navigateToCharityExcepted,
+      navigateToCorporateTrustee,
+      selectCorporateTrusteeYes,
+      navigateToCorporateTrusteeUKAddress,
+      selectCorporateTrusteeUKAddressNo,
+      navigateToCorporateTrusteeDetails,
+      enterCorporateTrusteeDetails,
+      navigateToCheckYourOrganisationDetails,
+      submitOrganisationDetails,
       navigateToMakeACharityClaim,
       navigateToAboutGiftAidSchedule,
       navigateToUploadGiftAidSchedule,
-      postFileToUpscan("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
-      getUpscanUploadResponse,
+      postFileToUpscanGAS("data/gift-aid-valid-large.ods"),
+      getUpscanUploadResponseGAS,
       navigateToGASUploaded
-    ) ++ getFileVerificationStatus ++
+    ) ++ getFileVerificationStatusGAS ++
       List[ActionBuilder](
         removeGASFromUploadedPage,
         navigateToUploadGiftAidSchedule,
-        postFileToUpscan("data/Gift-Aid-Schedule-Excel-GoodData-large2.ods"),
-        getUpscanUploadResponse,
+        postFileToUpscanGAS("data/gift-aid-valid-large.ods"),
+        getUpscanUploadResponseGAS,
         navigateToGASUploaded
-      ) ++ getFileVerificationStatus ++
+      ) ++ getFileVerificationStatusGAS ++
       List[ActionBuilder](
-        continueFromUploadedPage,
+        continueFromUploadedPageGAS,
         navigateToCheckYourGASSchedule,
-        selectUpdateScheduleYes,
+        selectUpdateScheduleYesGAS,
         navigateToUpdateGASWarning,
         SelectUpdateGASWarningYes,
         navigateToUploadGiftAidSchedule,
-        postFileToUpscan("data/Gift-Aid-Schedule-TEST-MasterError.ods"),
-        getUpscanUploadResponse
-      ) ++ getFileVerificationStatus ++
+        postFileToUpscanGAS("data/gift-aid-MasterError.ods"),
+        getUpscanUploadResponseGAS
+      ) ++ getFileVerificationStatusGAS ++
       List[ActionBuilder](
-        continueFromUploadedPage,
+        continueFromUploadedPageGAS,
         navigateToProblemWithYourGASSchedule,
-        clickAttachUpdatedScheduleButton
+        clickAttachUpdatedScheduleButtonGAS,
+        navigateToUploadGiftAidSchedule,
+        postFileToUpscanGAS("data/gift-aid-valid-large.ods"),
+        getUpscanUploadResponseGAS,
+        navigateToGASUploaded
+      ) ++ getFileVerificationStatusGAS ++
+      List[ActionBuilder](
+        continueFromUploadedPageGAS,
+        navigateToCheckYourGASSchedule,
+        selectUpdateScheduleNoGAS,
+        navigateToGASSuccessBanner,
+        submitScheduleUploadGAS,
+        navigateToMakeACharityClaim,
+        navigateToAboutOtherIncomeSchedule,
+        navigateToUploadOtherIncomeSchedule,
+        postFileToUpscanOI("data/other-income-valid-large.ods"),
+        getUpscanUploadResponseOI,
+        navigateToOIUploaded
+      ) ++ getFileVerificationStatusOI ++
+      List[ActionBuilder](
+        removeOIFromUploadedPage,
+        navigateToUploadOtherIncomeSchedule,
+        postFileToUpscanOI("data/other-income-valid-large.ods"),
+        getUpscanUploadResponseOI,
+        navigateToOIUploaded
+      ) ++ getFileVerificationStatusOI ++
+      List[ActionBuilder](
+        continueFromUploadedPageOI,
+        navigateToCheckYourOISchedule,
+        selectUpdateScheduleYesOI,
+        navigateToUpdateOIWarning,
+        SelectUpdateOIWarningYes,
+        navigateToUploadOtherIncomeSchedule,
+        postFileToUpscanOI("data/other-income-MasterError.ods"),
+        getUpscanUploadResponseOI
+      ) ++ getFileVerificationStatusOI ++
+      List[ActionBuilder](
+        continueFromUploadedPageOI,
+        navigateToProblemWithYourOISchedule,
+        clickAttachUpdatedScheduleButtonOI,
+        navigateToUploadOtherIncomeSchedule,
+        postFileToUpscanOI("data/other-income-valid-large.ods"),
+        getUpscanUploadResponseOI,
+        navigateToOIUploaded
+      ) ++ getFileVerificationStatusOI ++
+      List[ActionBuilder](
+        continueFromUploadedPageOI,
+        navigateToCheckYourOISchedule,
+        selectUpdateScheduleNoOI,
+        navigateToOISuccessBanner,
+        submitScheduleUploadOI,
+        navigateToMakeACharityClaim,
+        navigateToAboutCommunityBuildingsSchedule,
+        navigateToUploadCommunityBuildingsSchedule,
+        postFileToUpscanCB("data/community-buildings-valid-large.ods"),
+        getUpscanUploadResponseCB,
+        navigateToCBUploaded
+      ) ++ getFileVerificationStatusCB ++
+      List[ActionBuilder](
+        removeCBFromUploadedPage,
+        navigateToUploadCommunityBuildingsSchedule,
+        postFileToUpscanCB("data/community-buildings-valid-large.ods"),
+        getUpscanUploadResponseCB,
+        navigateToCBUploaded
+      ) ++ getFileVerificationStatusCB ++
+      List[ActionBuilder](
+        continueFromUploadedPageCB,
+        navigateToCheckYourCBSchedule,
+        selectUpdateScheduleYesCB,
+        navigateToUpdateCBWarning,
+        SelectUpdateCBWarningYes,
+        navigateToUploadCommunityBuildingsSchedule,
+        postFileToUpscanCB("data/community-buildings-MasterError.ods"),
+        getUpscanUploadResponseCB
+      ) ++ getFileVerificationStatusCB ++
+      List[ActionBuilder](
+        continueFromUploadedPageCB,
+        navigateToProblemWithYourCBSchedule,
+        clickAttachUpdatedScheduleButtonCB,
+        navigateToUploadCommunityBuildingsSchedule,
+        postFileToUpscanCB("data/community-buildings-MasterError.ods"),
+        getUpscanUploadResponseCB
+      ) ++ getFileVerificationStatusCB ++
+      List[ActionBuilder](
+        continueFromUploadedPageCB,
+        navigateToProblemWithYourCBSchedule,
+        navigateToDeleteCBWarning,
+        SelectDeleteCBWarningYes,
+        navigateToMakeACharityClaim,
+        navigateToAboutConnectedCharitiesSchedule,
+        navigateToUploadConnectedCharitiesSchedule,
+        postFileToUpscanCC("data/connected-charities-valid-large.ods"),
+        getUpscanUploadResponseCC,
+        navigateToCCUploaded
+      ) ++ getFileVerificationStatusCC ++
+      List[ActionBuilder](
+        removeCCFromUploadedPage,
+        navigateToUploadConnectedCharitiesSchedule,
+        postFileToUpscanCC("data/connected-charities-valid-large.ods"),
+        getUpscanUploadResponseCC,
+        navigateToCCUploaded
+      ) ++ getFileVerificationStatusCC ++
+      List[ActionBuilder](
+        continueFromUploadedPageCC,
+        navigateToCheckYourCCSchedule,
+        selectUpdateScheduleYesCC,
+        navigateToUpdateCCWarning,
+        SelectUpdateCCWarningYes,
+        navigateToUploadConnectedCharitiesSchedule,
+        postFileToUpscanCC("data/connected-charities-MasterError.ods"),
+        getUpscanUploadResponseCC
+      ) ++ getFileVerificationStatusCC ++
+      List[ActionBuilder](
+        continueFromUploadedPageCC,
+        navigateToProblemWithYourCCSchedule,
+        clickAttachUpdatedScheduleButtonCC,
+        navigateToUploadConnectedCharitiesSchedule,
+        postFileToUpscanCC("data/connected-charities-valid-large.ods"),
+        getUpscanUploadResponseCC,
+        navigateToCCUploaded
+      ) ++ getFileVerificationStatusCC ++
+      List[ActionBuilder](
+        continueFromUploadedPageCC,
+        navigateToCheckYourCCSchedule,
+        selectUpdateScheduleNoCC,
+        navigateToCCSuccessBanner,
+        submitScheduleUploadCC,
+        navigateToMakeACharityClaim
       )
 
-  setup("gas-journey-1", "Gift Aid schedule upload journey with success") withActions (
-    uploadGASScheduleHappyPath: _*
-  )
-
-  setup("gas-journey-2", "Gift Aid schedule upload journey with validation failed file to Errors page") withActions (
-    uploadGASScheduleErrorPage: _*
+  setup("UI-form-journey-1", "Repayment and Organisation Journey with Regulator Number and Auth Official") withActions (
+    UIJourneyRegulatorAuth: _*
   )
 
   setup(
-    "gas-journey-3",
-    "GAS journeys removing from upload page, deleting from Warning page, reuploading GAS etc"
+    "UI-form-journey-2",
+    "Repayment and Organisation Journey with Charity Excepted and Corporate Trustee"
   ) withActions (
-    uploadGASScheduleRemoveWarningIterations: _*
+    UIJourneyExceptedTrustee: _*
+  )
+
+  setup(
+    "schedule-journey-all-iterations",
+    "GA/OI/CB/CC schedules validated and failed validation uploads, deletion, reuploads, warnings"
+  ) withActions (
+    scheduleUploadAllIterations: _*
   )
 
 }
