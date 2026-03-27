@@ -34,7 +34,15 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
-      selectClaimTypeNoGASDS,
+      selectClaimTypeGASDS,
+      navigateToGASDSNotCB,
+      selectGASDSNotCBYes,
+      navigateToGASDSCB,
+      selectGASDSCBYes,
+      navigateToGASDSOverclaimed,
+      selectGASDSOverclaimedYes,
+      navigateToConnectedToCharities,
+      selectConnectedToCharitiesYes,
       navigateToHaveClaimReference,
       selectReference,
       navigateToEnterClaimReferenceNumber,
@@ -80,7 +88,15 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
-      selectClaimTypeNoGASDS,
+      selectClaimTypeGASDS,
+      navigateToGASDSNotCB,
+      selectGASDSNotCBYes,
+      navigateToGASDSCB,
+      selectGASDSCBYes,
+      navigateToGASDSOverclaimed,
+      selectGASDSOverclaimedYes,
+      navigateToConnectedToCharities,
+      selectConnectedToCharitiesYes,
       navigateToHaveClaimReference,
       selectReference,
       navigateToEnterClaimReferenceNumber,
@@ -124,7 +140,15 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
-      selectClaimTypeNoGASDS,
+      selectClaimTypeGASDS,
+      navigateToGASDSNotCB,
+      selectGASDSNotCBYes,
+      navigateToGASDSCB,
+      selectGASDSCBYes,
+      navigateToGASDSOverclaimed,
+      selectGASDSOverclaimedYes,
+      navigateToConnectedToCharities,
+      selectConnectedToCharitiesYes,
       navigateToHaveClaimReference,
       selectReference,
       navigateToEnterClaimReferenceNumber,
@@ -176,17 +200,17 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
         clickAttachUpdatedScheduleButtonCC
       )
 
-  setup("oi-journey-1", "Other Income schedule upload journey with success") withActions (
+  setup("cc-journey-1", "Connected Charities schedule upload journey with success") withActions (
     uploadCCScheduleHappyPath: _*
     )
 
-  setup("oi-journey-2", "Other Income schedule upload journey with validation failed file to Errors page") withActions (
+  setup("cc-journey-2", "Connected Charities schedule upload journey with validation failed file to Errors page") withActions (
     uploadCCScheduleErrorPage: _*
     )
 
   setup(
-    "oi-journey-3",
-    "Other Income journeys removing from upload page, deleting from Warning page, reuploading CC etc"
+    "cc-journey-3",
+    "Connected Charities journeys removing from upload page, deleting from Warning page, reuploading CC etc"
   ) withActions (
     uploadCCScheduleRemoveWarningIterations: _*
     )

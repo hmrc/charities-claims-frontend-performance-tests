@@ -18,12 +18,12 @@ package uk.gov.hmrc.perftests.charities.simulation
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
-import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{enterClaimReferenceValue, loginToAuthWizard, navigateToCheckYourRepaymentClaim, navigateToEnterClaimReferenceNumber, navigateToHaveClaimReference, navigateToMakeACharityClaim, navigateToRepaymentClaimDetails, navigateToSelectClaimType, selectClaimTypeGASDS, selectClaimTypeNoGASDS, selectReference, submitRepaymentClaim}
+import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{enterClaimReferenceValue, loginToAuthWizard, navigateToCheckYourRepaymentClaim, navigateToConnectedToCharities, navigateToEnterClaimReferenceNumber, navigateToGASDSCB, navigateToGASDSNotCB, navigateToGASDSOverclaimed, navigateToHaveClaimReference, navigateToMakeACharityClaim, navigateToRepaymentClaimDetails, navigateToSelectClaimType, selectClaimTypeGASDS, selectClaimTypeNoGASDS, selectConnectedToCharitiesYes, selectGASDSCBYes, selectGASDSNotCBYes, selectGASDSOverclaimedYes, selectReference, submitRepaymentClaim}
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
 
 trait RepaymentClaimSimulation extends PerformanceTestRunner with BaseRequests {
 
-  setup("repayment-journey", "Repayment Claims Questions Journey").withRequests(
+  setup("repayment-journey-1", "Repayment Claims Questions Journey NO GASDS").withRequests(
     navigateToAuth,
     authLogInForOrg,
     loginToAuthWizard,
@@ -31,6 +31,30 @@ trait RepaymentClaimSimulation extends PerformanceTestRunner with BaseRequests {
     navigateToRepaymentClaimDetails,
     navigateToSelectClaimType,
     selectClaimTypeNoGASDS,
+    navigateToHaveClaimReference,
+    selectReference,
+    navigateToEnterClaimReferenceNumber,
+    enterClaimReferenceValue,
+    navigateToCheckYourRepaymentClaim,
+    submitRepaymentClaim
+  )
+
+  setup("repayment-journey-2", "Repayment Claims Questions Journey GASDS").withRequests(
+    navigateToAuth,
+    authLogInForOrg,
+    loginToAuthWizard,
+    navigateToMakeACharityClaim,
+    navigateToRepaymentClaimDetails,
+    navigateToSelectClaimType,
+    selectClaimTypeGASDS,
+    navigateToGASDSNotCB,
+    selectGASDSNotCBYes,
+    navigateToGASDSCB,
+    selectGASDSCBYes,
+    navigateToGASDSOverclaimed,
+    selectGASDSOverclaimedYes,
+    navigateToConnectedToCharities,
+    selectConnectedToCharitiesYes,
     navigateToHaveClaimReference,
     selectReference,
     navigateToEnterClaimReferenceNumber,

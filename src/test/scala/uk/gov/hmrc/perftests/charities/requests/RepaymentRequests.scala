@@ -67,6 +67,62 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
       .formParam("value[2]", "claimingTaxDeducted")
       .check(status.is(303))
 
+  val navigateToGASDSNotCB: HttpRequestBuilder =
+    http("Navigate to Do you claim GASDS not collected in community buildings")
+      .get(s"$baseUrl$redirectUrl$gasdsNotCB")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("Do you want to claim a top-up payment under the Gift Aid Small Donations Scheme?"))
+
+  val selectGASDSNotCBYes: HttpRequestBuilder =
+    http("Select Yes on claim GASDS NOT collected in community buildings")
+      .post(s"$baseUrl$redirectUrl$gasdsNotCB")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value", "true")
+      .check(status.is(303))
+
+  val navigateToGASDSCB: HttpRequestBuilder =
+    http("Navigate to Do you want to claim GASDS collected in community buildings")
+      .get(s"$baseUrl$redirectUrl$gasdsCB")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("Do you want to claim for donations collected in community buildings?"))
+
+  val selectGASDSCBYes: HttpRequestBuilder =
+    http("Select Yes on claim GASDS collected in community buildings")
+      .post(s"$baseUrl$redirectUrl$gasdsCB")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value", "true")
+      .check(status.is(303))
+
+  val navigateToGASDSOverclaimed: HttpRequestBuilder =
+    http("Navigate to change a previous Gift Aid Small Donations Scheme claim?")
+      .get(s"$baseUrl$redirectUrl$gasdsPreviousOverclaimed")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("Gift Aid Small Donations Scheme claim"))
+
+  val selectGASDSOverclaimedYes: HttpRequestBuilder =
+    http("Select Yes on change a previous Gift Aid Small Donations Scheme claim?")
+      .post(s"$baseUrl$redirectUrl$gasdsPreviousOverclaimed")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value", "true")
+      .check(status.is(303))
+
+  val navigateToConnectedToCharities: HttpRequestBuilder =
+    http("Navigate to Connected charities and Community Amateur Sports Clubs")
+      .get(s"$baseUrl$redirectUrl$ConnectedToCharities")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("Connected charities and Community Amateur Sports Clubs"))
+
+  val selectConnectedToCharitiesYes: HttpRequestBuilder =
+    http("Select Yes on Connected charities and Community Amateur Sports Clubs")
+      .post(s"$baseUrl$redirectUrl$ConnectedToCharities")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value", "true")
+      .check(status.is(303))
+
   val navigateToHaveClaimReference: HttpRequestBuilder =
     http("Navigate to Do you have a claim reference number Page")
       .get(s"$baseUrl$redirectUrl$haveClaimReference")
