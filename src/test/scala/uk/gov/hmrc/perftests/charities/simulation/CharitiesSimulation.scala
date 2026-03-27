@@ -28,6 +28,7 @@ class CharitiesSimulation
     extends PerformanceTestRunner
     with RepaymentClaimSimulation
     with OrganisationDetailsSimulation
+    with CharitiesJourneyScheduleSimulation
     with OIScheduleSimulation
     with CBScheduleSimulation
     with CCScheduleSimulation
