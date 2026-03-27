@@ -84,7 +84,7 @@ trait BaseRequests extends ServicesConfiguration {
   val aboutTheCC: String           = "/about-connected-charities-schedule"
   val uploadCC: String             = "/upload-connected-charities-schedule"
   val uploadedCCPage: String       = "/your-connected-charities-schedule-upload"
-  val removeCCFromUploaded: String = "/your-connected-charities-schedule-upload-remove"
+  val removeCCFromUploaded: String = "/your-connected-charities-schedule-upload/remove"
   val checkCCSuccess: String       = "/check-your-connected-charities-schedule"
   val checkCCProblem: String       = "/problem-with-connected-charities-schedule"
   val updateCCWarning: String      = "/update-connected-charities-schedule"
