@@ -103,8 +103,6 @@ trait CharitiesOrganisationJourney extends PerformanceTestRunner with BaseReques
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
-
-
       navigateToAboutGiftAidSchedule,
       navigateToUploadGiftAidSchedule,
       postFileToUpscanGAS("data/gift-aid-valid-large.ods"),
@@ -266,7 +264,7 @@ trait CharitiesOrganisationJourney extends PerformanceTestRunner with BaseReques
   )
 
   setup(
-    "schedule-journey-all-iterations",
+    "upload-Schedule-Exhaustive",
     "GA/OI/CB/CC schedules validated and failed validation uploads, deletion, reuploads, warnings"
   ) withActions (
     uploadScheduleExhaustive: _*

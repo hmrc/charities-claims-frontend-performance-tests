@@ -21,7 +21,7 @@ import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
 import uk.gov.hmrc.perftests.charities.requests.CBScheduleUploadRequests._
 import uk.gov.hmrc.perftests.charities.requests.CCScheduleUploadRequests._
-import uk.gov.hmrc.perftests.charities.requests.DeclarationRequests.{enterAdjustmentText, navigateToDeclaration, navigateToWhatAdjustmentsToClaim, pollNavigateToClaimComplete, printSubmissionSummary, redirectToRegisterCharityFromAdjustment, selectNoContinueRegister, submitClaimDeclaration}
+import uk.gov.hmrc.perftests.charities.requests.DeclarationRequests.{enterAdjustmentText, navigateToDeclaration, navigateToDeclarationForUnregulated, navigateToWhatAdjustmentsToClaim, pollNavigateToClaimComplete, printSubmissionSummary, redirectToAdjustmentsFromRegister, redirectToRegisterCharityFromAdjustment, selectNoContinueRegister, submitClaimDeclaration}
 import uk.gov.hmrc.perftests.charities.requests.GASDSRequests.{enterAdjustmentAmountGASDS, enterAmount1GASDS, enterAmount2GASDS, enterAmount3GASDS, enterTaxYear1GASDS, enterTaxYear2GASDS, enterTaxYear3GASDS, navigateToAboutTheGASDS, navigateToAdjustmentAmountGASDS, navigateToAmount1GASDS, navigateToAmount2GASDS, navigateToAmount3GASDS, navigateToCYAAdjustmentGASDS, navigateToCYATaxYear1GASDS, navigateToCYATaxYear2GASDS, navigateToCYATaxYear3GASDS, navigateToClaim1Added, navigateToClaim2Added, navigateToClaim3Added, navigateToFinalCYA, navigateToTaxYear1GASDS, navigateToTaxYear2GASDS, navigateToTaxYear3GASDS, selectSecondYearYes, selectThirdYearYes, submitGASDSDetails}
 import uk.gov.hmrc.perftests.charities.requests.GASScheduleUploadRequests._
 import uk.gov.hmrc.perftests.charities.requests.OIScheduleUploadRequests._
@@ -280,6 +280,126 @@ trait CharitiesOrganisationFullSubmission extends PerformanceTestRunner with Bas
         navigateToMakeACharityClaim,
         redirectToRegisterCharityFromAdjustment,
         selectNoContinueRegister,
+        redirectToAdjustmentsFromRegister,
+        enterAdjustmentText,
+        navigateToDeclarationForUnregulated,
+        submitClaimDeclaration
+      ) ++ pollNavigateToClaimComplete ++
+      List[ActionBuilder](
+        printSubmissionSummary
+      )
+
+  val scheduleUploadAllRegulated: List[ActionBuilder] =
+    List[ActionBuilder](
+      navigateToAuth,
+      authLogInForOrg,
+      loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
+      navigateToMakeACharityClaim,
+      navigateToRepaymentClaimDetails,
+      navigateToSelectClaimType,
+      selectClaimTypeGASDS,
+      navigateToGASDSCheckbox,
+      selectGASDSAllYes,
+      navigateToGASDSOverclaimed,
+      selectGASDSOverclaimedYes,
+      navigateToHaveClaimReference,
+      selectReference,
+      navigateToEnterClaimReferenceNumber,
+      enterClaimReferenceValue,
+      navigateToCheckYourRepaymentClaim,
+      submitRepaymentClaim,
+      navigateToMakeACharityClaim,
+      navigateToAboutTheOrg,
+      navigateToCharityRegulator,
+      selectScottishRegistered,
+      navigateToRegulatorNumber,
+      enterRegulatorNumber,
+      navigateToCorporateTrustee,
+      selectCorporateTrusteeYes,
+      navigateToCorporateTrusteeUKAddress,
+      selectCorporateTrusteeUKAddressNo,
+      navigateToCorporateTrusteeDetails,
+      enterCorporateTrusteeDetails,
+      navigateToCheckYourOrganisationDetails,
+      submitOrganisationDetails,
+      navigateToMakeACharityClaim,
+      navigateToAboutTheGASDS,
+      navigateToAdjustmentAmountGASDS,
+      enterAdjustmentAmountGASDS,
+      navigateToCYAAdjustmentGASDS,
+      navigateToTaxYear1GASDS,
+      enterTaxYear1GASDS,
+      navigateToAmount1GASDS,
+      enterAmount1GASDS,
+      navigateToCYATaxYear1GASDS,
+      navigateToClaim1Added,
+      selectSecondYearYes,
+      navigateToTaxYear2GASDS,
+      enterTaxYear2GASDS,
+      navigateToAmount2GASDS,
+      enterAmount2GASDS,
+      navigateToCYATaxYear2GASDS,
+      navigateToClaim2Added,
+      selectThirdYearYes,
+      navigateToTaxYear3GASDS,
+      enterTaxYear3GASDS,
+      navigateToAmount3GASDS,
+      enterAmount3GASDS,
+      navigateToCYATaxYear3GASDS,
+      navigateToClaim3Added,
+      navigateToFinalCYA,
+      submitGASDSDetails,
+      navigateToAboutGiftAidSchedule,
+      navigateToUploadGiftAidSchedule,
+      postFileToUpscanGAS("data/gift-aid-valid-large.ods"),
+      getUpscanUploadResponseGAS,
+      navigateToGASUploaded
+    ) ++ getFileVerificationStatusGAS ++
+      List[ActionBuilder](
+        continueFromUploadedPageGAS,
+        navigateToCheckYourGASSchedule,
+        selectUpdateScheduleNoGAS,
+        navigateToGASSuccessBanner,
+        submitScheduleUploadGAS,
+        navigateToMakeACharityClaim,
+        navigateToAboutOtherIncomeSchedule,
+        navigateToUploadOtherIncomeSchedule,
+        postFileToUpscanOI("data/other-income-valid-large.ods"),
+        getUpscanUploadResponseOI,
+        navigateToOIUploaded
+      ) ++ getFileVerificationStatusOI ++
+      List[ActionBuilder](
+        continueFromUploadedPageOI,
+        navigateToCheckYourOISchedule,
+        selectUpdateScheduleNoOI,
+        navigateToOISuccessBanner,
+        submitScheduleUploadOI,
+        navigateToMakeACharityClaim,
+        navigateToAboutCommunityBuildingsSchedule,
+        navigateToUploadCommunityBuildingsSchedule,
+        postFileToUpscanCB("data/community-buildings-MasterError.ods"),
+        getUpscanUploadResponseCB
+      ) ++ getFileVerificationStatusCB ++
+      List[ActionBuilder](
+        continueFromUploadedPageCB,
+        navigateToProblemWithYourCBSchedule,
+        navigateToDeleteCBWarning,
+        SelectDeleteCBWarningYes,
+        navigateToMakeACharityClaim,
+        navigateToAboutConnectedCharitiesSchedule,
+        navigateToUploadConnectedCharitiesSchedule,
+        postFileToUpscanCC("data/connected-charities-valid-large.ods"),
+        getUpscanUploadResponseCC,
+        navigateToCCUploaded
+      ) ++ getFileVerificationStatusCC ++
+      List[ActionBuilder](
+        continueFromUploadedPageCC,
+        navigateToCheckYourCCSchedule,
+        selectUpdateScheduleNoCC,
+        navigateToCCSuccessBanner,
+        submitScheduleUploadCC,
+        navigateToMakeACharityClaim,
         navigateToWhatAdjustmentsToClaim,
         enterAdjustmentText,
         navigateToDeclaration,
@@ -307,5 +427,12 @@ trait CharitiesOrganisationFullSubmission extends PerformanceTestRunner with Bas
   ) withActions (
     scheduleUploadAllIterations: _*
   )
+
+  setup(
+    "schedule-journey-all-upload-regulated",
+    "GASDS/GA/OI/CB/CC valid schedules only regulated charity"
+  ) withActions (
+    scheduleUploadAllRegulated: _*
+    )
 
 }

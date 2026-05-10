@@ -27,8 +27,14 @@ import scala.concurrent.duration.DurationInt
 object DeclarationRequests extends ServicesConfiguration with BaseRequests {
 
   val redirectToRegisterCharityFromAdjustment: HttpRequestBuilder =
-    http("Navigate to Register your Charity for lowincome via adjustments page redirect")
+    http("Redirect to Register your Charity for excepted via adjustments page redirect")
       .get(s"$baseUrl$redirectUrl$declarationAdjustment")
+      .check(status.is(303))
+      .check(header("Location").saveAs("RegisterPageLocation"))
+
+  val navigateToRegisterCharityFromAdjustment: HttpRequestBuilder =
+    http("Navigate to Register your Charity for excepted via adjustments page")
+      .get("${RegisterPageLocation}")
       .check(status.is(200))
       .check(saveCsrfToken())
       .check(regex("Registering your charity with a regulator"))
@@ -39,6 +45,20 @@ object DeclarationRequests extends ServicesConfiguration with BaseRequests {
       .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", "false")
       .check(status.is(303))
+      //.check(header("Location").saveAs("AdjustmentLocation"))
+
+  val redirectToAdjustmentsFromRegister: HttpRequestBuilder =
+    http("Redirect to What adjustments made to this Claim page from Register Page")
+      .get(s"$baseUrl$redirectUrl$declarationAdjustment")
+      .check(status.is(303))
+      .check(header("Location").saveAs("AdjustmentPageLocation"))
+
+//  val navigateToAdjustmentsFromRegister: HttpRequestBuilder =
+//    http("Navigate to What adjustments made to this Claim page from Register Page")
+//      .get(s"$baseUrl$redirectUrl$declarationAdjustment")
+//      .check(status.is(200))
+//      .check(saveCsrfToken())
+//      .check(regex("What adjustments have you made to this claim?"))
 
   val navigateToWhatAdjustmentsToClaim: HttpRequestBuilder =
     http("Navigate to What adjustments made to this Claim page")
@@ -58,6 +78,13 @@ object DeclarationRequests extends ServicesConfiguration with BaseRequests {
     http("Navigate to Declaration Page")
       .get(s"$baseUrl$redirectUrl$declarationPage")
       .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("Declaration"))
+
+  val navigateToDeclarationForUnregulated: HttpRequestBuilder =
+    http("Navigate to Declaration Page")
+      .get(s"$baseUrl$redirectUrl$declarationPage")
+      .check(status.is(303))
       .check(saveCsrfToken())
       .check(regex("Declaration"))
 

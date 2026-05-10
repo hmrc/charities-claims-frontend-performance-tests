@@ -37,8 +37,6 @@ trait BaseRequests extends ServicesConfiguration {
   val charityNameAgent: String         = "/enter-the-charity-name"
 
   val makeACharityClaim: String         = "/make-a-charity-repayment-claim"
-
-  val makeACharityClaim: String         = "/make-a-charity-repayment-claim"
   val repaymentClaimDetails: String     = "/repayment-claim-details"
   val repaymentClaimType: String        = "/select-repayment-claim-type"
   val repaymentClaimTypeGASDS: String        = "/select-gift-aid-small-donations-scheme-claim-type"

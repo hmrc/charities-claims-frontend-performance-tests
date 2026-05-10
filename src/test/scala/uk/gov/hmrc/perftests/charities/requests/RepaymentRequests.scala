@@ -50,7 +50,7 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
 
   val navigateToHMRCCharityRefAgent: HttpRequestBuilder =
     http("Navigate to HMRC Charity Reference Page for Agent")
-      .get(s"$baseUrl$redirectUrl$")
+      .get(s"$baseUrl$redirectUrl$charityRefAgent")
       .check(status.is(200))
       .check(saveCsrfToken())
       .check(regex("What is the HMRC charities reference number?"))
@@ -71,7 +71,7 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
 
   val enterCharityNameAgent: HttpRequestBuilder =
     http("Enter Charity name for AGENT")
-      .post(s"$baseUrl$redirectUrl$")
+      .post(s"$baseUrl$redirectUrl$charityNameAgent")
       .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", "Charity Name for A1")
       .check(status.is(303))
