@@ -150,7 +150,7 @@ object OrganisationRequests extends ServicesConfiguration with BaseRequests {
         "nameOfCorporateTrustee",
         "Service information  region    visited  link    Charities Claims151532  Language switcher  navigation landmark    list  with 2 items  current  ENG  visited  lin"
       )
-      .formParam("corporateTrusteeDaytimeTelephoneNumber", "45689123456789123456789123456789122")
+      .formParam("corporateTrusteeDaytimeTelephoneNumber", "456891234567891234567891239122")
       .check(status.is(303))
 
   val navigateToAuthorisedOfficialUKAddress: HttpRequestBuilder =
@@ -172,7 +172,7 @@ object OrganisationRequests extends ServicesConfiguration with BaseRequests {
       .get(s"$baseUrl$redirectUrl$authorisedOfficialDetails")
       .check(status.is(200))
       .check(saveCsrfToken())
-      .check(regex("What are the authorised official details?"))
+      .check(regex("What are the authorised official’s details?"))
 
   val enterAuthorisedOfficialDetails: HttpRequestBuilder =
     http("Enter Authorised Official Details")
@@ -181,7 +181,7 @@ object OrganisationRequests extends ServicesConfiguration with BaseRequests {
       .formParam("title", "Miss")
       .formParam("firstName", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
       .formParam("lastName", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
-      .formParam("phoneNumber", "45689123456789123456789123456789122")
+      .formParam("phoneNumber", "456891234563456789123456789122")
       .formParam("postcode", "WG7 7FU")
       .check(status.is(303))
 

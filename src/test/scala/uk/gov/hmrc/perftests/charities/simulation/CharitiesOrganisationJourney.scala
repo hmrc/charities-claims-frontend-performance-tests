@@ -66,45 +66,8 @@ trait CharitiesOrganisationJourney extends PerformanceTestRunner with BaseReques
       navigateToMakeACharityClaim
     )
 
-  val UIJourneyExceptedTrustee: List[ActionBuilder] =
-    List[ActionBuilder](
-      navigateToAuth,
-      authLogInForOrg,
-      loginToAuthWizard,
-      navigateToCharityManagementOrganisation,
-      navigateToMakeACharityClaim,
-      navigateToRepaymentClaimDetails,
-      navigateToSelectClaimType,
-      selectClaimTypeGASDS,
-      navigateToGASDSCheckbox,
-      selectGASDSAllYes,
-      navigateToGASDSOverclaimed,
-      selectGASDSOverclaimedYes,
-      navigateToHaveClaimReference,
-      selectReference,
-      navigateToEnterClaimReferenceNumber,
-      enterClaimReferenceValue,
-      navigateToCheckYourRepaymentClaim,
-      submitRepaymentClaim,
-      navigateToMakeACharityClaim,
-      navigateToAboutTheOrg,
-      navigateToCharityRegulator,
-      selectNotRegistered,
-      navigateToWhyNotRegistered,
-      selectCharityExcepted,
-      navigateToCharityExcepted,
-      navigateToCorporateTrustee,
-      selectCorporateTrusteeYes,
-      navigateToCorporateTrusteeUKAddress,
-      selectCorporateTrusteeUKAddressNo,
-      navigateToCorporateTrusteeDetails,
-      enterCorporateTrusteeDetails,
-      navigateToCheckYourOrganisationDetails,
-      submitOrganisationDetails,
-      navigateToMakeACharityClaim
-    )
 
-  val scheduleUploadAllIterations: List[ActionBuilder] =
+  val uploadScheduleExhaustive: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
       authLogInForOrg,
@@ -303,17 +266,10 @@ trait CharitiesOrganisationJourney extends PerformanceTestRunner with BaseReques
   )
 
   setup(
-    "UI-form-journey-2",
-    "Repayment and Organisation Journey with with Charity Excepted and Corporate Trustee"
-  ) withActions (
-    UIJourneyExceptedTrustee: _*
-  )
-
-  setup(
     "schedule-journey-all-iterations",
     "GA/OI/CB/CC schedules validated and failed validation uploads, deletion, reuploads, warnings"
   ) withActions (
-    scheduleUploadAllIterations: _*
+    uploadScheduleExhaustive: _*
   )
 
 }

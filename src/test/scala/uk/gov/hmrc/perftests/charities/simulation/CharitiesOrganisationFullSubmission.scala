@@ -21,6 +21,7 @@ import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
 import uk.gov.hmrc.perftests.charities.requests.CBScheduleUploadRequests._
 import uk.gov.hmrc.perftests.charities.requests.CCScheduleUploadRequests._
+import uk.gov.hmrc.perftests.charities.requests.DeclarationRequests.{enterAdjustmentText, navigateToDeclaration, navigateToWhatAdjustmentsToClaim, pollNavigateToClaimComplete, printSubmissionSummary, redirectToRegisterCharityFromAdjustment, selectNoContinueRegister, submitClaimDeclaration}
 import uk.gov.hmrc.perftests.charities.requests.GASDSRequests.{enterAdjustmentAmountGASDS, enterAmount1GASDS, enterAmount2GASDS, enterAmount3GASDS, enterTaxYear1GASDS, enterTaxYear2GASDS, enterTaxYear3GASDS, navigateToAboutTheGASDS, navigateToAdjustmentAmountGASDS, navigateToAmount1GASDS, navigateToAmount2GASDS, navigateToAmount3GASDS, navigateToCYAAdjustmentGASDS, navigateToCYATaxYear1GASDS, navigateToCYATaxYear2GASDS, navigateToCYATaxYear3GASDS, navigateToClaim1Added, navigateToClaim2Added, navigateToClaim3Added, navigateToFinalCYA, navigateToTaxYear1GASDS, navigateToTaxYear2GASDS, navigateToTaxYear3GASDS, selectSecondYearYes, selectThirdYearYes, submitGASDSDetails}
 import uk.gov.hmrc.perftests.charities.requests.GASScheduleUploadRequests._
 import uk.gov.hmrc.perftests.charities.requests.OIScheduleUploadRequests._
@@ -30,7 +31,7 @@ import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, naviga
 
 trait CharitiesOrganisationFullSubmission extends PerformanceTestRunner with BaseRequests {
 
-  val UIJourneyRegulatorAuth: List[ActionBuilder] =
+  val UIJourneyTOPUPRegulatorAuth: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
       authLogInForOrg,
@@ -39,7 +40,7 @@ trait CharitiesOrganisationFullSubmission extends PerformanceTestRunner with Bas
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
-      selectClaimTypeGASDS,
+      selectClaimTypeGASDSOnly,
       navigateToGASDSCheckbox,
       selectGASDSTopUP,
       navigateToGASDSOverclaimed,
@@ -90,7 +91,15 @@ trait CharitiesOrganisationFullSubmission extends PerformanceTestRunner with Bas
       navigateToCYATaxYear3GASDS,
       navigateToClaim3Added,
       navigateToFinalCYA,
-      submitGASDSDetails
+      submitGASDSDetails,
+      navigateToMakeACharityClaim,
+      navigateToWhatAdjustmentsToClaim,
+      enterAdjustmentText,
+      navigateToDeclaration,
+      submitClaimDeclaration
+    ) ++ pollNavigateToClaimComplete ++
+      List[ActionBuilder](
+      printSubmissionSummary
     )
 
   val UIJourneyExceptedTrustee: List[ActionBuilder] =
@@ -269,11 +278,20 @@ trait CharitiesOrganisationFullSubmission extends PerformanceTestRunner with Bas
         navigateToCCSuccessBanner,
         submitScheduleUploadCC,
         navigateToMakeACharityClaim,
-
+        redirectToRegisterCharityFromAdjustment,
+        selectNoContinueRegister,
+        navigateToWhatAdjustmentsToClaim,
+        enterAdjustmentText,
+        navigateToDeclaration,
+        submitClaimDeclaration
+      ) ++ pollNavigateToClaimComplete ++
+      List[ActionBuilder](
+        printSubmissionSummary
       )
 
-  setup("UI-form-journey-1", "Repayment and Organisation Journey with Regulator Number and Auth Official") withActions (
-    UIJourneyRegulatorAuth: _*
+
+  setup("UI-GASDS-journey-1", "Full Submission Journey with Regulator Number and Auth Official with GASDS Top Up only, no uploads") withActions (
+    UIJourneyTOPUPRegulatorAuth: _*
   )
 
   setup(

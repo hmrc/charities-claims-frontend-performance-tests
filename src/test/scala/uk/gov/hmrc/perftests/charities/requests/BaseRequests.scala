@@ -33,14 +33,18 @@ trait BaseRequests extends ServicesConfiguration {
 
   val charityManagementOrganisation: String               = "/manage-charity-repayment-claim"
 
+  val charityRefAgent: String         = "/enter-charities-reference-number"
+  val charityNameAgent: String         = "/enter-the-charity-name"
+
+  val makeACharityClaim: String         = "/make-a-charity-repayment-claim"
+
   val makeACharityClaim: String         = "/make-a-charity-repayment-claim"
   val repaymentClaimDetails: String     = "/repayment-claim-details"
   val repaymentClaimType: String        = "/select-repayment-claim-type"
   val repaymentClaimTypeGASDS: String        = "/select-gift-aid-small-donations-scheme-claim-type"
- // val gasdsNotCB: String                = "/claim-gasds-payment"
- // val gasdsCB: String                   = "/claim-community-building-donations"
+
   val gasdsPreviousOverclaimed: String  = "/change-previous-gift-aid-small-donations-scheme-claim"
- // val ConnectedToCharities: String      = "/connected-to-charities"
+
   val haveClaimReference: String        = "/claim-reference-number-check"
   val enterClaimReferenceNumber: String = "/enter-claim-reference-number"
   val repaymentCYA: String              = "/check-your-repayment-claim"

@@ -48,10 +48,37 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
       .check(saveCsrfToken())
       .check(regex("Repayment claim details"))
 
+  val navigateToHMRCCharityRefAgent: HttpRequestBuilder =
+    http("Navigate to HMRC Charity Reference Page for Agent")
+      .get(s"$baseUrl$redirectUrl$")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("What is the HMRC charities reference number?"))
+
+  val enterHMRCReferenceAgent: HttpRequestBuilder =
+    http("Enter HMRC Charity reference for AGENT")
+      .post(s"$baseUrl$redirectUrl$charityRefAgent")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value", "A1")
+      .check(status.is(303))
+
+  val navigateToCharityNameAgent: HttpRequestBuilder =
+    http("Navigate to Charity Name for Agent")
+      .get(s"$baseUrl$redirectUrl$charityNameAgent")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("What is the name of the charity or Community Amateur Sports Club \\(CASC\\)?"))
+
+  val enterCharityNameAgent: HttpRequestBuilder =
+    http("Enter Charity name for AGENT")
+      .post(s"$baseUrl$redirectUrl$")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value", "Charity Name for A1")
+      .check(status.is(303))
+
   val navigateToSelectClaimType: HttpRequestBuilder =
     http("Select type of repayment claim Page")
       .get(s"$baseUrl$redirectUrl$repaymentClaimType")
-      .formParam("csrfToken", "#{csrfToken}")
       .check(status.is(200))
       .check(saveCsrfToken())
       .check(regex("Which type of repayment claim do you want to make?"))
@@ -73,12 +100,19 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
       .formParam("value[2]", "claimingTaxDeducted")
       .check(status.is(303))
 
+  val selectClaimTypeGASDSOnly: HttpRequestBuilder =
+    http("Select type of repayment claim Page")
+      .post(s"$baseUrl$redirectUrl$repaymentClaimType")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value[1]", "claimingUnderGiftAidSmallDonationsScheme")
+      .check(status.is(303))
+
   val navigateToGASDSCheckbox: HttpRequestBuilder =
-    http("Gift Aid Small Donations Scheme (GASDS) details")
+    http("Navigate to GASDS Checkbox (GASDS) details page")
       .get(s"$baseUrl$redirectUrl$repaymentClaimTypeGASDS")
       .check(status.is(200))
       .check(saveCsrfToken())
-      .check(regex("Gift Aid Small Donations Scheme (GASDS) details"))
+      .check(regex("Gift Aid Small Donations Scheme \\(GASDS\\) details"))
 
   val selectGASDSAllYes: HttpRequestBuilder =
     http("Select Yes on claim GASDS for Top-up/Community buildings/Connected Charity")
@@ -101,7 +135,7 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
       .get(s"$baseUrl$redirectUrl$gasdsPreviousOverclaimed")
       .check(status.is(200))
       .check(saveCsrfToken())
-      .check(regex("Gift Aid Small Donations Scheme (GASDS) details"))
+      .check(regex("Gift Aid Small Donations Scheme \\(GASDS\\) details"))
 
   val selectGASDSOverclaimedYes: HttpRequestBuilder =
     http("Select Yes on change a previous Gift Aid Small Donations Scheme claim?")

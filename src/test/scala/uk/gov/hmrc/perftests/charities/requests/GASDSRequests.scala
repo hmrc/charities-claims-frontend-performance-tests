@@ -21,7 +21,6 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
-import java.time.LocalDate.now
 import java.time.LocalDate
 
 object GASDSRequests extends ServicesConfiguration with BaseRequests {
@@ -54,11 +53,13 @@ object GASDSRequests extends ServicesConfiguration with BaseRequests {
       .check(saveCsrfToken())
       .check(regex("What is the adjustment amount for Gift Aid previously overclaimed?"))
 
+  val amountForAll= "999999.99"
+
   val enterAdjustmentAmountGASDS: HttpRequestBuilder =
     http("Enter your Adjustment Amount page")
       .post(s"$baseUrl$redirectUrl$adjustmentGASDS")
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", "99999.99")
+      .formParam("amount", amountForAll)
       .check(status.is(303))
 
   val navigateToCYAAdjustmentGASDS: HttpRequestBuilder =
@@ -93,7 +94,7 @@ object GASDSRequests extends ServicesConfiguration with BaseRequests {
     http("Enter tax year 1 Amount")
       .post(s"$baseUrl$redirectUrl$amount1GASDS")
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", "99999.99")
+      .formParam("amount", amountForAll)
       .check(status.is(303))
 
   val navigateToCYATaxYear1GASDS: HttpRequestBuilder =
@@ -142,7 +143,7 @@ object GASDSRequests extends ServicesConfiguration with BaseRequests {
     http("Enter tax year 2 Amount")
       .post(s"$baseUrl$redirectUrl$amount2GASDS")
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", "99999.99")
+      .formParam("amount", amountForAll)
       .check(status.is(303))
 
   val navigateToCYATaxYear2GASDS: HttpRequestBuilder =
@@ -191,7 +192,7 @@ object GASDSRequests extends ServicesConfiguration with BaseRequests {
     http("Enter tax year 3 Amount")
       .post(s"$baseUrl$redirectUrl$amount3GASDS")
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", "10000.00")
+      .formParam("amount", amountForAll)
       .check(status.is(303))
 
   val navigateToCYATaxYear3GASDS: HttpRequestBuilder =
