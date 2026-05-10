@@ -21,7 +21,7 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
-object RepaymentRequests extends ServicesConfiguration with BaseRequests {
+object DeclarationRequests extends ServicesConfiguration with BaseRequests {
 
   val loginToAuthWizard: HttpRequestBuilder =
     http("Login to auth wizard")

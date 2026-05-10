@@ -31,18 +31,15 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToAuth,
       authLogInForOrg,
       loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
       selectClaimTypeGASDS,
-      navigateToGASDSNotCB,
-      selectGASDSNotCBYes,
-      navigateToGASDSCB,
-      selectGASDSCBYes,
+      navigateToGASDSCheckbox,
+      selectGASDSAllYes,
       navigateToGASDSOverclaimed,
       selectGASDSOverclaimedYes,
-      navigateToConnectedToCharities,
-      selectConnectedToCharitiesYes,
       navigateToHaveClaimReference,
       selectReference,
       navigateToEnterClaimReferenceNumber,
@@ -85,18 +82,15 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToAuth,
       authLogInForOrg,
       loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
       selectClaimTypeGASDS,
-      navigateToGASDSNotCB,
-      selectGASDSNotCBYes,
-      navigateToGASDSCB,
-      selectGASDSCBYes,
+      navigateToGASDSCheckbox,
+      selectGASDSAllYes,
       navigateToGASDSOverclaimed,
       selectGASDSOverclaimedYes,
-      navigateToConnectedToCharities,
-      selectConnectedToCharitiesYes,
       navigateToHaveClaimReference,
       selectReference,
       navigateToEnterClaimReferenceNumber,
@@ -132,74 +126,6 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
         navigateToMakeACharityClaim
       )
 
-  val uploadCCScheduleRemoveWarningIterations: List[ActionBuilder] =
-    List[ActionBuilder](
-      navigateToAuth,
-      authLogInForOrg,
-      loginToAuthWizard,
-      navigateToMakeACharityClaim,
-      navigateToRepaymentClaimDetails,
-      navigateToSelectClaimType,
-      selectClaimTypeGASDS,
-      navigateToGASDSNotCB,
-      selectGASDSNotCBYes,
-      navigateToGASDSCB,
-      selectGASDSCBYes,
-      navigateToGASDSOverclaimed,
-      selectGASDSOverclaimedYes,
-      navigateToConnectedToCharities,
-      selectConnectedToCharitiesYes,
-      navigateToHaveClaimReference,
-      selectReference,
-      navigateToEnterClaimReferenceNumber,
-      enterClaimReferenceValue,
-      navigateToCheckYourRepaymentClaim,
-      submitRepaymentClaim,
-      navigateToMakeACharityClaim,
-      navigateToAboutTheOrg,
-      navigateToCharityRegulator,
-      selectNotRegistered,
-      navigateToWhyNotRegistered,
-      selectCharityExcepted,
-      navigateToCharityExcepted,
-      navigateToCorporateTrustee,
-      selectCorporateTrusteeYes,
-      navigateToCorporateTrusteeUKAddress,
-      selectCorporateTrusteeUKAddressNo,
-      navigateToCorporateTrusteeDetails,
-      enterCorporateTrusteeDetails,
-      navigateToCheckYourOrganisationDetails,
-      submitOrganisationDetails,
-      navigateToMakeACharityClaim,
-      navigateToAboutConnectedCharitiesSchedule,
-      navigateToUploadConnectedCharitiesSchedule,
-      postFileToUpscanCC("data/connected-charities-valid-large.ods"),
-      getUpscanUploadResponseCC,
-      navigateToCCUploaded
-    ) ++ getFileVerificationStatusCC ++
-      List[ActionBuilder](
-        removeCCFromUploadedPage,
-        navigateToUploadConnectedCharitiesSchedule,
-        postFileToUpscanCC("data/connected-charities-valid-large.ods"),
-        getUpscanUploadResponseCC,
-        navigateToCCUploaded
-      ) ++ getFileVerificationStatusCC ++
-      List[ActionBuilder](
-        continueFromUploadedPageCC,
-        navigateToCheckYourCCSchedule,
-        selectUpdateScheduleYesCC,
-        navigateToUpdateCCWarning,
-        SelectUpdateCCWarningYes,
-        navigateToUploadConnectedCharitiesSchedule,
-        postFileToUpscanCC("data/connected-charities-MasterError.ods"),
-        getUpscanUploadResponseCC
-      ) ++ getFileVerificationStatusCC ++
-      List[ActionBuilder](
-        continueFromUploadedPageCC,
-        navigateToProblemWithYourCCSchedule,
-        clickAttachUpdatedScheduleButtonCC
-      )
-
   setup("cc-journey-1", "Connected Charities schedule upload journey with success") withActions (
     uploadCCScheduleHappyPath: _*
   )
@@ -209,13 +135,6 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
     "Connected Charities schedule upload journey with validation failed file to Errors page"
   ) withActions (
     uploadCCScheduleErrorPage: _*
-  )
-
-  setup(
-    "cc-journey-3",
-    "Connected Charities journeys removing from upload page, deleting from Warning page, reuploading CC etc"
-  ) withActions (
-    uploadCCScheduleRemoveWarningIterations: _*
   )
 
 }

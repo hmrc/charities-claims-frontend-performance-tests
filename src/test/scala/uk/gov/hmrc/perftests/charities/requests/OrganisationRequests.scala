@@ -23,12 +23,6 @@ import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 object OrganisationRequests extends ServicesConfiguration with BaseRequests {
 
-  val loginToAuthWizard: HttpRequestBuilder =
-    http("Login to auth wizard")
-      .get(s"$baseUrl$redirectUrl")
-      .check(status.is(303))
-      .check(header("Location").is(s"$redirectUrl$makeACharityClaim"))
-
   val navigateToAboutTheOrg: HttpRequestBuilder =
     http("Navigate to About the Organisation page")
       .get(s"$baseUrl$redirectUrl$aboutTheOrg")

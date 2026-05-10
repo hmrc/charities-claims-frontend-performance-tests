@@ -19,7 +19,7 @@ package uk.gov.hmrc.perftests.charities.simulation
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
 import uk.gov.hmrc.perftests.charities.requests.OrganisationRequests.{enterAuthorisedOfficialDetails, enterCorporateTrusteeDetails, enterRegulatorNumber, navigateToAboutTheOrg, navigateToAuthorisedOfficialDetails, navigateToAuthorisedOfficialUKAddress, navigateToCharityExcepted, navigateToCharityRegulator, navigateToCheckYourOrganisationDetails, navigateToCorporateTrustee, navigateToCorporateTrusteeDetails, navigateToCorporateTrusteeUKAddress, navigateToRegulatorNumber, navigateToWhyNotRegistered, selectAuthorisedOfficialUKAddressYes, selectCharityExcepted, selectCorporateTrusteeNo, selectCorporateTrusteeUKAddressNo, selectCorporateTrusteeYes, selectNotRegistered, selectScottishRegistered, submitOrganisationDetails}
-import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{enterClaimReferenceValue, loginToAuthWizard, navigateToCheckYourRepaymentClaim, navigateToConnectedToCharities, navigateToEnterClaimReferenceNumber, navigateToGASDSCB, navigateToGASDSNotCB, navigateToGASDSOverclaimed, navigateToHaveClaimReference, navigateToMakeACharityClaim, navigateToRepaymentClaimDetails, navigateToSelectClaimType, selectClaimTypeGASDS, selectClaimTypeNoGASDS, selectConnectedToCharitiesYes, selectGASDSCBYes, selectGASDSNotCBYes, selectGASDSOverclaimedYes, selectReference, submitRepaymentClaim}
+import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{enterClaimReferenceValue, loginToAuthWizard, navigateToCharityManagementOrganisation, navigateToCheckYourRepaymentClaim, navigateToConnectedToCharities, navigateToEnterClaimReferenceNumber, navigateToGASDSCB, navigateToGASDSCheckbox, navigateToGASDSNotCB, navigateToGASDSOverclaimed, navigateToHaveClaimReference, navigateToMakeACharityClaim, navigateToRepaymentClaimDetails, navigateToSelectClaimType, selectClaimTypeGASDS, selectClaimTypeNoGASDS, selectConnectedToCharitiesYes, selectGASDSAllYes, selectGASDSCBYes, selectGASDSNotCBYes, selectGASDSOverclaimedYes, selectReference, submitRepaymentClaim}
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
 
 trait OrganisationDetailsSimulation extends PerformanceTestRunner with BaseRequests {
@@ -29,6 +29,7 @@ trait OrganisationDetailsSimulation extends PerformanceTestRunner with BaseReque
       navigateToAuth,
       authLogInForOrg,
       loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
@@ -64,18 +65,15 @@ trait OrganisationDetailsSimulation extends PerformanceTestRunner with BaseReque
     navigateToAuth,
     authLogInForOrg,
     loginToAuthWizard,
+    navigateToCharityManagementOrganisation,
     navigateToMakeACharityClaim,
     navigateToRepaymentClaimDetails,
     navigateToSelectClaimType,
     selectClaimTypeGASDS,
-    navigateToGASDSNotCB,
-    selectGASDSNotCBYes,
-    navigateToGASDSCB,
-    selectGASDSCBYes,
+    navigateToGASDSCheckbox,
+    selectGASDSAllYes,
     navigateToGASDSOverclaimed,
     selectGASDSOverclaimedYes,
-    navigateToConnectedToCharities,
-    selectConnectedToCharitiesYes,
     navigateToHaveClaimReference,
     selectReference,
     navigateToEnterClaimReferenceNumber,

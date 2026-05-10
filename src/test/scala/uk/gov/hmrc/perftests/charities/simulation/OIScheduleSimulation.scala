@@ -31,6 +31,7 @@ trait OIScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToAuth,
       authLogInForOrg,
       loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
@@ -77,6 +78,7 @@ trait OIScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToAuth,
       authLogInForOrg,
       loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
@@ -116,79 +118,12 @@ trait OIScheduleSimulation extends PerformanceTestRunner with BaseRequests {
         navigateToMakeACharityClaim
       )
 
-  val uploadOIScheduleRemoveWarningIterations: List[ActionBuilder] =
-    List[ActionBuilder](
-      navigateToAuth,
-      authLogInForOrg,
-      loginToAuthWizard,
-      navigateToMakeACharityClaim,
-      navigateToRepaymentClaimDetails,
-      navigateToSelectClaimType,
-      selectClaimTypeNoGASDS,
-      navigateToHaveClaimReference,
-      selectReference,
-      navigateToEnterClaimReferenceNumber,
-      enterClaimReferenceValue,
-      navigateToCheckYourRepaymentClaim,
-      submitRepaymentClaim,
-      navigateToMakeACharityClaim,
-      navigateToAboutTheOrg,
-      navigateToCharityRegulator,
-      selectNotRegistered,
-      navigateToWhyNotRegistered,
-      selectCharityExcepted,
-      navigateToCharityExcepted,
-      navigateToCorporateTrustee,
-      selectCorporateTrusteeYes,
-      navigateToCorporateTrusteeUKAddress,
-      selectCorporateTrusteeUKAddressNo,
-      navigateToCorporateTrusteeDetails,
-      enterCorporateTrusteeDetails,
-      navigateToCheckYourOrganisationDetails,
-      submitOrganisationDetails,
-      navigateToMakeACharityClaim,
-      navigateToAboutOtherIncomeSchedule,
-      navigateToUploadOtherIncomeSchedule,
-      postFileToUpscanOI("data/other-income-valid-large.ods"),
-      getUpscanUploadResponseOI,
-      navigateToOIUploaded
-    ) ++ getFileVerificationStatusOI ++
-      List[ActionBuilder](
-        removeOIFromUploadedPage,
-        navigateToUploadOtherIncomeSchedule,
-        postFileToUpscanOI("data/other-income-valid-large.ods"),
-        getUpscanUploadResponseOI,
-        navigateToOIUploaded
-      ) ++ getFileVerificationStatusOI ++
-      List[ActionBuilder](
-        continueFromUploadedPageOI,
-        navigateToCheckYourOISchedule,
-        selectUpdateScheduleYesOI,
-        navigateToUpdateOIWarning,
-        SelectUpdateOIWarningYes,
-        navigateToUploadOtherIncomeSchedule,
-        postFileToUpscanOI("data/other-income-MasterError.ods"),
-        getUpscanUploadResponseOI
-      ) ++ getFileVerificationStatusOI ++
-      List[ActionBuilder](
-        continueFromUploadedPageOI,
-        navigateToProblemWithYourOISchedule,
-        clickAttachUpdatedScheduleButtonOI
-      )
-
   setup("oi-journey-1", "Other Income schedule upload journey with success") withActions (
     uploadOIScheduleHappyPath: _*
   )
 
   setup("oi-journey-2", "Other Income schedule upload journey with validation failed file to Errors page") withActions (
     uploadOIScheduleErrorPage: _*
-  )
-
-  setup(
-    "oi-journey-3",
-    "Other Income journeys removing from upload page, deleting from Warning page, reuploading OI etc"
-  ) withActions (
-    uploadOIScheduleRemoveWarningIterations: _*
   )
 
 }

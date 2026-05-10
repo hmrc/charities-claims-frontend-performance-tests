@@ -31,18 +31,15 @@ trait CBScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToAuth,
       authLogInForOrg,
       loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
       selectClaimTypeGASDS,
-      navigateToGASDSNotCB,
-      selectGASDSNotCBYes,
-      navigateToGASDSCB,
-      selectGASDSCBYes,
+      navigateToGASDSCheckbox,
+      selectGASDSAllYes,
       navigateToGASDSOverclaimed,
       selectGASDSOverclaimedYes,
-      navigateToConnectedToCharities,
-      selectConnectedToCharitiesYes,
       navigateToHaveClaimReference,
       selectReference,
       navigateToEnterClaimReferenceNumber,
@@ -85,18 +82,15 @@ trait CBScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToAuth,
       authLogInForOrg,
       loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
       selectClaimTypeGASDS,
-      navigateToGASDSNotCB,
-      selectGASDSNotCBYes,
-      navigateToGASDSCB,
-      selectGASDSCBYes,
+      navigateToGASDSCheckbox,
+      selectGASDSAllYes,
       navigateToGASDSOverclaimed,
       selectGASDSOverclaimedYes,
-      navigateToConnectedToCharities,
-      selectConnectedToCharitiesYes,
       navigateToHaveClaimReference,
       selectReference,
       navigateToEnterClaimReferenceNumber,
@@ -132,73 +126,6 @@ trait CBScheduleSimulation extends PerformanceTestRunner with BaseRequests {
         navigateToMakeACharityClaim
       )
 
-  val uploadCBScheduleRemoveWarningIterations: List[ActionBuilder] =
-    List[ActionBuilder](
-      navigateToAuth,
-      authLogInForOrg,
-      loginToAuthWizard,
-      navigateToMakeACharityClaim,
-      navigateToRepaymentClaimDetails,
-      navigateToSelectClaimType,
-      selectClaimTypeGASDS,
-      navigateToGASDSNotCB,
-      selectGASDSNotCBYes,
-      navigateToGASDSCB,
-      selectGASDSCBYes,
-      navigateToGASDSOverclaimed,
-      selectGASDSOverclaimedYes,
-      navigateToConnectedToCharities,
-      selectConnectedToCharitiesYes,
-      navigateToHaveClaimReference,
-      selectReference,
-      navigateToEnterClaimReferenceNumber,
-      enterClaimReferenceValue,
-      navigateToCheckYourRepaymentClaim,
-      submitRepaymentClaim,
-      navigateToMakeACharityClaim,
-      navigateToAboutTheOrg,
-      navigateToCharityRegulator,
-      selectNotRegistered,
-      navigateToWhyNotRegistered,
-      selectCharityExcepted,
-      navigateToCharityExcepted,
-      navigateToCorporateTrustee,
-      selectCorporateTrusteeYes,
-      navigateToCorporateTrusteeUKAddress,
-      selectCorporateTrusteeUKAddressNo,
-      navigateToCorporateTrusteeDetails,
-      enterCorporateTrusteeDetails,
-      navigateToCheckYourOrganisationDetails,
-      submitOrganisationDetails,
-      navigateToMakeACharityClaim,
-      navigateToAboutCommunityBuildingsSchedule,
-      navigateToUploadCommunityBuildingsSchedule,
-      postFileToUpscanCB("data/community-buildings-valid-large.ods"),
-      getUpscanUploadResponseCB,
-      navigateToCBUploaded
-    ) ++ getFileVerificationStatusCB ++
-      List[ActionBuilder](
-        removeCBFromUploadedPage,
-        navigateToUploadCommunityBuildingsSchedule,
-        postFileToUpscanCB("data/community-buildings-valid-large.ods"),
-        getUpscanUploadResponseCB,
-        navigateToCBUploaded
-      ) ++ getFileVerificationStatusCB ++
-      List[ActionBuilder](
-        continueFromUploadedPageCB,
-        navigateToCheckYourCBSchedule,
-        selectUpdateScheduleYesCB,
-        navigateToUpdateCBWarning,
-        SelectUpdateCBWarningYes,
-        navigateToUploadCommunityBuildingsSchedule,
-        postFileToUpscanCB("data/community-buildings-MasterError.ods"),
-        getUpscanUploadResponseCB
-      ) ++ getFileVerificationStatusCB ++
-      List[ActionBuilder](
-        continueFromUploadedPageCB,
-        navigateToProblemWithYourCBSchedule,
-        clickAttachUpdatedScheduleButtonCB
-      )
 
   setup("cb-journey-1", "Community Buildings schedule upload journey with success") withActions (
     uploadCBScheduleHappyPath: _*
@@ -209,13 +136,6 @@ trait CBScheduleSimulation extends PerformanceTestRunner with BaseRequests {
     "Community Buildings schedule upload journey with validation failed file to Errors page"
   ) withActions (
     uploadCBScheduleErrorPage: _*
-  )
-
-  setup(
-    "cb-journey-3",
-    "Community Buildings journeys removing from upload page, deleting from Warning page, reuploading CB etc"
-  ) withActions (
-    uploadCBScheduleRemoveWarningIterations: _*
   )
 
 }
