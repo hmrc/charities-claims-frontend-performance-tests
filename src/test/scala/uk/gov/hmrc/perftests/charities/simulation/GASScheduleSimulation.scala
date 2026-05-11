@@ -120,7 +120,6 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
         navigateToMakeACharityClaim
       )
 
-
   setup("gas-journey-1", "Gift Aid schedule upload journey with success") withActions (
     uploadGASScheduleHappyPath: _*
   )
@@ -128,6 +127,5 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
   setup("gas-journey-2", "Gift Aid schedule upload journey with validation failed file to Errors page") withActions (
     uploadGASScheduleErrorPage: _*
   )
-
 
 }

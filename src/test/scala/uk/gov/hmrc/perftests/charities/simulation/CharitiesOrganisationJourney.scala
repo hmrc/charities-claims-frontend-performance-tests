@@ -66,7 +66,6 @@ trait CharitiesOrganisationJourney extends PerformanceTestRunner with BaseReques
       navigateToMakeACharityClaim
     )
 
-
   val uploadScheduleExhaustive: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,

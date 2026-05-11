@@ -126,7 +126,6 @@ trait CBScheduleSimulation extends PerformanceTestRunner with BaseRequests {
         navigateToMakeACharityClaim
       )
 
-
   setup("cb-journey-1", "Community Buildings schedule upload journey with success") withActions (
     uploadCBScheduleHappyPath: _*
   )

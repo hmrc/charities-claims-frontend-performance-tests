@@ -26,18 +26,18 @@ import java.time.LocalDate
 object GASDSRequests extends ServicesConfiguration with BaseRequests {
 
   def currentTaxYear(): Int = {
-    val today = LocalDate.now()
-    val year = today.getYear
+    val today        = LocalDate.now()
+    val year         = today.getYear
     val taxYearStart = LocalDate.of(year, 4, 6)
 
     if (today.isBefore(taxYearStart)) year
     else year + 1
   }
 
-  val TaxYear: String            = currentTaxYear().toString
-  val earliestTaxYear: String       = (currentTaxYear()-1).toString
-  val secondEarliestTaxYear: String = (currentTaxYear()-2).toString
-  val previousTaxYear: String         = (currentTaxYear()-3).toString
+  val TaxYear: String               = currentTaxYear().toString
+  val earliestTaxYear: String       = (currentTaxYear() - 1).toString
+  val secondEarliestTaxYear: String = (currentTaxYear() - 2).toString
+  val previousTaxYear: String       = (currentTaxYear() - 3).toString
 
   val navigateToAboutTheGASDS: HttpRequestBuilder =
     http("Navigate to About the GASDS page")
@@ -53,7 +53,7 @@ object GASDSRequests extends ServicesConfiguration with BaseRequests {
       .check(saveCsrfToken())
       .check(regex("What is the adjustment amount for Gift Aid previously overclaimed?"))
 
-  val amountForAll= "999999.99"
+  val amountForAll = "999999.99"
 
   val enterAdjustmentAmountGASDS: HttpRequestBuilder =
     http("Enter your Adjustment Amount page")

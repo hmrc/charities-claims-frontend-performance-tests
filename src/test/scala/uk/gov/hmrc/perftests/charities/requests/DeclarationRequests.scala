@@ -45,20 +45,6 @@ object DeclarationRequests extends ServicesConfiguration with BaseRequests {
       .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", "false")
       .check(status.is(303))
-      //.check(header("Location").saveAs("AdjustmentLocation"))
-
-  val redirectToAdjustmentsFromRegister: HttpRequestBuilder =
-    http("Redirect to What adjustments made to this Claim page from Register Page")
-      .get(s"$baseUrl$redirectUrl$declarationAdjustment")
-      .check(status.is(303))
-      .check(header("Location").saveAs("AdjustmentPageLocation"))
-
-//  val navigateToAdjustmentsFromRegister: HttpRequestBuilder =
-//    http("Navigate to What adjustments made to this Claim page from Register Page")
-//      .get(s"$baseUrl$redirectUrl$declarationAdjustment")
-//      .check(status.is(200))
-//      .check(saveCsrfToken())
-//      .check(regex("What adjustments have you made to this claim?"))
 
   val navigateToWhatAdjustmentsToClaim: HttpRequestBuilder =
     http("Navigate to What adjustments made to this Claim page")
@@ -81,13 +67,6 @@ object DeclarationRequests extends ServicesConfiguration with BaseRequests {
       .check(saveCsrfToken())
       .check(regex("Declaration"))
 
-  val navigateToDeclarationForUnregulated: HttpRequestBuilder =
-    http("Navigate to Declaration Page")
-      .get(s"$baseUrl$redirectUrl$declarationPage")
-      .check(status.is(303))
-      .check(saveCsrfToken())
-      .check(regex("Declaration"))
-
   val submitClaimDeclaration: HttpRequestBuilder =
     http("Submit Claim Declaration")
       .post(s"$baseUrl$redirectUrl$declarationPage")
@@ -100,13 +79,11 @@ object DeclarationRequests extends ServicesConfiguration with BaseRequests {
       .check(status.is(200))
       .check(regex("Claim complete"))
 
-
   val pollNavigateToClaimComplete: List[ActionBuilder] =
-    tryMax(10, "completePageRetry") {
+    tryMax(15, "completePageRetry") {
       exec(navigateToClaimComplete)
         .pause(1.second)
     }.actionBuilders
-
 
   val printSubmissionSummary: HttpRequestBuilder =
     http("Navigate to Print Submission Summary page")
