@@ -19,33 +19,30 @@ package uk.gov.hmrc.perftests.charities.simulation
 import io.gatling.core.action.builder.ActionBuilder
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
-import uk.gov.hmrc.perftests.charities.requests.CBScheduleUploadRequests.{SelectDeleteCBWarningYes, SelectUpdateCBWarningYes, clickAttachUpdatedScheduleButtonCB, continueFromUploadedPageCB, getFileVerificationStatusCB, getUpscanUploadResponseCB, navigateToAboutCommunityBuildingsSchedule, navigateToCBSuccessBanner, navigateToCBUploaded, navigateToCheckYourCBSchedule, navigateToDeleteCBWarning, navigateToProblemWithYourCBSchedule, navigateToUpdateCBWarning, navigateToUploadCommunityBuildingsSchedule, postFileToUpscanCB, removeCBFromUploadedPage, selectUpdateScheduleNoCB, selectUpdateScheduleYesCB, submitScheduleUploadCB}
-import uk.gov.hmrc.perftests.charities.requests.CCScheduleUploadRequests.{SelectUpdateCCWarningYes, clickAttachUpdatedScheduleButtonCC, continueFromUploadedPageCC, getFileVerificationStatusCC, getUpscanUploadResponseCC, navigateToAboutConnectedCharitiesSchedule, navigateToCCSuccessBanner, navigateToCCUploaded, navigateToCheckYourCCSchedule, navigateToProblemWithYourCCSchedule, navigateToUpdateCCWarning, navigateToUploadConnectedCharitiesSchedule, postFileToUpscanCC, removeCCFromUploadedPage, selectUpdateScheduleNoCC, selectUpdateScheduleYesCC, submitScheduleUploadCC}
-import uk.gov.hmrc.perftests.charities.requests.GASScheduleUploadRequests.{SelectUpdateGASWarningYes, clickAttachUpdatedScheduleButtonGAS, continueFromUploadedPageGAS, getFileVerificationStatusGAS, getUpscanUploadResponseGAS, navigateToAboutGiftAidSchedule, navigateToCheckYourGASSchedule, navigateToGASSuccessBanner, navigateToGASUploaded, navigateToProblemWithYourGASSchedule, navigateToUpdateGASWarning, navigateToUploadGiftAidSchedule, postFileToUpscanGAS, removeGASFromUploadedPage, selectUpdateScheduleNoGAS, selectUpdateScheduleYesGAS, submitScheduleUploadGAS}
-import uk.gov.hmrc.perftests.charities.requests.OIScheduleUploadRequests.{SelectUpdateOIWarningYes, clickAttachUpdatedScheduleButtonOI, continueFromUploadedPageOI, getFileVerificationStatusOI, getUpscanUploadResponseOI, navigateToAboutOtherIncomeSchedule, navigateToCheckYourOISchedule, navigateToOISuccessBanner, navigateToOIUploaded, navigateToProblemWithYourOISchedule, navigateToUpdateOIWarning, navigateToUploadOtherIncomeSchedule, postFileToUpscanOI, removeOIFromUploadedPage, selectUpdateScheduleNoOI, selectUpdateScheduleYesOI, submitScheduleUploadOI}
+import uk.gov.hmrc.perftests.charities.requests.CBScheduleUploadRequests._
+import uk.gov.hmrc.perftests.charities.requests.CCScheduleUploadRequests._
+import uk.gov.hmrc.perftests.charities.requests.GASScheduleUploadRequests._
+import uk.gov.hmrc.perftests.charities.requests.OIScheduleUploadRequests._
 import uk.gov.hmrc.perftests.charities.requests.OrganisationRequests._
 import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{loginToAuthWizard, _}
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
 
-trait CharitiesJourneyScheduleSimulation extends PerformanceTestRunner with BaseRequests {
+trait CharitiesOrganisationJourney extends PerformanceTestRunner with BaseRequests {
 
   val UIJourneyRegulatorAuth: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
       authLogInForOrg,
       loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
       selectClaimTypeGASDS,
-      navigateToGASDSNotCB,
-      selectGASDSNotCBYes,
-      navigateToGASDSCB,
-      selectGASDSCBYes,
+      navigateToGASDSCheckbox,
+      selectGASDSAllYes,
       navigateToGASDSOverclaimed,
       selectGASDSOverclaimedYes,
-      navigateToConnectedToCharities,
-      selectConnectedToCharitiesYes,
       navigateToHaveClaimReference,
       selectReference,
       navigateToEnterClaimReferenceNumber,
@@ -69,64 +66,20 @@ trait CharitiesJourneyScheduleSimulation extends PerformanceTestRunner with Base
       navigateToMakeACharityClaim
     )
 
-  val UIJourneyExceptedTrustee: List[ActionBuilder] =
+  val uploadScheduleExhaustive: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
       authLogInForOrg,
       loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
       selectClaimTypeGASDS,
-      navigateToGASDSNotCB,
-      selectGASDSNotCBYes,
-      navigateToGASDSCB,
-      selectGASDSCBYes,
+      navigateToGASDSCheckbox,
+      selectGASDSAllYes,
       navigateToGASDSOverclaimed,
       selectGASDSOverclaimedYes,
-      navigateToConnectedToCharities,
-      selectConnectedToCharitiesYes,
-      navigateToHaveClaimReference,
-      selectReference,
-      navigateToEnterClaimReferenceNumber,
-      enterClaimReferenceValue,
-      navigateToCheckYourRepaymentClaim,
-      submitRepaymentClaim,
-      navigateToMakeACharityClaim,
-      navigateToAboutTheOrg,
-      navigateToCharityRegulator,
-      selectNotRegistered,
-      navigateToWhyNotRegistered,
-      selectCharityExcepted,
-      navigateToCharityExcepted,
-      navigateToCorporateTrustee,
-      selectCorporateTrusteeYes,
-      navigateToCorporateTrusteeUKAddress,
-      selectCorporateTrusteeUKAddressNo,
-      navigateToCorporateTrusteeDetails,
-      enterCorporateTrusteeDetails,
-      navigateToCheckYourOrganisationDetails,
-      submitOrganisationDetails,
-      navigateToMakeACharityClaim
-    )
-
-  val scheduleUploadAllIterations: List[ActionBuilder] =
-    List[ActionBuilder](
-      navigateToAuth,
-      authLogInForOrg,
-      loginToAuthWizard,
-      navigateToMakeACharityClaim,
-      navigateToRepaymentClaimDetails,
-      navigateToSelectClaimType,
-      selectClaimTypeGASDS,
-      navigateToGASDSNotCB,
-      selectGASDSNotCBYes,
-      navigateToGASDSCB,
-      selectGASDSCBYes,
-      navigateToGASDSOverclaimed,
-      selectGASDSOverclaimedYes,
-      navigateToConnectedToCharities,
-      selectConnectedToCharitiesYes,
       navigateToHaveClaimReference,
       selectReference,
       navigateToEnterClaimReferenceNumber,
@@ -310,17 +263,10 @@ trait CharitiesJourneyScheduleSimulation extends PerformanceTestRunner with Base
   )
 
   setup(
-    "UI-form-journey-2",
-    "Repayment and Organisation Journey with Charity Excepted and Corporate Trustee"
-  ) withActions (
-    UIJourneyExceptedTrustee: _*
-  )
-
-  setup(
-    "schedule-journey-all-iterations",
+    "upload-Schedule-Exhaustive",
     "GA/OI/CB/CC schedules validated and failed validation uploads, deletion, reuploads, warnings"
   ) withActions (
-    scheduleUploadAllIterations: _*
+    uploadScheduleExhaustive: _*
   )
 
 }

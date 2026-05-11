@@ -18,7 +18,7 @@ package uk.gov.hmrc.perftests.charities.simulation
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
-import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{enterClaimReferenceValue, loginToAuthWizard, navigateToCheckYourRepaymentClaim, navigateToConnectedToCharities, navigateToEnterClaimReferenceNumber, navigateToGASDSCB, navigateToGASDSNotCB, navigateToGASDSOverclaimed, navigateToHaveClaimReference, navigateToMakeACharityClaim, navigateToRepaymentClaimDetails, navigateToSelectClaimType, selectClaimTypeGASDS, selectClaimTypeNoGASDS, selectConnectedToCharitiesYes, selectGASDSCBYes, selectGASDSNotCBYes, selectGASDSOverclaimedYes, selectReference, submitRepaymentClaim}
+import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{enterClaimReferenceValue, loginToAuthWizard, navigateToCharityManagementOrganisation, navigateToCheckYourRepaymentClaim, navigateToEnterClaimReferenceNumber, navigateToGASDSCheckbox, navigateToGASDSOverclaimed, navigateToHaveClaimReference, navigateToMakeACharityClaim, navigateToRepaymentClaimDetails, navigateToSelectClaimType, selectClaimTypeGASDS, selectClaimTypeNoGASDS, selectGASDSAllYes, selectGASDSOverclaimedYes, selectReference, submitRepaymentClaim}
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
 
 trait RepaymentClaimSimulation extends PerformanceTestRunner with BaseRequests {
@@ -27,6 +27,7 @@ trait RepaymentClaimSimulation extends PerformanceTestRunner with BaseRequests {
     navigateToAuth,
     authLogInForOrg,
     loginToAuthWizard,
+    navigateToCharityManagementOrganisation,
     navigateToMakeACharityClaim,
     navigateToRepaymentClaimDetails,
     navigateToSelectClaimType,
@@ -43,18 +44,15 @@ trait RepaymentClaimSimulation extends PerformanceTestRunner with BaseRequests {
     navigateToAuth,
     authLogInForOrg,
     loginToAuthWizard,
+    navigateToCharityManagementOrganisation,
     navigateToMakeACharityClaim,
     navigateToRepaymentClaimDetails,
     navigateToSelectClaimType,
     selectClaimTypeGASDS,
-    navigateToGASDSNotCB,
-    selectGASDSNotCBYes,
-    navigateToGASDSCB,
-    selectGASDSCBYes,
+    navigateToGASDSCheckbox,
+    selectGASDSAllYes,
     navigateToGASDSOverclaimed,
     selectGASDSOverclaimedYes,
-    navigateToConnectedToCharities,
-    selectConnectedToCharitiesYes,
     navigateToHaveClaimReference,
     selectReference,
     navigateToEnterClaimReferenceNumber,

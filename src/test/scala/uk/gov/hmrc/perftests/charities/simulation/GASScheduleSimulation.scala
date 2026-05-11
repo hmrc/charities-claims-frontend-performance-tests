@@ -33,6 +33,7 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToAuth,
       authLogInForOrg,
       loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
@@ -79,6 +80,7 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToAuth,
       authLogInForOrg,
       loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
@@ -118,79 +120,12 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
         navigateToMakeACharityClaim
       )
 
-  val uploadGASScheduleRemoveWarningIterations: List[ActionBuilder] =
-    List[ActionBuilder](
-      navigateToAuth,
-      authLogInForOrg,
-      loginToAuthWizard,
-      navigateToMakeACharityClaim,
-      navigateToRepaymentClaimDetails,
-      navigateToSelectClaimType,
-      selectClaimTypeNoGASDS,
-      navigateToHaveClaimReference,
-      selectReference,
-      navigateToEnterClaimReferenceNumber,
-      enterClaimReferenceValue,
-      navigateToCheckYourRepaymentClaim,
-      submitRepaymentClaim,
-      navigateToMakeACharityClaim,
-      navigateToAboutTheOrg,
-      navigateToCharityRegulator,
-      selectNotRegistered,
-      navigateToWhyNotRegistered,
-      selectCharityExcepted,
-      navigateToCharityExcepted,
-      navigateToCorporateTrustee,
-      selectCorporateTrusteeYes,
-      navigateToCorporateTrusteeUKAddress,
-      selectCorporateTrusteeUKAddressNo,
-      navigateToCorporateTrusteeDetails,
-      enterCorporateTrusteeDetails,
-      navigateToCheckYourOrganisationDetails,
-      submitOrganisationDetails,
-      navigateToMakeACharityClaim,
-      navigateToAboutGiftAidSchedule,
-      navigateToUploadGiftAidSchedule,
-      postFileToUpscanGAS("data/gift-aid-valid-large.ods"),
-      getUpscanUploadResponseGAS,
-      navigateToGASUploaded
-    ) ++ getFileVerificationStatusGAS ++
-      List[ActionBuilder](
-        removeGASFromUploadedPage,
-        navigateToUploadGiftAidSchedule,
-        postFileToUpscanGAS("data/gift-aid-valid-large.ods"),
-        getUpscanUploadResponseGAS,
-        navigateToGASUploaded
-      ) ++ getFileVerificationStatusGAS ++
-      List[ActionBuilder](
-        continueFromUploadedPageGAS,
-        navigateToCheckYourGASSchedule,
-        selectUpdateScheduleYesGAS,
-        navigateToUpdateGASWarning,
-        SelectUpdateGASWarningYes,
-        navigateToUploadGiftAidSchedule,
-        postFileToUpscanGAS("data/gift-aid-MasterError.ods"),
-        getUpscanUploadResponseGAS
-      ) ++ getFileVerificationStatusGAS ++
-      List[ActionBuilder](
-        continueFromUploadedPageGAS,
-        navigateToProblemWithYourGASSchedule,
-        clickAttachUpdatedScheduleButtonGAS
-      )
-
   setup("gas-journey-1", "Gift Aid schedule upload journey with success") withActions (
     uploadGASScheduleHappyPath: _*
   )
 
   setup("gas-journey-2", "Gift Aid schedule upload journey with validation failed file to Errors page") withActions (
     uploadGASScheduleErrorPage: _*
-  )
-
-  setup(
-    "gas-journey-3",
-    "GAS journeys removing from upload page, deleting from Warning page, reuploading GAS etc"
-  ) withActions (
-    uploadGASScheduleRemoveWarningIterations: _*
   )
 
 }

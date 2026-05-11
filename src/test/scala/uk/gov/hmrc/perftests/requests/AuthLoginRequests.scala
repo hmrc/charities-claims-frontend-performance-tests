@@ -34,7 +34,7 @@ object AuthLoginRequests extends ServicesConfiguration with BaseRequests {
   def authLogInForOrg: HttpRequestBuilder =
     http("Login as an GG sign-in")
       .post(authLoginStubUrl)
-      .formParam("redirectionUrl", redirectUrl)
+      .formParam("redirectionUrl", redirectUrlManagement)
       .formParam("csrfToken", "#{csrfToken}")
       .formParam("credentialStrength", "strong")
       .formParam("authorityId", "")
@@ -42,15 +42,15 @@ object AuthLoginRequests extends ServicesConfiguration with BaseRequests {
       .formParam("affinityGroup", "Organisation")
       .formParam("enrolment[0].name", "HMRC-CHAR-ORG")
       .formParam("enrolment[0].taxIdentifier[0].name", "CHARID")
-      .formParam("enrolment[0].taxIdentifier[0].value", "123456")
+      .formParam("enrolment[0].taxIdentifier[0].value", "OR123")
       .formParam("enrolment[0].state", "Activated")
       .check(status.is(303))
-      .check(header("Location").is(redirectUrl))
+      .check(header("Location").is(redirectUrlManagement))
 
   def authLogInForAgent: HttpRequestBuilder =
     http("Login as an Org")
       .post(authLoginStubUrl)
-      .formParam("redirectionUrl", redirectUrl)
+      .formParam("redirectionUrl", redirectUrlManagement)
       .formParam("csrfToken", "#{csrfToken}")
       .formParam("credentialStrength", "strong")
       .formParam("credentialRole", "User")
@@ -59,10 +59,10 @@ object AuthLoginRequests extends ServicesConfiguration with BaseRequests {
       .formParam("affinityGroup", "Organisation")
       .formParam("enrolment[0].name", "HMRC-CHAR-AGENT")
       .formParam("enrolment[0].taxIdentifier[0].name", "AGENTCHARID")
-      .formParam("enrolment[0].taxIdentifier[0].value", "123")
+      .formParam("enrolment[0].taxIdentifier[0].value", "AG123")
       .formParam("enrolment[0].state", "Activated")
       .check(status.is(303))
-      .check(header("Location").is(redirectUrl))
+      .check(header("Location").is(redirectUrlManagement))
       .check(status.saveAs("statusCode"))
 
   def loginToService(
@@ -72,7 +72,7 @@ object AuthLoginRequests extends ServicesConfiguration with BaseRequests {
     expectedLocation: String
   ): HttpRequestBuilder =
     http(name)
-      .get(s"$baseUrl$redirectUrl")
+      .get(s"$baseUrlManagement$redirectUrlManagement")
       .check(status.is(303))
       .check(header("Location").is(expectedLocation))
 

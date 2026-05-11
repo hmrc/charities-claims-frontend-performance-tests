@@ -25,16 +25,25 @@ import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 trait BaseRequests extends ServicesConfiguration {
 
-  val baseUrl: String                   = baseUrlFor("charities-claims")
-  val redirectUrl: String               = "/charities-claims"
-  val makeACharityClaim: String         = "/make-a-charity-repayment-claim"
-  val repaymentClaimDetails: String     = "/repayment-claim-details"
-  val repaymentClaimType: String        = "/repayment-claim-type"
-  val gasdsNotCB: String                = "/claim-gasds-payment"
-  val gasdsCB: String                   = "/claim-community-building-donations"
-  val gasdsPreviousOverclaimed: String  = "/change-previous-gasds-claim"
-  val ConnectedToCharities: String      = "/connected-to-charities"
-  val haveClaimReference: String        = "/claim-reference-number"
+  val baseUrl: String     = baseUrlFor("charities-claims")
+  val redirectUrl: String = "/charities-claims"
+
+  val baseUrlManagement: String     = baseUrlFor("charities-management")
+  val redirectUrlManagement: String = "/charities-management"
+
+  val charityManagementOrganisation: String = "/manage-charity-repayment-claim"
+
+  val charityRefAgent: String  = "/enter-charities-reference-number"
+  val charityNameAgent: String = "/enter-the-charity-name"
+
+  val makeACharityClaim: String       = "/make-a-charity-repayment-claim"
+  val repaymentClaimDetails: String   = "/repayment-claim-details"
+  val repaymentClaimType: String      = "/select-repayment-claim-type"
+  val repaymentClaimTypeGASDS: String = "/select-gift-aid-small-donations-scheme-claim-type"
+
+  val gasdsPreviousOverclaimed: String = "/change-previous-gift-aid-small-donations-scheme-claim"
+
+  val haveClaimReference: String        = "/claim-reference-number-check"
   val enterClaimReferenceNumber: String = "/enter-claim-reference-number"
   val repaymentCYA: String              = "/check-your-repayment-claim"
 
@@ -50,6 +59,21 @@ trait BaseRequests extends ServicesConfiguration {
   val authorisedOfficialAddress: String = "/authorised-official-address"
   val authorisedOfficialDetails: String = "/authorised-official-details"
   val organisationCYA: String           = "/check-your-organisation-details"
+
+  val aboutTheGASDSpage: String   = "/about-gift-aid-small-donations-scheme"
+  val adjustmentGASDS: String     = "/adjustment-for-gift-aid-small-donations-scheme-overclaimed"
+  val adjustmentsCYAGASDS: String = "/check-gift-aid-small-donations-scheme-adjustment-amount"
+  val taxyear1GASDS: String       = "/which-tax-year-are-you-claiming-for/1"
+  val amount1GASDS: String        = "/donation-amount-you-are-claiming/1"
+  val cya1GASDS: String           = "/check-claim-details-for-tax-year/1"
+  val claimaddedGASDS: String     = "/claim-added-for-tax-year"
+  val taxyear2GASDS: String       = "/which-tax-year-are-you-claiming-for/2"
+  val amount2GASDS: String        = "/donation-amount-you-are-claiming/2"
+  val cya2GASDS: String           = "/check-claim-details-for-tax-year/2"
+  val taxyear3GASDS: String       = "/which-tax-year-are-you-claiming-for/3"
+  val amount3GASDS: String        = "/donation-amount-you-are-claiming/3"
+  val cya3GASDS: String           = "/check-claim-details-for-tax-year/3"
+  val cyaFinalGASDS: String       = "/check-your-gift-aid-small-donations-scheme-donation-details"
 
   val aboutTheGAS: String           = "/about-gift-aid-schedule"
   val uploadGAS: String             = "/upload-gift-aid-schedule"
@@ -90,6 +114,12 @@ trait BaseRequests extends ServicesConfiguration {
   val updateCCWarning: String      = "/update-connected-charities-schedule"
   val deleteCCWarning: String      = "/delete-gasds-connected-charities-schedule"
   val bannerCC: String             = "/connected-charities-schedule-upload-successful"
+
+  val declarationRegister: String   = "/registering-your-charity-with-a-regulator"
+  val declarationAdjustment: String = "/adjustments-to-this-claim"
+  val declarationPage: String       = "/declaration"
+  val claimComplete: String         = "/claim-complete"
+  val submissionSummary: String     = "/charity-repayment-claim-summary"
 
   val transactionType: String = "/preliminary-questions/transaction-type"
   val address: String         = "/preliminary-questions/address"
