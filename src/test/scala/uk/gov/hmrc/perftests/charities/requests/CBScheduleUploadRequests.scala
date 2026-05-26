@@ -125,7 +125,7 @@ object CBScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
             .check(status.is(200))
             .check(regex("""<strong[^>]*>\s*([\s\S]*?)\s*</strong>""").saveAs("uploadStatusRaw"))
             .check(saveCsrfToken())
-            .check(regex("Your Community Buildings schedule upload"))
+            .check(regex("Community Buildings schedule upload"))
         )
         .exec { session =>
           val cleaned = session("uploadStatusRaw").asOption[String].map(_.trim).getOrElse("")
@@ -156,6 +156,13 @@ object CBScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
       .check(status.is(200))
       .check(saveCsrfToken())
       .check(regex("Check your Community Buildings schedule"))
+
+  val navigateToCheckYourCBScheduleAgent: HttpRequestBuilder =
+    http("Navigate to check your Community Buildings Schedule page")
+      .get(s"$baseUrl" + "#{nextPageURL}")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("Check this Community Buildings schedule"))
 
   val navigateToProblemWithYourCBSchedule: HttpRequestBuilder =
     http("Navigate to Problem with your Community Buildings Schedule page")

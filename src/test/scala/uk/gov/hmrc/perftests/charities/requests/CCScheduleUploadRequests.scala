@@ -125,7 +125,7 @@ object CCScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
             .check(status.is(200))
             .check(regex("""<strong[^>]*>\s*([\s\S]*?)\s*</strong>""").saveAs("uploadStatusRaw"))
             .check(saveCsrfToken())
-            .check(regex("Your Connected Charities schedule upload"))
+            .check(regex("Connected Charities schedule upload"))
         )
         .exec { session =>
           val cleaned = session("uploadStatusRaw").asOption[String].map(_.trim).getOrElse("")
@@ -156,6 +156,13 @@ object CCScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
       .check(status.is(200))
       .check(saveCsrfToken())
       .check(regex("Check your Connected Charities schedule"))
+
+  val navigateToCheckYourCCScheduleAgent: HttpRequestBuilder =
+    http("Navigate to check your Connected Charities Schedule page")
+      .get(s"$baseUrl" + "#{nextPageURL}")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("Check tjos Connected Charities schedule"))
 
   val navigateToProblemWithYourCCSchedule: HttpRequestBuilder =
     http("Navigate to Problem with your Connected Charities Schedule page")

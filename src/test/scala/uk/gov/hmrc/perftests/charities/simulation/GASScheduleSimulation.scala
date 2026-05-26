@@ -21,8 +21,8 @@ import io.gatling.core.structure.{ChainBuilder, ScenarioBuilder}
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.{BaseRequests, GASScheduleUploadRequests}
 import uk.gov.hmrc.perftests.charities.requests.GASScheduleUploadRequests.{SelectDeleteGASWarningYes, SelectUpdateGASWarningYes, clickAttachUpdatedScheduleButtonGAS, continueFromUploadedPageGAS, getFileVerificationStatusGAS, getUpscanUploadResponseGAS, navigateToAboutGiftAidSchedule, navigateToCheckYourGASSchedule, navigateToDeleteGASWarning, navigateToGASSuccessBanner, navigateToGASUploaded, navigateToProblemWithYourGASSchedule, navigateToUpdateGASWarning, navigateToUploadGiftAidSchedule, postFileToUpscanGAS, removeGASFromUploadedPage, selectUpdateScheduleNoGAS, selectUpdateScheduleYesGAS, submitScheduleUploadGAS}
-import uk.gov.hmrc.perftests.charities.requests.OrganisationRequests._
-import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{enterClaimReferenceValue, loginToAuthWizard, navigateToCheckYourRepaymentClaim, navigateToEnterClaimReferenceNumber, navigateToHaveClaimReference, selectReference, submitRepaymentClaim, _}
+import uk.gov.hmrc.perftests.charities.requests.OrganisationDetailsRequests._
+import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests._
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
 import io.gatling.core.action.builder.ActionBuilder
 

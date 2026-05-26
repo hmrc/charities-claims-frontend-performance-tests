@@ -36,20 +36,20 @@
 //import io.gatling.http.Predef._
 //import io.gatling.http.request.builder.HttpRequestBuilder
 //import uk.gov.hmrc.performance.conf.ServicesConfiguration
-//import uk.gov.hmrc.perftests.charities.requests.{BaseRequests, OrganisationRequests}
+//import uk.gov.hmrc.perftests.charities.requests.{BaseRequests, OrganisationDetailsRequests}
 //
 //object AuthLoginRequests extends ServicesConfiguration with BaseRequests {
 //
 //  lazy val navigateToAuth: HttpRequestBuilder =
 //    http("Auth wizard")
-//      .get(OrganisationRequests.authLoginStubUrl)
+//      .get(OrganisationDetailsRequests.authLoginStubUrl)
 //      .check(saveCsrfToken())
 //      .check(status.is(200))
 //      .check(regex("Authority Wizard").exists)
 //
 //  def authLogInForOrg: HttpRequestBuilder =
 //    http("Login as an GG sign-in")
-//      .post(OrganisationRequests.authLoginStubUrl)
+//      .post(OrganisationDetailsRequests.authLoginStubUrl)
 //      .formParam("redirectionUrl", redirectUrl)
 //      .formParam("csrfToken", "#{csrfToken}")
 //      .formParam("credentialStrength", "strong")
@@ -65,7 +65,7 @@
 //
 //  def authLogInForAgent: HttpRequestBuilder =
 //    http("Login as an Org")
-//      .post(OrganisationRequests.authLoginStubUrl)
+//      .post(OrganisationDetailsRequests.authLoginStubUrl)
 //      .formParam("redirectionUrl", redirectUrl)
 //      .formParam("csrfToken", "#{csrfToken}")
 //      .formParam("credentialStrength", "strong")

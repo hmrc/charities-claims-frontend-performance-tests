@@ -20,7 +20,7 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
-import uk.gov.hmrc.perftests.charities.requests.{BaseRequests, OrganisationRequests, RepaymentRequests}
+import uk.gov.hmrc.perftests.charities.requests.{BaseRequests, OrganisationDetailsRequests, RepaymentRequests}
 
 object AuthLoginRequests extends ServicesConfiguration with BaseRequests {
 
@@ -56,7 +56,7 @@ object AuthLoginRequests extends ServicesConfiguration with BaseRequests {
       .formParam("credentialRole", "User")
       .formParam("authorityId", "")
       .formParam("confidenceLevel", "50")
-      .formParam("affinityGroup", "Organisation")
+      .formParam("affinityGroup", "Agent")
       .formParam("enrolment[0].name", "HMRC-CHAR-AGENT")
       .formParam("enrolment[0].taxIdentifier[0].name", "AGENTCHARID")
       .formParam("enrolment[0].taxIdentifier[0].value", "AG123")

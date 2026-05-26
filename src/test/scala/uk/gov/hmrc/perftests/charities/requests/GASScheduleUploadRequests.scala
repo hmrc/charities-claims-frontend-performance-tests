@@ -127,7 +127,7 @@ object GASScheduleUploadRequests extends ServicesConfiguration with BaseRequests
             .check(status.is(200))
             .check(regex("""<strong[^>]*>\s*([\s\S]*?)\s*</strong>""").saveAs("uploadStatusRaw"))
             .check(saveCsrfToken())
-            .check(regex("Your Gift Aid schedule upload"))
+            .check(regex("Gift Aid schedule upload"))
         )
         .exec { session =>
           val cleaned = session("uploadStatusRaw").asOption[String].map(_.trim).getOrElse("")
@@ -158,6 +158,13 @@ object GASScheduleUploadRequests extends ServicesConfiguration with BaseRequests
       .check(status.is(200))
       .check(saveCsrfToken())
       .check(regex("Check your Gift Aid schedule"))
+
+  val navigateToCheckYourGASScheduleAgent: HttpRequestBuilder =
+    http("Navigate to check this Gift Aid Schedule page")
+      .get(s"$baseUrl" + "#{nextPageURL}")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("Check this Gift Aid schedule"))
 
   val navigateToProblemWithYourGASSchedule: HttpRequestBuilder =
     http("Navigate to Problem with your Gift Aid Schedule page")
