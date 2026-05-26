@@ -33,6 +33,7 @@ class CharitiesSimulation
     with OIScheduleSimulation
     with CBScheduleSimulation
     with CCScheduleSimulation
+    with CharitiesAgentFullSubmission
     with GASScheduleSimulation {
   runSimulation()
 }

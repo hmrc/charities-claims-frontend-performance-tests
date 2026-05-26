@@ -125,7 +125,7 @@ object OIScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
             .check(status.is(200))
             .check(regex("""<strong[^>]*>\s*([\s\S]*?)\s*</strong>""").saveAs("uploadStatusRaw"))
             .check(saveCsrfToken())
-            .check(regex("Your Other Income schedule upload"))
+            .check(regex("Other Income schedule upload"))
         )
         .exec { session =>
           val cleaned = session("uploadStatusRaw").asOption[String].map(_.trim).getOrElse("")
@@ -156,6 +156,13 @@ object OIScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
       .check(status.is(200))
       .check(saveCsrfToken())
       .check(regex("Check your Other Income schedule"))
+
+  val navigateToCheckYourOIScheduleAgent: HttpRequestBuilder =
+    http("Navigate to check your Other Income Schedule page")
+      .get(s"$baseUrl" + "#{nextPageURL}")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("Check this Other Income schedule"))
 
   val navigateToProblemWithYourOISchedule: HttpRequestBuilder =
     http("Navigate to Problem with your Other Income Schedule page")

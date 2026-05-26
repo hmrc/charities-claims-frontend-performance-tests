@@ -23,7 +23,7 @@ import uk.gov.hmrc.perftests.charities.requests.CBScheduleUploadRequests._
 import uk.gov.hmrc.perftests.charities.requests.CCScheduleUploadRequests._
 import uk.gov.hmrc.perftests.charities.requests.GASScheduleUploadRequests._
 import uk.gov.hmrc.perftests.charities.requests.OIScheduleUploadRequests._
-import uk.gov.hmrc.perftests.charities.requests.OrganisationRequests._
+import uk.gov.hmrc.perftests.charities.requests.OrganisationDetailsRequests._
 import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{loginToAuthWizard, _}
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
 

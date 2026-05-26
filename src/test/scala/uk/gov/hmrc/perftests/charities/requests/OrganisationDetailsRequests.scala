@@ -21,7 +21,7 @@ import io.gatling.http.Predef._
 import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
-object OrganisationRequests extends ServicesConfiguration with BaseRequests {
+object OrganisationDetailsRequests extends ServicesConfiguration with BaseRequests {
 
   val navigateToAboutTheOrg: HttpRequestBuilder =
     http("Navigate to About the Organisation page")
@@ -51,6 +51,13 @@ object OrganisationRequests extends ServicesConfiguration with BaseRequests {
       .formParam("value", "Scottish")
       .check(status.is(303))
 
+  val selectEnglandWalesRegistered: HttpRequestBuilder =
+    http("Select charity England and Wales as regulator name")
+      .post(s"$baseUrl$redirectUrl$nameOfCharityRegulator")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value", "EnglandAndWales")
+      .check(status.is(303))
+
   val navigateToWhyNotRegistered: HttpRequestBuilder =
     http("Navigate to Why charity not registered to a regulator Page")
       .get(s"$baseUrl$redirectUrl$charityNotRegistered")
@@ -78,6 +85,13 @@ object OrganisationRequests extends ServicesConfiguration with BaseRequests {
       .check(status.is(200))
       .check(saveCsrfToken())
       .check(regex("Your charity is excepted"))
+
+  val navigateToCharityExceptedAgent: HttpRequestBuilder =
+    http("Navigate to Charity is Excepted Page")
+      .get(s"$baseUrl$redirectUrl$charityExcepted")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("The charity is excepted"))
 
   val navigateToCharityExempt: HttpRequestBuilder =
     http("Navigate to Your Charity is Excepted Page")
@@ -185,12 +199,82 @@ object OrganisationRequests extends ServicesConfiguration with BaseRequests {
       .formParam("postcode", "WG7 7FU")
       .check(status.is(303))
 
+  val navigateToSendPaymentToAgent: HttpRequestBuilder =
+    http("Navigate to 'Who should HMRC send payment to' Page")
+      .get(s"$baseUrl$redirectUrl$sendPaymentToAgent")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("Who should HMRC send payment to?"))
+
+  val selectAgentNomineeAgent: HttpRequestBuilder =
+    http("Select Agent/Nominee")
+      .post(s"$baseUrl$redirectUrl$sendPaymentToAgent")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value", "taxAgent")
+      .check(status.is(303))
+
+  val selectCASCAgent: HttpRequestBuilder =
+    http("Select Charity/CASC")
+      .post(s"$baseUrl$redirectUrl$sendPaymentToAgent")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value", "business")
+      .check(status.is(303))
+
+  val navigateToTelephoneAgent: HttpRequestBuilder =
+    http("Navigate to 'agent's telephone number' Page")
+      .get(s"$baseUrl$redirectUrl$telephoneAgent")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("What is your telephone number?"))
+
+  val enterTelephoneAgent: HttpRequestBuilder =
+    http("Enter telephone number of agent")
+      .post(s"$baseUrl$redirectUrl$telephoneAgent")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value", "456891234567891234567891239122")
+      .check(status.is(303))
+
+  val navigateToUKAddressAgent: HttpRequestBuilder =
+    http("Navigate to 'Do you have a UK Address' agents Page")
+      .get(s"$baseUrl$redirectUrl$UKAddressAgent")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("Do you have a UK address?"))
+
+  val selectUKAddressYesAgent: HttpRequestBuilder =
+    http("Select YES for Agent's UK Address")
+      .post(s"$baseUrl$redirectUrl$UKAddressAgent")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value", "true")
+      .check(status.is(303))
+
+  val navigateToPostcodeAgent: HttpRequestBuilder =
+    http("Navigate to enter Agent's Postcode Page")
+      .get(s"$baseUrl$redirectUrl$postcodeAgent")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("What is your postcode?"))
+
+  val enterPostcodeAgent: HttpRequestBuilder =
+    http("Enter Agent's Postcode")
+      .post(s"$baseUrl$redirectUrl$postcodeAgent")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value", "WG7 7FU")
+      .check(status.is(303))
+
   val navigateToCheckYourOrganisationDetails: HttpRequestBuilder =
     http("Navigate Check your organisation details Page")
       .get(s"$baseUrl$redirectUrl$organisationCYA")
       .check(status.is(200))
       .check(saveCsrfToken())
       .check(regex("Check your organisation details"))
+
+  val navigateToCheckYourOrganisationDetailsAgent: HttpRequestBuilder =
+    http("Navigate Check your organisation details Page")
+      .get(s"$baseUrl$redirectUrl$organisationCYA")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("Check the organisation details"))
 
   val submitOrganisationDetails: HttpRequestBuilder =
     http("Submit Organisation Details")

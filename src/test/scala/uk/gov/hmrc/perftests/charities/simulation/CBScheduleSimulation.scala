@@ -20,8 +20,8 @@ import io.gatling.core.action.builder.ActionBuilder
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
 import uk.gov.hmrc.perftests.charities.requests.CBScheduleUploadRequests.{SelectDeleteCBWarningYes, SelectUpdateCBWarningYes, clickAttachUpdatedScheduleButtonCB, continueFromUploadedPageCB, getFileVerificationStatusCB, getUpscanUploadResponseCB, navigateToAboutCommunityBuildingsSchedule, navigateToCBSuccessBanner, navigateToCBUploaded, navigateToCheckYourCBSchedule, navigateToDeleteCBWarning, navigateToProblemWithYourCBSchedule, navigateToUpdateCBWarning, navigateToUploadCommunityBuildingsSchedule, postFileToUpscanCB, removeCBFromUploadedPage, selectUpdateScheduleNoCB, selectUpdateScheduleYesCB, submitScheduleUploadCB}
-import uk.gov.hmrc.perftests.charities.requests.OrganisationRequests._
-import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{loginToAuthWizard, _}
+import uk.gov.hmrc.perftests.charities.requests.OrganisationDetailsRequests._
+import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests._
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
 
 trait CBScheduleSimulation extends PerformanceTestRunner with BaseRequests {

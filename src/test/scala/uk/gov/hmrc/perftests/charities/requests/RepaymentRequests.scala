@@ -27,7 +27,7 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
     http("Login to auth wizard")
       .get(s"$baseUrlManagement$redirectUrlManagement")
       .check(status.is(303))
-      .check(header("Location").is(s"$redirectUrlManagement$charityManagementOrganisation"))
+      .check(header("Location").is(s"$redirectUrlManagement$charityManagementURL"))
 
   val navigateToCharityManagementOrganisation: HttpRequestBuilder =
     http("Navigate to Make a Charity Repayment Claim page")
@@ -151,6 +151,13 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
       .check(saveCsrfToken())
       .check(regex("Do you have a claim reference number?"))
 
+  val navigateToHaveClaimReferenceAgent: HttpRequestBuilder =
+    http("Navigate to Agent's Charity have a claim reference number Page")
+      .get(s"$baseUrl$redirectUrl$haveClaimReference")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("Does the charity have a claim reference number?"))
+
   val selectReference: HttpRequestBuilder =
     http("Enter If you have a claim reference number")
       .post(s"$baseUrl$redirectUrl$haveClaimReference")
@@ -164,6 +171,13 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
       .check(status.is(200))
       .check(saveCsrfToken())
       .check(regex("What is your claim reference number?"))
+
+  val navigateToEnterClaimReferenceNumberAgent: HttpRequestBuilder =
+    http("Navigate to Agent's Enter charity's claim reference number Page")
+      .get(s"$baseUrl$redirectUrl$enterClaimReferenceNumber")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("What is the charity’s claim reference number?"))
 
   val enterClaimReferenceValue: HttpRequestBuilder =
     http("Enter If you have a claim reference number")
@@ -179,6 +193,14 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
       .check(status.is(200))
       .check(saveCsrfToken())
       .check(regex("Check your repayment claim"))
+
+  val navigateToCheckYourRepaymentClaimAgent: HttpRequestBuilder =
+    http("Navigate to Agent's CYA Page for Repayment Claim")
+      .get(s"$baseUrl$redirectUrl$repaymentCYA")
+      .formParam("csrfToken", "#{csrfToken}")
+      .check(status.is(200))
+      .check(saveCsrfToken())
+      .check(regex("Check repayment claim details"))
 
   val submitRepaymentClaim: HttpRequestBuilder =
     http("Submit Repayment Claim")
