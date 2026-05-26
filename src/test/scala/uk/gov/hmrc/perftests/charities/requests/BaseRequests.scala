@@ -33,12 +33,12 @@ trait BaseRequests extends ServicesConfiguration {
 
   val charityManagementURL: String = "/manage-charity-repayment-claim"
 
-  val charityRefAgent: String  = "/enter-charities-reference-number"
-  val charityNameAgent: String = "/enter-the-charity-name"
-  val sendPaymentToAgent: String  = "/who-should-we-send-the-payment-to"
-  val telephoneAgent: String = "/enter-a-telephone-number"
-  val UKAddressAgent: String = "/do-you-have-a-uk-address"
-  val postcodeAgent: String = "/what-is-your-postcode"
+  val charityRefAgent: String    = "/enter-charities-reference-number"
+  val charityNameAgent: String   = "/enter-the-charity-name"
+  val sendPaymentToAgent: String = "/who-should-we-send-the-payment-to"
+  val telephoneAgent: String     = "/enter-a-telephone-number"
+  val UKAddressAgent: String     = "/do-you-have-a-uk-address"
+  val postcodeAgent: String      = "/what-is-your-postcode"
 
   val makeACharityClaim: String       = "/make-a-charity-repayment-claim"
   val repaymentClaimDetails: String   = "/repayment-claim-details"

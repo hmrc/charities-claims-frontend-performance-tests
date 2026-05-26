@@ -102,7 +102,7 @@ object GASDSRequests extends ServicesConfiguration with BaseRequests {
       .get(s"$baseUrl$redirectUrl$amount1GASDS")
       .check(status.is(200))
       .check(saveCsrfToken())
-      .check(regex("What donation amount are you claiming under GASDS, in pounds?"))
+      .check(regex("What is the donation amount you are claiming, in pounds?"))
 
   val navigateToAmount1GASDSAgent: HttpRequestBuilder =
     http("Navigate to Amount of Tax Year 1 GASDS page")
@@ -172,7 +172,7 @@ object GASDSRequests extends ServicesConfiguration with BaseRequests {
       .get(s"$baseUrl$redirectUrl$amount2GASDS")
       .check(status.is(200))
       .check(saveCsrfToken())
-      .check(regex("What donation amount are you claiming under GASDS, in pounds?"))
+      .check(regex("What is the donation amount you are claiming, in pounds?"))
 
   val navigateToAmount2GASDSAgent: HttpRequestBuilder =
     http("Navigate to Amount of Tax Year 2 GASDS page")
@@ -242,7 +242,7 @@ object GASDSRequests extends ServicesConfiguration with BaseRequests {
       .get(s"$baseUrl$redirectUrl$amount3GASDS")
       .check(status.is(200))
       .check(saveCsrfToken())
-      .check(regex("What donation amount are you claiming under GASDS, in pounds?"))
+      .check(regex("What is the donation amount you are claiming, in pounds?"))
 
   val navigateToAmount3GASDSAgent: HttpRequestBuilder =
     http("Navigate to Amount of Tax Year 3 GASDS page")

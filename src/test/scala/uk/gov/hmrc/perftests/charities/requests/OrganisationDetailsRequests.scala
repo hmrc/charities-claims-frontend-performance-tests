@@ -199,7 +199,6 @@ object OrganisationDetailsRequests extends ServicesConfiguration with BaseReques
       .formParam("postcode", "WG7 7FU")
       .check(status.is(303))
 
-
   val navigateToSendPaymentToAgent: HttpRequestBuilder =
     http("Navigate to 'Who should HMRC send payment to' Page")
       .get(s"$baseUrl$redirectUrl$sendPaymentToAgent")
@@ -262,7 +261,6 @@ object OrganisationDetailsRequests extends ServicesConfiguration with BaseReques
       .formParam("csrfToken", "#{csrfToken}")
       .formParam("value", "WG7 7FU")
       .check(status.is(303))
-
 
   val navigateToCheckYourOrganisationDetails: HttpRequestBuilder =
     http("Navigate Check your organisation details Page")

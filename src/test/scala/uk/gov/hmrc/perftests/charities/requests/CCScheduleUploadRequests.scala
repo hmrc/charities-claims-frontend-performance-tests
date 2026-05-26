@@ -162,7 +162,7 @@ object CCScheduleUploadRequests extends ServicesConfiguration with BaseRequests 
       .get(s"$baseUrl" + "#{nextPageURL}")
       .check(status.is(200))
       .check(saveCsrfToken())
-      .check(regex("Check tjos Connected Charities schedule"))
+      .check(regex("Check this Connected Charities schedule"))
 
   val navigateToProblemWithYourCCSchedule: HttpRequestBuilder =
     http("Navigate to Problem with your Connected Charities Schedule page")
