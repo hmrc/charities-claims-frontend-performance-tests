@@ -34,6 +34,7 @@ class CharitiesSimulation
     with CBScheduleSimulation
     with CCScheduleSimulation
     with CharitiesAgentFullSubmission
+    with CharitiesFullSubmitTimeoutFriendly
     with GASScheduleSimulation {
   runSimulation()
 }
