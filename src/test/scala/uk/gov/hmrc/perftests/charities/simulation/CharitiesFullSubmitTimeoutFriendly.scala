@@ -31,8 +31,7 @@ import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, naviga
 
 trait CharitiesFullSubmitTimeoutFriendly extends PerformanceTestRunner with BaseRequests {
 
-
-  val schedule3UploadsSubmissions: List[ActionBuilder] =
+  val schedule1UploadSubmissions: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
       authLogInForOrg,
@@ -41,9 +40,9 @@ trait CharitiesFullSubmitTimeoutFriendly extends PerformanceTestRunner with Base
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
-      selectClaimTypeGACB,
+      selectClaimTypeGAGASDS,
       navigateToGASDSCheckbox,
-      selectGASDScbTopup,
+      selectGASDSTopUP,
       navigateToGASDSOverclaimed,
       selectGASDSOverclaimedYes,
       navigateToHaveClaimReference,
@@ -107,19 +106,6 @@ trait CharitiesFullSubmitTimeoutFriendly extends PerformanceTestRunner with Base
         navigateToGASSuccessBanner,
         submitScheduleUploadGAS,
         navigateToMakeACharityClaim,
-        navigateToAboutCommunityBuildingsSchedule,
-        navigateToUploadCommunityBuildingsSchedule,
-        postFileToUpscanCB("data/community-buildings-valid-large.ods"),
-        getUpscanUploadResponseCB,
-        navigateToCBUploaded
-      ) ++ getFileVerificationStatusCB ++
-      List[ActionBuilder](
-        continueFromUploadedPageCB,
-        navigateToCheckYourCBSchedule,
-        selectUpdateScheduleNoCB,
-        navigateToCBSuccessBanner,
-        submitScheduleUploadCB,
-        navigateToMakeACharityClaim,
         redirectToRegisterCharityFromAdjustment,
         selectNoContinueRegister,
         navigateToWhatAdjustmentsToClaim,
@@ -133,8 +119,8 @@ trait CharitiesFullSubmitTimeoutFriendly extends PerformanceTestRunner with Base
 
   setup(
     "schedule-journey-org-timeout-friendly",
-    "GASDS/GA/OI/CB valid schedules only"
+    "GASDS plus GA valid schedule only"
   ) withActions (
-    schedule3UploadsSubmissions: _*
+    schedule1UploadSubmissions: _*
   )
 }

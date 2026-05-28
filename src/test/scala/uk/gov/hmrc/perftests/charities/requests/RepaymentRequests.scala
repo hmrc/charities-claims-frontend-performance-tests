@@ -100,7 +100,7 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
       .formParam("value[2]", "claimingTaxDeducted")
       .check(status.is(303))
 
-  val selectClaimTypeGACB: HttpRequestBuilder =
+  val selectClaimTypeGAGASDS: HttpRequestBuilder =
     http("Select type of repayment claim Page")
       .post(s"$baseUrl$redirectUrl$repaymentClaimType")
       .formParam("csrfToken", "#{csrfToken}")
