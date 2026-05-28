@@ -100,6 +100,14 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
       .formParam("value[2]", "claimingTaxDeducted")
       .check(status.is(303))
 
+  val selectClaimTypeGACB: HttpRequestBuilder =
+    http("Select type of repayment claim Page")
+      .post(s"$baseUrl$redirectUrl$repaymentClaimType")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value[0]", "claimingGiftAid")
+      .formParam("value[1]", "claimingUnderGiftAidSmallDonationsScheme")
+      .check(status.is(303))
+
   val selectClaimTypeGASDSOnly: HttpRequestBuilder =
     http("Select type of repayment claim Page")
       .post(s"$baseUrl$redirectUrl$repaymentClaimType")
@@ -121,6 +129,14 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
       .formParam("value[0]", "topUp")
       .formParam("value[2]", "communityBuildings")
       .formParam("value[3]", "connectedCharity")
+      .check(status.is(303))
+
+  val selectGASDScbTopup: HttpRequestBuilder =
+    http("Select Yes on claim GASDS for Top-up/Community buildings/Connected Charity")
+      .post(s"$baseUrl$redirectUrl$repaymentClaimTypeGASDS")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value[0]", "topUp")
+      .formParam("value[2]", "communityBuildings")
       .check(status.is(303))
 
   val selectGASDSTopUP: HttpRequestBuilder =
