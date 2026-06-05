@@ -117,10 +117,124 @@ trait CharitiesFullSubmitTimeoutFriendly extends PerformanceTestRunner with Base
         printSubmissionSummary
       )
 
+  val GiftAidScheduleUpload: List[ActionBuilder] =
+    List[ActionBuilder](
+      navigateToAuth,
+      authLogInForOrg,
+      loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
+      navigateToMakeACharityClaim,
+      navigateToRepaymentClaimDetails,
+      navigateToSelectClaimType,
+      selectClaimTypeGAGASDS,
+      navigateToGASDSCheckbox,
+      selectGASDSTopUP,
+      navigateToGASDSOverclaimed,
+      selectGASDSOverclaimedYes,
+      navigateToHaveClaimReference,
+      selectReference,
+      navigateToEnterClaimReferenceNumber,
+      enterClaimReferenceValue,
+      navigateToCheckYourRepaymentClaim,
+      submitRepaymentClaim,
+      navigateToMakeACharityClaim,
+      navigateToAboutGiftAidSchedule,
+      navigateToUploadGiftAidSchedule,
+      postFileToUpscanGAS("data/gift-aid-valid-large.ods"),
+      getUpscanUploadResponseGAS,
+      navigateToGASUploaded
+    ) ++ getFileVerificationStatusGAS ++
+      List[ActionBuilder](
+        continueFromUploadedPageGAS,
+        navigateToCheckYourGASSchedule,
+        selectUpdateScheduleNoGAS,
+        navigateToGASSuccessBanner,
+        submitScheduleUploadGAS,
+        navigateToMakeACharityClaim
+      )
+
+  val GASDSSubmission: List[ActionBuilder] =
+    List[ActionBuilder](
+      navigateToAuth,
+      authLogInForOrg,
+      loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
+      navigateToMakeACharityClaim,
+      navigateToRepaymentClaimDetails,
+      navigateToSelectClaimType,
+      selectClaimTypeGASDSOnly,
+      navigateToGASDSCheckbox,
+      selectGASDSTopUP,
+      navigateToGASDSOverclaimed,
+      selectGASDSOverclaimedYes,
+      navigateToHaveClaimReference,
+      selectReference,
+      navigateToEnterClaimReferenceNumber,
+      enterClaimReferenceValue,
+      navigateToCheckYourRepaymentClaim,
+      submitRepaymentClaim,
+      navigateToMakeACharityClaim,
+      navigateToAboutTheOrg,
+      navigateToCharityRegulator,
+      selectScottishRegistered,
+      navigateToRegulatorNumber,
+      enterRegulatorNumber,
+      navigateToCorporateTrustee,
+      selectCorporateTrusteeNo,
+      navigateToAuthorisedOfficialUKAddress,
+      selectAuthorisedOfficialUKAddressYes,
+      navigateToAuthorisedOfficialDetails,
+      enterAuthorisedOfficialDetails,
+      navigateToCheckYourOrganisationDetails,
+      submitOrganisationDetails,
+      navigateToMakeACharityClaim,
+      navigateToAboutTheGASDS,
+      navigateToAdjustmentAmountGASDS,
+      enterAdjustmentAmountGASDS,
+      navigateToCYAAdjustmentGASDS,
+      navigateToTaxYear1GASDS,
+      enterTaxYear1GASDS,
+      navigateToAmount1GASDS,
+      enterAmount1GASDS,
+      navigateToCYATaxYear1GASDS,
+      navigateToClaim1Added,
+      selectSecondYearYes,
+      navigateToTaxYear2GASDS,
+      enterTaxYear2GASDS,
+      navigateToAmount2GASDS,
+      enterAmount2GASDS,
+      navigateToCYATaxYear2GASDS,
+      navigateToClaim2Added,
+      selectThirdYearYes,
+      navigateToTaxYear3GASDS,
+      enterTaxYear3GASDS,
+      navigateToAmount3GASDS,
+      enterAmount3GASDS,
+      navigateToCYATaxYear3GASDS,
+      navigateToClaim3Added,
+      navigateToFinalCYA,
+      submitGASDSDetails,
+      navigateToMakeACharityClaim,
+      navigateToWhatAdjustmentsToClaim,
+      enterAdjustmentText,
+      navigateToDeclaration,
+      submitClaimDeclaration
+    ) ++ pollNavigateToClaimComplete ++
+      List[ActionBuilder](
+        printSubmissionSummary
+      )
+
   setup(
     "schedule-journey-org-timeout-friendly",
-    "GASDS plus GA valid schedule only"
+    "Gift Aid schedule upload only"
   ) withActions (
-    schedule1UploadSubmissions: _*
+    GiftAidScheduleUpload: _*
+  )
+
+  setup(
+    "journey-gasds-org-submission",
+    "GASDS claim submission without any schedule upload"
+  ) withActions (
+    GASDSSubmission: _*
   )
 }
