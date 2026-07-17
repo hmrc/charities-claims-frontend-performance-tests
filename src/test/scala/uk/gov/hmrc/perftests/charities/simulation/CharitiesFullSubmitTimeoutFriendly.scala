@@ -62,7 +62,7 @@ trait CharitiesFullSubmitTimeoutFriendly extends PerformanceTestRunner with Base
       navigateToMakeACharityClaim,
       navigateToAboutGiftAidSchedule,
       navigateToUploadGiftAidSchedule,
-      postFileToUpscanGAS("data/Gift-Aid-Schedule-VALIDTEST"),
+      postFileToUpscanGAS("data/Gift-Aid-Schedule-VALIDTEST.ods"),
       getUpscanUploadResponseGAS,
       navigateToGASUploaded
     ) ++ getFileVerificationStatusGAS ++
