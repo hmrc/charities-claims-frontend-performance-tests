@@ -225,6 +225,13 @@ trait CharitiesFullSubmitTimeoutFriendly extends PerformanceTestRunner with Base
       )
 
   setup(
+    "schedule-journey-org-schedule-submit",
+    "Gift Aid schedule upload and submission"
+  ) withActions (
+    schedule1UploadSubmissions: _*
+    )
+
+  setup(
     "schedule-journey-org-timeout-friendly",
     "Gift Aid schedule upload only"
   ) withActions (
