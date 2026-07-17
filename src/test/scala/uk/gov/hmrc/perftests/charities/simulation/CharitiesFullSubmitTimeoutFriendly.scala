@@ -19,12 +19,9 @@ package uk.gov.hmrc.perftests.charities.simulation
 import io.gatling.core.action.builder.ActionBuilder
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
-import uk.gov.hmrc.perftests.charities.requests.CBScheduleUploadRequests._
-import uk.gov.hmrc.perftests.charities.requests.CCScheduleUploadRequests._
 import uk.gov.hmrc.perftests.charities.requests.DeclarationRequests._
 import uk.gov.hmrc.perftests.charities.requests.GASDSRequests._
 import uk.gov.hmrc.perftests.charities.requests.GASScheduleUploadRequests._
-import uk.gov.hmrc.perftests.charities.requests.OIScheduleUploadRequests._
 import uk.gov.hmrc.perftests.charities.requests.OrganisationDetailsRequests._
 import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{loginToAuthWizard, _}
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
@@ -40,11 +37,7 @@ trait CharitiesFullSubmitTimeoutFriendly extends PerformanceTestRunner with Base
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
-      selectClaimTypeGAGASDS,
-      navigateToGASDSCheckbox,
-      selectGASDSTopUP,
-      navigateToGASDSOverclaimed,
-      selectGASDSOverclaimedYes,
+      selectClaimTypeGAOnly,
       navigateToHaveClaimReference,
       selectReference,
       navigateToEnterClaimReferenceNumber,
@@ -67,35 +60,9 @@ trait CharitiesFullSubmitTimeoutFriendly extends PerformanceTestRunner with Base
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
-      navigateToAboutTheGASDS,
-      navigateToAdjustmentAmountGASDS,
-      enterAdjustmentAmountGASDS,
-      navigateToCYAAdjustmentGASDS,
-      navigateToTaxYear1GASDS,
-      enterTaxYear1GASDS,
-      navigateToAmount1GASDS,
-      enterAmount1GASDS,
-      navigateToCYATaxYear1GASDS,
-      navigateToClaim1Added,
-      selectSecondYearYes,
-      navigateToTaxYear2GASDS,
-      enterTaxYear2GASDS,
-      navigateToAmount2GASDS,
-      enterAmount2GASDS,
-      navigateToCYATaxYear2GASDS,
-      navigateToClaim2Added,
-      selectThirdYearYes,
-      navigateToTaxYear3GASDS,
-      enterTaxYear3GASDS,
-      navigateToAmount3GASDS,
-      enterAmount3GASDS,
-      navigateToCYATaxYear3GASDS,
-      navigateToClaim3Added,
-      navigateToFinalCYA,
-      submitGASDSDetails,
       navigateToAboutGiftAidSchedule,
       navigateToUploadGiftAidSchedule,
-      postFileToUpscanGAS("data/gift-aid-valid-large.ods"),
+      postFileToUpscanGAS("data/Gift-Aid-Schedule-VALIDTEST"),
       getUpscanUploadResponseGAS,
       navigateToGASUploaded
     ) ++ getFileVerificationStatusGAS ++
@@ -106,8 +73,6 @@ trait CharitiesFullSubmitTimeoutFriendly extends PerformanceTestRunner with Base
         navigateToGASSuccessBanner,
         submitScheduleUploadGAS,
         navigateToMakeACharityClaim,
-        redirectToRegisterCharityFromAdjustment,
-        selectNoContinueRegister,
         navigateToWhatAdjustmentsToClaim,
         enterAdjustmentText,
         navigateToDeclaration,

@@ -115,6 +115,13 @@ object RepaymentRequests extends ServicesConfiguration with BaseRequests {
       .formParam("value[1]", "claimingUnderGiftAidSmallDonationsScheme")
       .check(status.is(303))
 
+  val selectClaimTypeGAOnly: HttpRequestBuilder =
+    http("Select type of repayment claim Page")
+      .post(s"$baseUrl$redirectUrl$repaymentClaimType")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value[0]", "claimingGiftAid")
+      .check(status.is(303))
+
   val navigateToGASDSCheckbox: HttpRequestBuilder =
     http("Navigate to GASDS Checkbox (GASDS) details page")
       .get(s"$baseUrl$redirectUrl$repaymentClaimTypeGASDS")
