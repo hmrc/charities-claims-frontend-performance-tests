@@ -65,6 +65,13 @@ object OrganisationDetailsRequests extends ServicesConfiguration with BaseReques
       .check(saveCsrfToken())
       .check(regex("Why is the charity not registered with a regulator?"))
 
+  val selectLowIncome: HttpRequestBuilder =
+    http("Select charity LowIncome")
+      .post(s"$baseUrl$redirectUrl$charityNotRegistered")
+      .formParam("csrfToken", "#{csrfToken}")
+      .formParam("value", "LowIncome")
+      .check(status.is(303))
+
   val selectCharityExcepted: HttpRequestBuilder =
     http("Select charity Your Charity is Excepted")
       .post(s"$baseUrl$redirectUrl$charityNotRegistered")

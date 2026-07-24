@@ -47,9 +47,9 @@ trait CharitiesFullSubmitTimeoutFriendly extends PerformanceTestRunner with Base
       navigateToMakeACharityClaim,
       navigateToAboutTheOrg,
       navigateToCharityRegulator,
-      selectScottishRegistered,
-      navigateToRegulatorNumber,
-      enterRegulatorNumber,
+      selectNotRegistered,
+      navigateToWhyNotRegistered,
+      selectLowIncome,
       navigateToCorporateTrustee,
       selectCorporateTrusteeNo,
       navigateToAuthorisedOfficialUKAddress,
@@ -72,6 +72,8 @@ trait CharitiesFullSubmitTimeoutFriendly extends PerformanceTestRunner with Base
         navigateToGASSuccessBanner,
         submitScheduleUploadGAS,
         navigateToMakeACharityClaim,
+        redirectToRegisterCharityFromAdjustment,
+        selectNoContinueRegister,
         navigateToWhatAdjustmentsToClaim,
         enterAdjustmentText,
         navigateToDeclaration,
@@ -193,7 +195,7 @@ trait CharitiesFullSubmitTimeoutFriendly extends PerformanceTestRunner with Base
     "Gift Aid schedule upload and submission"
   ) withActions (
     schedule1UploadSubmissions: _*
-    )
+  )
 
   setup(
     "schedule-journey-org-timeout-friendly",
