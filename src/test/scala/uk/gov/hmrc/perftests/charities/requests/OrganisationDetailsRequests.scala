@@ -203,7 +203,7 @@ object OrganisationDetailsRequests extends ServicesConfiguration with BaseReques
       .formParam("firstName", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
       .formParam("lastName", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
       .formParam("phoneNumber", "456891234563456789123456789122")
-      .formParam("postcode", "WG7 7FU")
+      .formParam("postcode", "AA1 1AA")
       .check(status.is(303))
 
   val navigateToSendPaymentToAgent: HttpRequestBuilder =
@@ -266,7 +266,7 @@ object OrganisationDetailsRequests extends ServicesConfiguration with BaseReques
     http("Enter Agent's Postcode")
       .post(s"$baseUrl$redirectUrl$postcodeAgent")
       .formParam("csrfToken", "#{csrfToken}")
-      .formParam("value", "WG7 7FU")
+      .formParam("value", "AA1 1AA")
       .check(status.is(303))
 
   val navigateToCheckYourOrganisationDetails: HttpRequestBuilder =
