@@ -24,7 +24,6 @@ import io.gatling.http.request.builder.HttpRequestBuilder
 import uk.gov.hmrc.performance.conf.ServicesConfiguration
 
 import scala.concurrent.duration.DurationInt
-import scala.util.matching.Regex
 
 object GASScheduleUploadRequests extends ServicesConfiguration with BaseRequests {
 
