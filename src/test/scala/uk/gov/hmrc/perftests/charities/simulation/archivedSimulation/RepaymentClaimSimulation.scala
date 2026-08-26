@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.perftests.charities.simulation
+package uk.gov.hmrc.perftests.charities.simulation.archivedSimulation
 
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
-import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{enterClaimReferenceValue, loginToAuthWizard, navigateToCharityManagementOrganisation, navigateToCheckYourRepaymentClaim, navigateToEnterClaimReferenceNumber, navigateToGASDSCheckbox, navigateToGASDSOverclaimed, navigateToHaveClaimReference, navigateToMakeACharityClaim, navigateToRepaymentClaimDetails, navigateToSelectClaimType, selectClaimTypeGASDS, selectClaimTypeNoGASDS, selectGASDSAllYes, selectGASDSOverclaimedYes, selectReference, submitRepaymentClaim}
+import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests._
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
 
 trait RepaymentClaimSimulation extends PerformanceTestRunner with BaseRequests {

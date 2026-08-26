@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.perftests.charities.simulation
+package uk.gov.hmrc.perftests.charities.simulation.archivedSimulation
 
 import io.gatling.core.action.builder.ActionBuilder
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
@@ -27,74 +27,70 @@ import uk.gov.hmrc.perftests.charities.requests.GASScheduleUploadRequests._
 import uk.gov.hmrc.perftests.charities.requests.OIScheduleUploadRequests._
 import uk.gov.hmrc.perftests.charities.requests.OrganisationDetailsRequests._
 import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests.{loginToAuthWizard, _}
-import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForAgent, authLogInForOrg, navigateToAuth}
+import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
 
-trait CharitiesAgentFullSubmission extends PerformanceTestRunner with BaseRequests {
+trait CharitiesOrganisationFullSubmission extends PerformanceTestRunner with BaseRequests {
 
-  val AgentUIJourneyTOPUPRegulatorAuth: List[ActionBuilder] =
+  val UIJourneyTOPUPRegulatorAuth: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
-      authLogInForAgent,
+      authLogInForOrg,
       loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
+      navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
-      navigateToHMRCCharityRefAgent,
-      enterHMRCReferenceAgent,
-      navigateToCharityNameAgent,
-      enterCharityNameAgent,
       navigateToSelectClaimType,
       selectClaimTypeGASDSOnly,
       navigateToGASDSCheckbox,
       selectGASDSTopUP,
       navigateToGASDSOverclaimed,
       selectGASDSOverclaimedYes,
-      navigateToHaveClaimReferenceAgent,
+      navigateToHaveClaimReference,
       selectReference,
-      navigateToEnterClaimReferenceNumberAgent,
+      navigateToEnterClaimReferenceNumber,
       enterClaimReferenceValue,
-      navigateToCheckYourRepaymentClaimAgent,
+      navigateToCheckYourRepaymentClaim,
       submitRepaymentClaim,
       navigateToMakeACharityClaim,
       navigateToAboutTheOrg,
       navigateToCharityRegulator,
-      selectEnglandWalesRegistered,
+      selectScottishRegistered,
       navigateToRegulatorNumber,
       enterRegulatorNumber,
-      navigateToSendPaymentToAgent,
-      selectAgentNomineeAgent,
-      navigateToTelephoneAgent,
-      enterTelephoneAgent,
-      navigateToUKAddressAgent,
-      selectUKAddressYesAgent,
-      navigateToPostcodeAgent,
-      enterPostcodeAgent,
-      navigateToCheckYourOrganisationDetailsAgent,
+      navigateToCorporateTrustee,
+      selectCorporateTrusteeNo,
+      navigateToAuthorisedOfficialUKAddress,
+      selectAuthorisedOfficialUKAddressYes,
+      navigateToAuthorisedOfficialDetails,
+      enterAuthorisedOfficialDetails,
+      navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
       navigateToAboutTheGASDS,
       navigateToAdjustmentAmountGASDS,
       enterAdjustmentAmountGASDS,
-      navigateToCYAAdjustmentGASDSAgent,
-      navigateToTaxYear1GASDSAgent,
+      navigateToCYAAdjustmentGASDS,
+      navigateToTaxYear1GASDS,
       enterTaxYear1GASDS,
-      navigateToAmount1GASDSAgent,
+      navigateToAmount1GASDS,
       enterAmount1GASDS,
-      navigateToCYATaxYear1GASDSAgent,
+      navigateToCYATaxYear1GASDS,
       navigateToClaim1Added,
       selectSecondYearYes,
-      navigateToTaxYear2GASDSAgent,
+      navigateToTaxYear2GASDS,
       enterTaxYear2GASDS,
-      navigateToAmount2GASDSAgent,
+      navigateToAmount2GASDS,
       enterAmount2GASDS,
-      navigateToCYATaxYear2GASDSAgent,
+      navigateToCYATaxYear2GASDS,
       navigateToClaim2Added,
       selectThirdYearYes,
-      navigateToTaxYear3GASDSAgent,
+      navigateToTaxYear3GASDS,
       enterTaxYear3GASDS,
-      navigateToAmount3GASDSAgent,
+      navigateToAmount3GASDS,
       enterAmount3GASDS,
-      navigateToCYATaxYear3GASDSAgent,
+      navigateToCYATaxYear3GASDS,
       navigateToClaim3Added,
-      navigateToFinalCYAAgent,
+      navigateToFinalCYA,
       submitGASDSDetails,
       navigateToMakeACharityClaim,
       navigateToWhatAdjustmentsToClaim,
@@ -106,27 +102,25 @@ trait CharitiesAgentFullSubmission extends PerformanceTestRunner with BaseReques
         printSubmissionSummary
       )
 
-  val AgentScheduleUploadAllIterations: List[ActionBuilder] =
+  val scheduleUploadAllIterations: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
-      authLogInForAgent,
+      authLogInForOrg,
       loginToAuthWizard,
+      navigateToCharityManagementOrganisation,
+      navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
-      navigateToHMRCCharityRefAgent,
-      enterHMRCReferenceAgent,
-      navigateToCharityNameAgent,
-      enterCharityNameAgent,
       navigateToSelectClaimType,
       selectClaimTypeGASDS,
       navigateToGASDSCheckbox,
       selectGASDSAllYes,
       navigateToGASDSOverclaimed,
       selectGASDSOverclaimedYes,
-      navigateToHaveClaimReferenceAgent,
+      navigateToHaveClaimReference,
       selectReference,
-      navigateToEnterClaimReferenceNumberAgent,
+      navigateToEnterClaimReferenceNumber,
       enterClaimReferenceValue,
-      navigateToCheckYourRepaymentClaimAgent,
+      navigateToCheckYourRepaymentClaim,
       submitRepaymentClaim,
       navigateToMakeACharityClaim,
       navigateToAboutTheOrg,
@@ -134,43 +128,41 @@ trait CharitiesAgentFullSubmission extends PerformanceTestRunner with BaseReques
       selectNotRegistered,
       navigateToWhyNotRegistered,
       selectCharityExcepted,
-      navigateToCharityExceptedAgent,
-      navigateToSendPaymentToAgent,
-      selectCASCAgent,
-      navigateToTelephoneAgent,
-      enterTelephoneAgent,
-      navigateToUKAddressAgent,
-      selectUKAddressYesAgent,
-      navigateToPostcodeAgent,
-      enterPostcodeAgent,
-      navigateToCheckYourOrganisationDetailsAgent,
+      navigateToCharityExcepted,
+      navigateToCorporateTrustee,
+      selectCorporateTrusteeYes,
+      navigateToCorporateTrusteeUKAddress,
+      selectCorporateTrusteeUKAddressNo,
+      navigateToCorporateTrusteeDetails,
+      enterCorporateTrusteeDetails,
+      navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
       navigateToAboutTheGASDS,
       navigateToAdjustmentAmountGASDS,
       enterAdjustmentAmountGASDS,
-      navigateToCYAAdjustmentGASDSAgent,
-      navigateToTaxYear1GASDSAgent,
+      navigateToCYAAdjustmentGASDS,
+      navigateToTaxYear1GASDS,
       enterTaxYear1GASDS,
-      navigateToAmount1GASDSAgent,
+      navigateToAmount1GASDS,
       enterAmount1GASDS,
-      navigateToCYATaxYear1GASDSAgent,
+      navigateToCYATaxYear1GASDS,
       navigateToClaim1Added,
       selectSecondYearYes,
-      navigateToTaxYear2GASDSAgent,
+      navigateToTaxYear2GASDS,
       enterTaxYear2GASDS,
-      navigateToAmount2GASDSAgent,
+      navigateToAmount2GASDS,
       enterAmount2GASDS,
-      navigateToCYATaxYear2GASDSAgent,
+      navigateToCYATaxYear2GASDS,
       navigateToClaim2Added,
       selectThirdYearYes,
-      navigateToTaxYear3GASDSAgent,
+      navigateToTaxYear3GASDS,
       enterTaxYear3GASDS,
-      navigateToAmount3GASDSAgent,
+      navigateToAmount3GASDS,
       enterAmount3GASDS,
-      navigateToCYATaxYear3GASDSAgent,
+      navigateToCYATaxYear3GASDS,
       navigateToClaim3Added,
-      navigateToFinalCYAAgent,
+      navigateToFinalCYA,
       submitGASDSDetails,
       navigateToAboutGiftAidSchedule,
       navigateToUploadGiftAidSchedule,
@@ -180,7 +172,7 @@ trait CharitiesAgentFullSubmission extends PerformanceTestRunner with BaseReques
     ) ++ getFileVerificationStatusGAS ++
       List[ActionBuilder](
         continueFromUploadedPageGAS,
-        navigateToCheckYourGASScheduleAgent,
+        navigateToCheckYourGASSchedule,
         selectUpdateScheduleNoGAS,
         navigateToGASSuccessBanner,
         submitScheduleUploadGAS,
@@ -193,7 +185,7 @@ trait CharitiesAgentFullSubmission extends PerformanceTestRunner with BaseReques
       ) ++ getFileVerificationStatusOI ++
       List[ActionBuilder](
         continueFromUploadedPageOI,
-        navigateToCheckYourOIScheduleAgent,
+        navigateToCheckYourOISchedule,
         selectUpdateScheduleNoOI,
         navigateToOISuccessBanner,
         submitScheduleUploadOI,
@@ -206,7 +198,7 @@ trait CharitiesAgentFullSubmission extends PerformanceTestRunner with BaseReques
       ) ++ getFileVerificationStatusCB ++
       List[ActionBuilder](
         continueFromUploadedPageCB,
-        navigateToCheckYourCBScheduleAgent,
+        navigateToCheckYourCBSchedule,
         selectUpdateScheduleNoCB,
         navigateToCBSuccessBanner,
         submitScheduleUploadCB,
@@ -219,7 +211,7 @@ trait CharitiesAgentFullSubmission extends PerformanceTestRunner with BaseReques
       ) ++ getFileVerificationStatusCC ++
       List[ActionBuilder](
         continueFromUploadedPageCC,
-        navigateToCheckYourCCScheduleAgent,
+        navigateToCheckYourCCSchedule,
         selectUpdateScheduleNoCC,
         navigateToCCSuccessBanner,
         submitScheduleUploadCC,
@@ -236,16 +228,16 @@ trait CharitiesAgentFullSubmission extends PerformanceTestRunner with BaseReques
       )
 
   setup(
-    "Agent-UI-GASDS-journey-1",
-    "Agent's full Submission Journey with Regulator Number and Auth Official with GASDS Top Up only, no uploads"
+    "UI-GASDS-journey-1",
+    "Full Submission Journey with Regulator Number and Auth Official with GASDS Top Up only, no uploads"
   ) withActions (
-    AgentUIJourneyTOPUPRegulatorAuth: _*
+    UIJourneyTOPUPRegulatorAuth: _*
   )
 
   setup(
-    "Agent-schedule-journey-all-iterations",
-    "Agent's GASDS/GA/OI/CB/CC valid schedules only"
+    "schedule-journey-all-iterations",
+    "GASDS/GA/OI/CB/CC valid schedules only"
   ) withActions (
-    AgentScheduleUploadAllIterations: _*
+    scheduleUploadAllIterations: _*
   )
 }

@@ -24,6 +24,14 @@ Do **NOT** run a full performance test against staging from your local machine. 
 
 ## Tests
 
+### Main performance Tests summary
+
+'CharitiesFullSubmitTimeoutFriendly' simulation file consists 3 main tests.
+journeysToRun.conf setup of journeysToRun[] with 1 E2E test for 'gift aid schedule upload' then 'submitting' (journey-schedules-org).
+Second Journey (journey-1-schedule-org) consists of 2 tests with 1) high load/data schedule upload and 2) Claim Submission.
+Only 1 of the above should be configured to run in staging due to 20 minutes timeout threshold in Jenkins Performance Pipeline.
+
+
 Run smoke test (locally) as follows:
 
 ```bash

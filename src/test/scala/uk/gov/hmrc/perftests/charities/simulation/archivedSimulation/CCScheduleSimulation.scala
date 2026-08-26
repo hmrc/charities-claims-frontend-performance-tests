@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.perftests.charities.simulation
+package uk.gov.hmrc.perftests.charities.simulation.archivedSimulation
 
 import io.gatling.core.action.builder.ActionBuilder
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
-import uk.gov.hmrc.perftests.charities.requests.OIScheduleUploadRequests.{SelectDeleteOIWarningYes, SelectUpdateOIWarningYes, clickAttachUpdatedScheduleButtonOI, continueFromUploadedPageOI, getFileVerificationStatusOI, getUpscanUploadResponseOI, navigateToAboutOtherIncomeSchedule, navigateToCheckYourOISchedule, navigateToDeleteOIWarning, navigateToOISuccessBanner, navigateToOIUploaded, navigateToProblemWithYourOISchedule, navigateToUpdateOIWarning, navigateToUploadOtherIncomeSchedule, postFileToUpscanOI, removeOIFromUploadedPage, selectUpdateScheduleNoOI, selectUpdateScheduleYesOI, submitScheduleUploadOI}
+import uk.gov.hmrc.perftests.charities.requests.CCScheduleUploadRequests.{loginToAuthWizard, _}
 import uk.gov.hmrc.perftests.charities.requests.OrganisationDetailsRequests._
 import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests._
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
 
-trait OIScheduleSimulation extends PerformanceTestRunner with BaseRequests {
+trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
 
-  val uploadOIScheduleHappyPath: List[ActionBuilder] =
+  val uploadCCScheduleHappyPath: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
       authLogInForOrg,
@@ -35,7 +35,11 @@ trait OIScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
-      selectClaimTypeNoGASDS,
+      selectClaimTypeGASDS,
+      navigateToGASDSCheckbox,
+      selectGASDSAllYes,
+      navigateToGASDSOverclaimed,
+      selectGASDSOverclaimedYes,
       navigateToHaveClaimReference,
       selectReference,
       navigateToEnterClaimReferenceNumber,
@@ -58,22 +62,22 @@ trait OIScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
-      navigateToAboutOtherIncomeSchedule,
-      navigateToUploadOtherIncomeSchedule,
-      postFileToUpscanOI("data/other-income-valid-large.ods"),
-      getUpscanUploadResponseOI,
-      navigateToOIUploaded
-    ) ++ getFileVerificationStatusOI ++
+      navigateToAboutConnectedCharitiesSchedule,
+      navigateToUploadConnectedCharitiesSchedule,
+      postFileToUpscanCC("data/connected-charities-valid-large.ods"),
+      getUpscanUploadResponseCC,
+      navigateToCCUploaded
+    ) ++ getFileVerificationStatusCC ++
       List[ActionBuilder](
-        continueFromUploadedPageOI,
-        navigateToCheckYourOISchedule,
-        selectUpdateScheduleNoOI,
-        navigateToOISuccessBanner,
-        submitScheduleUploadOI,
+        continueFromUploadedPageCC,
+        navigateToCheckYourCCSchedule,
+        selectUpdateScheduleNoCC,
+        navigateToCCSuccessBanner,
+        submitScheduleUploadCC,
         navigateToMakeACharityClaim
       )
 
-  val uploadOIScheduleErrorPage: List[ActionBuilder] =
+  val uploadCCScheduleErrorPage: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
       authLogInForOrg,
@@ -82,7 +86,11 @@ trait OIScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
-      selectClaimTypeNoGASDS,
+      selectClaimTypeGASDS,
+      navigateToGASDSCheckbox,
+      selectGASDSAllYes,
+      navigateToGASDSOverclaimed,
+      selectGASDSOverclaimedYes,
       navigateToHaveClaimReference,
       selectReference,
       navigateToEnterClaimReferenceNumber,
@@ -105,25 +113,28 @@ trait OIScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
-      navigateToAboutOtherIncomeSchedule,
-      navigateToUploadOtherIncomeSchedule,
-      postFileToUpscanOI("data/other-income-MasterError.ods"),
-      getUpscanUploadResponseOI
-    ) ++ getFileVerificationStatusOI ++
+      navigateToAboutConnectedCharitiesSchedule,
+      navigateToUploadConnectedCharitiesSchedule,
+      postFileToUpscanCC("data/connected-charities-MasterError.ods"),
+      getUpscanUploadResponseCC
+    ) ++ getFileVerificationStatusCC ++
       List[ActionBuilder](
-        continueFromUploadedPageOI,
-        navigateToProblemWithYourOISchedule,
-        navigateToDeleteOIWarning,
-        SelectDeleteOIWarningYes,
+        continueFromUploadedPageCC,
+        navigateToProblemWithYourCCSchedule,
+        navigateToDeleteCCWarning,
+        SelectDeleteCCWarningYes,
         navigateToMakeACharityClaim
       )
 
-  setup("oi-journey-1", "Other Income schedule upload journey with success") withActions (
-    uploadOIScheduleHappyPath: _*
+  setup("cc-journey-1", "Connected Charities schedule upload journey with success") withActions (
+    uploadCCScheduleHappyPath: _*
   )
 
-  setup("oi-journey-2", "Other Income schedule upload journey with validation failed file to Errors page") withActions (
-    uploadOIScheduleErrorPage: _*
+  setup(
+    "cc-journey-2",
+    "Connected Charities schedule upload journey with validation failed file to Errors page"
+  ) withActions (
+    uploadCCScheduleErrorPage: _*
   )
 
 }
