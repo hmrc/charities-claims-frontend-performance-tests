@@ -14,21 +14,19 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.perftests.charities.simulation
+package uk.gov.hmrc.perftests.charities.simulation.archivedSimulation
 
-import io.gatling.core.Predef.{exec, scenario}
-import io.gatling.core.structure.{ChainBuilder, ScenarioBuilder}
+import io.gatling.core.action.builder.ActionBuilder
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
-import uk.gov.hmrc.perftests.charities.requests.{BaseRequests, GASScheduleUploadRequests}
-import uk.gov.hmrc.perftests.charities.requests.GASScheduleUploadRequests.{SelectDeleteGASWarningYes, SelectUpdateGASWarningYes, clickAttachUpdatedScheduleButtonGAS, continueFromUploadedPageGAS, getFileVerificationStatusGAS, getUpscanUploadResponseGAS, navigateToAboutGiftAidSchedule, navigateToCheckYourGASSchedule, navigateToDeleteGASWarning, navigateToGASSuccessBanner, navigateToGASUploaded, navigateToProblemWithYourGASSchedule, navigateToUpdateGASWarning, navigateToUploadGiftAidSchedule, postFileToUpscanGAS, removeGASFromUploadedPage, selectUpdateScheduleNoGAS, selectUpdateScheduleYesGAS, submitScheduleUploadGAS}
+import uk.gov.hmrc.perftests.charities.requests.BaseRequests
+import uk.gov.hmrc.perftests.charities.requests.OIScheduleUploadRequests.{loginToAuthWizard, _}
 import uk.gov.hmrc.perftests.charities.requests.OrganisationDetailsRequests._
 import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests._
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
-import io.gatling.core.action.builder.ActionBuilder
 
-trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
+trait OIScheduleSimulation extends PerformanceTestRunner with BaseRequests {
 
-  val uploadGASScheduleHappyPath: List[ActionBuilder] =
+  val uploadOIScheduleHappyPath: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
       authLogInForOrg,
@@ -60,22 +58,22 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
-      navigateToAboutGiftAidSchedule,
-      navigateToUploadGiftAidSchedule,
-      postFileToUpscanGAS("data/gift-aid-valid-large.ods"),
-      getUpscanUploadResponseGAS,
-      navigateToGASUploaded
-    ) ++ getFileVerificationStatusGAS ++
+      navigateToAboutOtherIncomeSchedule,
+      navigateToUploadOtherIncomeSchedule,
+      postFileToUpscanOI("data/other-income-valid-large.ods"),
+      getUpscanUploadResponseOI,
+      navigateToOIUploaded
+    ) ++ getFileVerificationStatusOI ++
       List[ActionBuilder](
-        continueFromUploadedPageGAS,
-        navigateToCheckYourGASSchedule,
-        selectUpdateScheduleNoGAS,
-        navigateToGASSuccessBanner,
-        submitScheduleUploadGAS,
+        continueFromUploadedPageOI,
+        navigateToCheckYourOISchedule,
+        selectUpdateScheduleNoOI,
+        navigateToOISuccessBanner,
+        submitScheduleUploadOI,
         navigateToMakeACharityClaim
       )
 
-  val uploadGASScheduleErrorPage: List[ActionBuilder] =
+  val uploadOIScheduleErrorPage: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
       authLogInForOrg,
@@ -107,25 +105,25 @@ trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
-      navigateToAboutGiftAidSchedule,
-      navigateToUploadGiftAidSchedule,
-      postFileToUpscanGAS("data/gift-aid-MasterError.ods"),
-      getUpscanUploadResponseGAS
-    ) ++ getFileVerificationStatusGAS ++
+      navigateToAboutOtherIncomeSchedule,
+      navigateToUploadOtherIncomeSchedule,
+      postFileToUpscanOI("data/other-income-MasterError.ods"),
+      getUpscanUploadResponseOI
+    ) ++ getFileVerificationStatusOI ++
       List[ActionBuilder](
-        continueFromUploadedPageGAS,
-        navigateToProblemWithYourGASSchedule,
-        navigateToDeleteGASWarning,
-        SelectDeleteGASWarningYes,
+        continueFromUploadedPageOI,
+        navigateToProblemWithYourOISchedule,
+        navigateToDeleteOIWarning,
+        SelectDeleteOIWarningYes,
         navigateToMakeACharityClaim
       )
 
-  setup("gas-journey-1", "Gift Aid schedule upload journey with success") withActions (
-    uploadGASScheduleHappyPath: _*
+  setup("oi-journey-1", "Other Income schedule upload journey with success") withActions (
+    uploadOIScheduleHappyPath: _*
   )
 
-  setup("gas-journey-2", "Gift Aid schedule upload journey with validation failed file to Errors page") withActions (
-    uploadGASScheduleErrorPage: _*
+  setup("oi-journey-2", "Other Income schedule upload journey with validation failed file to Errors page") withActions (
+    uploadOIScheduleErrorPage: _*
   )
 
 }

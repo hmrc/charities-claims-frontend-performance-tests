@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.perftests.charities.simulation
+package uk.gov.hmrc.perftests.charities.simulation.archivedSimulation
 
 import io.gatling.core.action.builder.ActionBuilder
 import uk.gov.hmrc.performance.simulation.PerformanceTestRunner
 import uk.gov.hmrc.perftests.charities.requests.BaseRequests
-import uk.gov.hmrc.perftests.charities.requests.CCScheduleUploadRequests.{SelectDeleteCCWarningYes, SelectUpdateCCWarningYes, clickAttachUpdatedScheduleButtonCC, continueFromUploadedPageCC, getFileVerificationStatusCC, getUpscanUploadResponseCC, navigateToAboutConnectedCharitiesSchedule, navigateToCCSuccessBanner, navigateToCCUploaded, navigateToCheckYourCCSchedule, navigateToDeleteCCWarning, navigateToProblemWithYourCCSchedule, navigateToUpdateCCWarning, navigateToUploadConnectedCharitiesSchedule, postFileToUpscanCC, removeCCFromUploadedPage, selectUpdateScheduleNoCC, selectUpdateScheduleYesCC, submitScheduleUploadCC}
+import uk.gov.hmrc.perftests.charities.requests.GASScheduleUploadRequests.{loginToAuthWizard, _}
 import uk.gov.hmrc.perftests.charities.requests.OrganisationDetailsRequests._
 import uk.gov.hmrc.perftests.charities.requests.RepaymentRequests._
 import uk.gov.hmrc.perftests.requests.AuthLoginRequests.{authLogInForOrg, navigateToAuth}
 
-trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
+trait GASScheduleSimulation extends PerformanceTestRunner with BaseRequests {
 
-  val uploadCCScheduleHappyPath: List[ActionBuilder] =
+  val uploadGASScheduleHappyPath: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
       authLogInForOrg,
@@ -35,11 +35,7 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
-      selectClaimTypeGASDS,
-      navigateToGASDSCheckbox,
-      selectGASDSAllYes,
-      navigateToGASDSOverclaimed,
-      selectGASDSOverclaimedYes,
+      selectClaimTypeNoGASDS,
       navigateToHaveClaimReference,
       selectReference,
       navigateToEnterClaimReferenceNumber,
@@ -62,22 +58,22 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
-      navigateToAboutConnectedCharitiesSchedule,
-      navigateToUploadConnectedCharitiesSchedule,
-      postFileToUpscanCC("data/connected-charities-valid-large.ods"),
-      getUpscanUploadResponseCC,
-      navigateToCCUploaded
-    ) ++ getFileVerificationStatusCC ++
+      navigateToAboutGiftAidSchedule,
+      navigateToUploadGiftAidSchedule,
+      postFileToUpscanGAS("data/gift-aid-valid-large.ods"),
+      getUpscanUploadResponseGAS,
+      navigateToGASUploaded
+    ) ++ getFileVerificationStatusGAS ++
       List[ActionBuilder](
-        continueFromUploadedPageCC,
-        navigateToCheckYourCCSchedule,
-        selectUpdateScheduleNoCC,
-        navigateToCCSuccessBanner,
-        submitScheduleUploadCC,
+        continueFromUploadedPageGAS,
+        navigateToCheckYourGASSchedule,
+        selectUpdateScheduleNoGAS,
+        navigateToGASSuccessBanner,
+        submitScheduleUploadGAS,
         navigateToMakeACharityClaim
       )
 
-  val uploadCCScheduleErrorPage: List[ActionBuilder] =
+  val uploadGASScheduleErrorPage: List[ActionBuilder] =
     List[ActionBuilder](
       navigateToAuth,
       authLogInForOrg,
@@ -86,11 +82,7 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToMakeACharityClaim,
       navigateToRepaymentClaimDetails,
       navigateToSelectClaimType,
-      selectClaimTypeGASDS,
-      navigateToGASDSCheckbox,
-      selectGASDSAllYes,
-      navigateToGASDSOverclaimed,
-      selectGASDSOverclaimedYes,
+      selectClaimTypeNoGASDS,
       navigateToHaveClaimReference,
       selectReference,
       navigateToEnterClaimReferenceNumber,
@@ -113,28 +105,25 @@ trait CCScheduleSimulation extends PerformanceTestRunner with BaseRequests {
       navigateToCheckYourOrganisationDetails,
       submitOrganisationDetails,
       navigateToMakeACharityClaim,
-      navigateToAboutConnectedCharitiesSchedule,
-      navigateToUploadConnectedCharitiesSchedule,
-      postFileToUpscanCC("data/connected-charities-MasterError.ods"),
-      getUpscanUploadResponseCC
-    ) ++ getFileVerificationStatusCC ++
+      navigateToAboutGiftAidSchedule,
+      navigateToUploadGiftAidSchedule,
+      postFileToUpscanGAS("data/gift-aid-MasterError.ods"),
+      getUpscanUploadResponseGAS
+    ) ++ getFileVerificationStatusGAS ++
       List[ActionBuilder](
-        continueFromUploadedPageCC,
-        navigateToProblemWithYourCCSchedule,
-        navigateToDeleteCCWarning,
-        SelectDeleteCCWarningYes,
+        continueFromUploadedPageGAS,
+        navigateToProblemWithYourGASSchedule,
+        navigateToDeleteGASWarning,
+        SelectDeleteGASWarningYes,
         navigateToMakeACharityClaim
       )
 
-  setup("cc-journey-1", "Connected Charities schedule upload journey with success") withActions (
-    uploadCCScheduleHappyPath: _*
+  setup("gas-journey-1", "Gift Aid schedule upload journey with success") withActions (
+    uploadGASScheduleHappyPath: _*
   )
 
-  setup(
-    "cc-journey-2",
-    "Connected Charities schedule upload journey with validation failed file to Errors page"
-  ) withActions (
-    uploadCCScheduleErrorPage: _*
+  setup("gas-journey-2", "Gift Aid schedule upload journey with validation failed file to Errors page") withActions (
+    uploadGASScheduleErrorPage: _*
   )
 
 }
